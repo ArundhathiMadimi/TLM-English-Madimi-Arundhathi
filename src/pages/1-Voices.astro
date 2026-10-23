@@ -352,10 +352,71 @@ import LessonNav from '../components/LessonNav.astro';
     ]
   };
 
+  /* ---------- sentence generator ---------- */
+  /* doers: [subject, object form used after "by", person: 1 = I, 3 = he/she/one person, p = plural] */
+  var DOERS=[["I","me","1"],["we","us","p"],["they","them","p"],["she","her","3"],["he","him","3"],["Ravi","Ravi","3"],["Meena","Meena","3"],["Lakshmi","Lakshmi","3"],["Arjun","Arjun","3"],
+    ["my mother","my mother","3"],["our teacher","our teacher","3"],["the students","the students","p"],["the farmers","the farmers","p"],["the children","the children","p"]];
+  /* verbs: [base, past, V3, -s form, -ing form, objects as [noun phrase, 1 if plural]].
+     Leave out verbs whose base and past look the same (read, put, cut): "I read books" would have two right answers. */
+  var VERBS=[
+    ["write","wrote","written","writes","writing",[["a letter",0],["stories",1]]],
+    ["eat","ate","eaten","eats","eating",[["an apple",0],["mangoes",1]]],
+    ["clean","cleaned","cleaned","cleans","cleaning",[["the room",0],["the windows",1]]],
+    ["paint","painted","painted","paints","painting",[["the wall",0],["pictures",1]]],
+    ["sing","sang","sung","sings","singing",[["a song",0],["songs",1]]],
+    ["draw","drew","drawn","draws","drawing",[["a map",0],["pictures",1]]],
+    ["open","opened","opened","opens","opening",[["the door",0],["the windows",1]]],
+    ["plant","planted","planted","plants","planting",[["a tree",0],["flowers",1]]],
+    ["cook","cooked","cooked","cooks","cooking",[["dinner",0],["vegetables",1]]],
+    ["wash","washed","washed","washes","washing",[["the car",0],["the plates",1]]],
+    ["make","made","made","makes","making",[["a kite",0],["sweets",1]]],
+    ["build","built","built","builds","building",[["a house",0],["sandcastles",1]]],
+    ["water","watered","watered","waters","watering",[["the garden",0],["the plants",1]]],
+    ["fly","flew","flown","flies","flying",[["a kite",0],["kites",1]]],
+    ["buy","bought","bought","buys","buying",[["a book",0],["vegetables",1]]],
+    ["repair","repaired","repaired","repairs","repairing",[["the bicycle",0],["the chairs",1]]],
+    ["feed","fed","fed","feeds","feeding",[["the dog",0],["the birds",1]]],
+    ["teach","taught","taught","teaches","teaching",[["English",0],["the songs",1]]],
+    ["grow","grew","grown","grows","growing",[["rice",0],["vegetables",1]]],
+    ["catch","caught","caught","catches","catching",[["the ball",0],["fish",1]]]
+  ];
+  function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+  /* each tense builds the active verb from the doer's person and the passive verb from whether the receiver is plural */
+  var GEN_TENSES=[
+    {c:6,act:function(v,p){return p==="3"?v[3]:v[0]},pas:function(v,pl){return (pl?"are ":"is ")+v[2]}},
+    {c:6,act:function(v){return v[1]},pas:function(v,pl){return (pl?"were ":"was ")+v[2]}},
+    {c:6,act:function(v){return "will "+v[0]},pas:function(v){return "will be "+v[2]}},
+    {c:7,act:function(v,p){return (p==="1"?"am ":p==="3"?"is ":"are ")+v[4]},pas:function(v,pl){return (pl?"are being ":"is being ")+v[2]}},
+    {c:7,act:function(v,p){return (p==="p"?"were ":"was ")+v[4]},pas:function(v,pl){return (pl?"were being ":"was being ")+v[2]}},
+    {c:7,act:function(v,p){return (p==="3"?"has ":"have ")+v[2]},pas:function(v,pl){return (pl?"have been ":"has been ")+v[2]}},
+    {c:8,act:function(v){return "had "+v[2]},pas:function(v){return "had been "+v[2]}},
+    {c:8,act:function(v){return "must "+v[0]},pas:function(v){return "must be "+v[2]}},
+    {c:8,act:function(v){return "should "+v[0]},pas:function(v){return "should be "+v[2]}}
+  ];
+  /* n generated sentences for this class, each with a different verb */
+  function generate(n){
+    var tenses=GEN_TENSES.filter(function(t){return t.c<=cls});
+    return shuffle(VERBS).slice(0,n).map(function(v){
+      var d=TLM.pickOne(DOERS),o=TLM.pickOne(v[5]),t=TLM.pickOne(tenses);
+      var other=TLM.pickOne(tenses.filter(function(x){return x!==t}));
+      var pas=t.pas(v,o[1]);
+      return {
+        act:cap(d[0])+" "+t.act(v,d[2])+" "+o[0]+".",
+        pas:cap(o[0])+" "+pas+" by "+d[1]+".",
+        ans:[cap(o[0]),pas,"by "+d[1]],
+        d:[other.pas(v,o[1])===pas?t.act(v,d[2]):other.pas(v,o[1]),d[0]!==d[1]?"by "+d[0]:t.act(v,d[2])]
+      };
+    }).map(function(g){g.d=g.d.filter(function(x){return g.ans.indexOf(x)<0});return g});
+  }
+
   var mode="spot",sp,bd;
+  function buildQ(x){return {a:x.a,ans:x.ans,e:x.e,bank:shuffle(x.ans.concat(x.d))}}
   function resetPractice(){
-    sp={i:0,score:0,ans:null,q:shuffle(SPOT[cls])};
-    bd={i:0,score:0,picked:[],checked:false,ok:false,q:BUILD[cls].map(function(x){return {a:x.a,ans:x.ans,e:x.e,bank:shuffle(x.ans.concat(x.d))}})};
+    /* half hand-written (includes questions, commands and passives without "by"), half generated */
+    var spot=TLM.deal("voices-spot-"+cls,SPOT[cls],4).concat(generate(4).map(function(g){return Math.random()<.5?[g.act,"A"]:[g.pas,"P"]}));
+    sp={i:0,score:0,ans:null,miss:[],q:shuffle(spot)};
+    var build=TLM.deal("voices-build-"+cls,BUILD[cls],2).concat(generate(4).map(function(g){return {a:g.act,ans:g.ans,d:g.d,e:"."}}));
+    bd={i:0,score:0,picked:[],checked:false,ok:false,miss:[],q:shuffle(build).map(buildQ)};
     drawPractice();
   }
   function drawPractice(){
@@ -371,7 +432,7 @@ import LessonNav from '../components/LessonNav.astro';
   function drawSpot(){
     var box=$("#pbody"),n=sp.q.length;
     if(sp.i>=n){
-      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+sp.score+' out of '+n+'</p><p>'+ending(sp.score,n)+'</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      box.innerHTML=TLM.result(sp.score,n,ending(sp.score,n),sp.miss.length);
       return;
     }
     var q=sp.q[sp.i];
@@ -385,10 +446,11 @@ import LessonNav from '../components/LessonNav.astro';
     var b=e.target.closest("button");if(!b)return;
     if(mode==="spot"){
       if(b.dataset.act==="again"){resetPractice();return}
+      if(b.dataset.act==="retry"){sp=TLM.retry(sp.miss);drawSpot();return}
       if(b.dataset.act==="next"){sp.i++;sp.ans=null;drawSpot();return}
       if(b.dataset.a&&!sp.ans){
         var q=sp.q[sp.i],ok=b.dataset.a===q[1];
-        sp.ans=b.dataset.a;if(ok)sp.score++;
+        sp.ans=b.dataset.a;if(ok)sp.score++;else sp.miss.push(q);
         var fb=$("#pbody .fb");
         fb.className="fb "+(ok?"good":"bad");
         var why=q[1]==="A"?"The doer comes first and does the action, so this is active.":"The receiver comes first, with be + V3, so this is passive.";
@@ -402,11 +464,12 @@ import LessonNav from '../components/LessonNav.astro';
       }
     }else{
       if(b.dataset.act==="again"){resetPractice();return}
+      if(b.dataset.act==="retry"){bd=TLM.retry(bd.miss.map(function(x){return buildQ({a:x.a,ans:x.ans,e:x.e,d:x.bank.filter(function(w){return x.ans.indexOf(w)<0})})}));drawBuild();return}
       if(b.dataset.act==="next"){bd.i++;bd.picked=[];bd.checked=false;drawBuild();return}
       if(b.dataset.act==="check"){
         var q2=bd.q[bd.i];
         bd.checked=true;bd.ok=bd.picked.join("|")===q2.ans.join("|");
-        if(bd.ok)bd.score++;
+        if(bd.ok)bd.score++;else bd.miss.push(q2);
         drawBuild();return;
       }
       if(b.dataset.act==="clear"){bd.picked=[];drawBuild();return}
@@ -419,7 +482,7 @@ import LessonNav from '../components/LessonNav.astro';
   function drawBuild(){
     var box=$("#pbody"),n=bd.q.length;
     if(bd.i>=n){
-      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+bd.score+' out of '+n+'</p><p>'+ending(bd.score,n)+'</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      box.innerHTML=TLM.result(bd.score,n,ending(bd.score,n),bd.miss.length);
       return;
     }
     var q=bd.q[bd.i];

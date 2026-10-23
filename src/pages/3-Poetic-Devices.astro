@@ -226,7 +226,17 @@ import LessonNav from '../components/LessonNav.astro';
     {t:"The door creaked open slowly.",w:"creaked",d:"onomatopoeia",c:8},
     {t:"He ran as fast as the wind to catch the bus.",w:"as fast as the wind",d:"simile",c:8},
     {t:"The sharp smell of rain rose from the hot, dusty road.",hl:["sharp smell of rain","hot, dusty road"],d:"imagery",c:8},
-    {t:"The sun went low behind the hill, and all the fields grew calm and still.",hl:["hill","still"],d:"rhyme",c:8}
+    {t:"The sun went low behind the hill, and all the fields grew calm and still.",hl:["hill","still"],d:"rhyme",c:8},
+    {t:"The kitten’s fur was as soft as cotton.",w:"as soft as cotton",d:"simile",c:6},
+    {t:"Ravi swims like a fish in the river.",w:"like a fish",d:"simile",c:6},
+    {t:"Our garden is a rainbow of flowers in spring.",w:"a rainbow of flowers",d:"metaphor",c:6},
+    {t:"The stars are diamonds in the night sky.",w:"diamonds",d:"metaphor",c:6},
+    {t:"The morning sun peeped through my window.",w:"peeped through my window",d:"personification",c:6},
+    {t:"The old tree waved its arms at us.",w:"waved its arms",d:"personification",c:6},
+    {t:"Priya picked pretty pink roses for her mother.",w:"Priya picked pretty pink",d:"alliteration",c:6},
+    {t:"The ducks quacked loudly near the pond.",w:"quacked",d:"onomatopoeia",c:6},
+    {t:"The temple bell went ding-dong in the evening.",w:"ding-dong",d:"onomatopoeia",c:6},
+    {t:"A little star shines from afar.",hl:["star","afar"],d:"rhyme",c:6}
   ];
   LINES.forEach(function(l){l.hl=l.hl||[l.w]});
   function byStart(s){return LINES.filter(function(l){return l.t.indexOf(s)===0})[0]}
@@ -345,25 +355,24 @@ import LessonNav from '../components/LessonNav.astro';
   var mode="name",S={};
   function resetPractice(){
     var P=pool(),names=devNames(),n=Math.min(8,P.length);
-    S.name={i:0,score:0,ans:null,q:shuffle(P).slice(0,n).map(function(l){
-      var others=shuffle(names.filter(function(x){return x!==l.d})).slice(0,2);
+    S.name={i:0,score:0,ans:null,miss:[],q:TLM.deal("poetic-name-"+cls,P,n).map(function(l){
+      /* imagery is never a wrong option: most lines appeal to the senses, so it would also be right */
+      var others=shuffle(names.filter(function(x){return x!==l.d&&x!=="imagery"})).slice(0,2);
       return {l:l,o:shuffle([l.d].concat(others))};
     })};
-    S.pick={i:0,score:0,ans:null,q:shuffle(P).slice(0,n).map(function(l){
+    S.pick={i:0,score:0,ans:null,miss:[],q:TLM.deal("poetic-pick-"+cls,P,n).map(function(l){
       var others=shuffle(P.filter(function(x){return x.d!==l.d})).slice(0,2);
       return {l:l,o:shuffle([l].concat(others))};
     })};
     var F=P.filter(function(l){return l.w});
-    S.find={i:0,score:0,ans:null,q:shuffle(F).slice(0,n).map(function(l){return {l:l,ch:chunksOf(l)}})};
+    S.find={i:0,score:0,ans:null,miss:[],q:TLM.deal("poetic-find-"+cls,F,n).map(function(l){return {l:l,ch:chunksOf(l)}})};
     drawPractice();
   }
   function drawPractice(){
     document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
     var s=S[mode],box=$("#pbody"),n=s.q.length;
     if(s.i>=n){
-      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+s.score+' out of '+n+'</p><p>'+
-        (s.score===n?"Perfect round. You have a poet’s ear.":s.score>=n*0.7?"Great work. Check the devices you missed and try again.":"Good start. Read the device cards again, then play once more.")+
-        '</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You have a poet’s ear.":s.score>=n*0.7?"Great work. Check the devices you missed and try again.":"Good start. Read the device cards again, then play once more.",s.miss.length);
       return;
     }
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
@@ -383,6 +392,7 @@ import LessonNav from '../components/LessonNav.astro';
   $("#pbody").addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
     if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss.map(function(q){return q.o?{l:q.l,o:shuffle(q.o)}:q}));drawPractice();return}
     var s=S[mode];
     if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
     if(b.dataset.o===undefined||s.ans!==null)return;
@@ -390,7 +400,7 @@ import LessonNav from '../components/LessonNav.astro';
     if(mode==="name"){correctIdx=q.o.indexOf(q.l.d);ok=idx===correctIdx}
     else if(mode==="pick"){correctIdx=q.o.indexOf(q.l);ok=idx===correctIdx}
     else{correctIdx=q.ch.findIndex(function(x){return x.k===1});ok=idx===correctIdx}
-    s.ans=idx;if(ok)s.score++;
+    s.ans=idx;if(ok)s.score++;else s.miss.push(q);
     var d=DEV[q.l.d],fb=$("#pbody .fb");
     fb.className="fb "+(ok?"good":"bad");
     fb.textContent=(ok?"Correct. ":"Not quite. ")+cap(q.l.d)+": "+d.def+" Clue: “"+q.l.hl.join("” and “")+"”.";

@@ -341,7 +341,9 @@ import LessonNav from '../components/LessonNav.astro';
     ["although she was tired","S",7],["while we were eating","S",7],["where the river bends","S",7],["running down the road","P",7],
     ["He opened the door","M",7],["which was very old","S",7],
     ["that he would come","S",8],["unless you hurry","S",8],["so that she could pass","S",8],["what you said","S",8],
-    ["Birds fly south in winter","M",8],["after a long day","P",8]
+    ["Birds fly south in winter","M",8],["after a long day","P",8],
+    ["on the top shelf","P",6],["Arjun reads a story every night","M",6],["because the shop was closed","S",6],
+    ["near the school gate","P",6],["Priya washed the plates","M",6],["if it rains tomorrow","S",6]
   ];
   var TWHY={
     P:"It has no subject and verb pair, so it is a phrase.",
@@ -356,6 +358,15 @@ import LessonNav from '../components/LessonNav.astro';
     {pre:"It was getting dark,",post:"we went home.",ans:"so",o:["so","but","or"],w:"“So” shows the result.",c:6},
     {pre:"Take your umbrella",post:"it rains.",ans:"if",o:["if","but","or"],w:"“If” sets a condition.",c:6},
     {pre:"Wait here",post:"I come back.",ans:"until",o:["until","because","and"],w:"“Until” tells how long to wait.",c:6},
+    {pre:"Rahul swept the floor",post:"Divya dusted the shelves.",ans:"and",o:["and","until","if"],w:"“And” adds one equal idea to another.",c:6},
+    {pre:"The sum was very hard,",post:"Sita solved it.",ans:"but",o:["but","or","until"],w:"“But” shows a contrast: the sum was hard, yet she solved it.",c:6},
+    {pre:"Priya ran fast,",post:"she missed the bus.",ans:"but",o:["but","so","if"],w:"“But” shows a contrast: she ran fast, yet she missed the bus.",c:6},
+    {pre:"Shall we walk to school",post:"shall we take the bus?",ans:"or",o:["or","because","so"],w:"“Or” offers a choice.",c:6},
+    {pre:"Mother was angry",post:"I broke the glass.",ans:"because",o:["because","or","until"],w:"“Because” gives the reason Mother was angry.",c:6},
+    {pre:"Arjun did not come to school",post:"he had a fever.",ans:"because",o:["because","or","until"],w:"“Because” gives the reason.",c:6},
+    {pre:"You will feel better",post:"you rest for a day.",ans:"if",o:["if","but","or"],w:"“If” sets a condition.",c:6},
+    {pre:"Let us play outside",post:"it gets dark.",ans:"until",o:["until","because","but"],w:"“Until” tells how long we can play.",c:6},
+    {pre:"The baby was sleeping,",post:"we spoke softly.",ans:"so",o:["so","or","if"],w:"“So” shows the result.",c:6},
     {pre:"She smiled",post:"she saw us.",ans:"when",o:["when","because","but"],w:"“When” tells the time.",c:7},
     {pre:"He was late",post:"the bus broke down.",ans:"because",o:["because","where","who"],w:"“Because” tells why he was late.",c:7},
     {pre:"Stay",post:"you are.",ans:"where",o:["where","when","who"],w:"“Where” tells the place.",c:7},
@@ -363,6 +374,8 @@ import LessonNav from '../components/LessonNav.astro';
     {pre:"I like the book",post:"you gave me.",ans:"that",o:["that","who","where"],w:"“That” joins the describing clause to the noun “book”.",c:7},
     {pre:"The dog",post:"barked all night is sleeping now.",ans:"which",o:["which","who","where"],w:"“Which” is used for animals and things.",c:7},
     {pre:"This is the house",post:"I was born.",ans:"where",o:["where","who","because"],w:"“Where” tells the place.",c:7},
+    {pre:"Rohan brushed his teeth",post:"he went to bed.",ans:"before",o:["before","who","where"],w:"“Before” tells the time: first he brushed, then he went to bed.",c:7},
+    {pre:"This is the girl",post:"bag was lost.",ans:"whose",o:["whose","which","where"],w:"“Whose” shows that the bag belongs to the girl.",c:7},
     {pre:"I know",post:"she is honest.",ans:"that",o:["that","unless","although"],w:"“That” introduces what I know: a noun clause.",c:8},
     {pre:"",post:"you work hard, you will succeed.",ans:"If",o:["If","Although","Because"],w:"“If” sets the condition.",c:8},
     {pre:"She studied hard",post:"she could pass.",ans:"so that",o:["so that","although","unless"],w:"“So that” gives the purpose.",c:8},
@@ -381,6 +394,14 @@ import LessonNav from '../components/LessonNav.astro';
     {p:[["Stay ",0],["where you are",1],[".",0]],a:"adverb",c:7},
     {p:[["She smiled ",0],["when she saw us",1],[".",0]],a:"adverb",c:7},
     {p:[["I was tired, ",0],["but I kept working",1],[".",0]],a:"coordinate",c:7},
+    {p:[["The pen ",0],["which you lent me",1],[" writes well.",0]],a:"adjective",c:7},
+    {p:[["Lakshmi stayed at home ",0],["because she had a cold",1],[".",0]],a:"adverb",c:7},
+    {p:[["We waited for the bus, ",0],["but it did not come",1],[".",0]],a:"coordinate",c:7},
+    {p:[["I met a man ",0],["who sells balloons",1],[".",0]],a:"adjective",c:7},
+    {p:[["We will play ",0],["after we finish our homework",1],[".",0]],a:"adverb",c:7},
+    {p:[["Amma cooked the rice, ",0],["and Appa made the curry",1],[".",0]],a:"coordinate",c:7},
+    {p:[["Sit ",0],["wherever you like",1],[".",0]],a:"adverb",c:7},
+    {p:[["Rani is the girl ",0],["whose father is a doctor",1],[".",0]],a:"adjective",c:7},
     {p:[["She knows ",0],["that he is honest",1],[".",0]],a:"noun",c:8},
     {p:[["",0],["What he said",1],[" surprised us.",0]],a:"noun",c:8},
     {p:[["I do not know ",0],["where she lives",1],[".",0]],a:"noun",c:8},
@@ -402,9 +423,9 @@ import LessonNav from '../components/LessonNav.astro';
   var mode="test",S={};
   function resetPractice(){
     var T=TEST.filter(function(x){return x[2]<=cls}),J=JOIN.filter(function(x){return x.c<=cls}),Y=TYPE.filter(function(x){return x.c<=cls});
-    S.test={i:0,score:0,ans:null,q:shuffle(T).slice(0,8)};
-    S.join={i:0,score:0,ans:null,q:shuffle(J).slice(0,8).map(function(x){return {pre:x.pre,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
-    S.type={i:0,score:0,ans:null,q:shuffle(Y).slice(0,8)};
+    S.test={i:0,score:0,ans:null,miss:[],q:TLM.deal("clauses-test-"+cls,T,8)};
+    S.join={i:0,score:0,ans:null,miss:[],q:TLM.deal("clauses-join-"+cls,J,8).map(function(x){return {pre:x.pre,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
+    S.type={i:0,score:0,ans:null,miss:[],q:TLM.deal("clauses-type-"+cls,Y,8)};
     if(cls===6&&mode==="type")mode="test";
     $('#modeSeg [data-m="type"]').hidden=cls===6;
     drawPractice();
@@ -413,9 +434,7 @@ import LessonNav from '../components/LessonNav.astro';
     document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
     var s=S[mode],box=$("#pbody"),n=s.q.length;
     if(s.i>=n){
-      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+s.score+' out of '+n+'</p><p>'+
-        (s.score===n?"Perfect round. You think in clauses.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the clause helper again, then play once more.")+
-        '</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You think in clauses.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the clause helper again, then play once more.",s.miss.length);
       return;
     }
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
@@ -436,6 +455,7 @@ import LessonNav from '../components/LessonNav.astro';
   $("#pbody").addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
     if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
     var s=S[mode];
     if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
     if(s.ans!==null||(b.dataset.k===undefined&&b.dataset.o===undefined))return;
@@ -451,7 +471,7 @@ import LessonNav from '../components/LessonNav.astro';
       btns.forEach(function(x){if(q.o[+x.dataset.o]===q.ans)correct=x});
       $("#gap").textContent=q.ans;
     }
-    s.ans=1;if(ok)s.score++;
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
     var fb=$("#pbody .fb");
     fb.className="fb "+(ok?"good":"bad");
     fb.textContent=(ok?"Correct. ":"Not quite. ")+why;

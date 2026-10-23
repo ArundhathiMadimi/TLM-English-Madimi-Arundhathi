@@ -296,7 +296,7 @@ import LessonNav from '../components/LessonNav.astro';
     {c:8,n:"Passive voice",f:"is / was + V3",d:"The doer is not the subject. See the Voices TLM for more.",ex:"The window was {{broken}} by the wind."},
     {c:8,n:"If-sentences",f:"if + V1, will + V1  /  if + V2, would + V1",d:"Real conditions use the present. Imaginary ones use the past.",ex:"If it {{rains}}, we {{will stay}} home. If I {{were}} a bird, I {{would fly}}."}
   ];
-  var VT={go:["went","gone"],eat:["ate","eaten"],see:["saw","seen"],buy:["bought","bought"],bring:["brought","brought"],take:["took","taken"],give:["gave","given"],play:["played","played"],write:["wrote","written"],run:["ran","run"],make:["made","made"],drink:["drank","drunk"],sing:["sang","sung"],begin:["began","begun"],swim:["swam","swum"],break:["broke","broken"],know:["knew","known"],grow:["grew","grown"],throw:["threw","thrown"],wear:["wore","worn"],steal:["stole","stolen"],forget:["forgot","forgotten"],choose:["chose","chosen"],fly:["flew","flown"],speak:["spoke","spoken"]};
+  var VT={go:["went","gone"],come:["came","come"],sit:["sat","sat"],eat:["ate","eaten"],see:["saw","seen"],buy:["bought","bought"],bring:["brought","brought"],take:["took","taken"],give:["gave","given"],play:["played","played"],write:["wrote","written"],run:["ran","run"],make:["made","made"],drink:["drank","drunk"],sing:["sang","sung"],begin:["began","begun"],swim:["swam","swum"],break:["broke","broken"],know:["knew","known"],grow:["grew","grown"],throw:["threw","thrown"],wear:["wore","worn"],steal:["stole","stolen"],forget:["forgot","forgotten"],choose:["chose","chosen"],fly:["flew","flown"],speak:["spoke","spoken"]};
   var IRR={6:["go","eat","see","buy","bring","take","give","write"],7:["run","drink","sing","begin","speak","fly","make","swim"],8:["break","know","grow","throw","wear","steal","forget","choose"]};
   function drawHelper(){
     $("#helpLead").textContent=cls===6
@@ -391,12 +391,26 @@ import LessonNav from '../components/LessonNav.astro';
     {o:["He has two sisters.","He have two sisters.","He haves two sisters."],w:"“He” is singular, so use has.",c:6},
     {o:["I am happy.","I is happy.","I are happy."],w:"“I” always takes am.",c:6},
     {o:["They will come tomorrow.","They will came tomorrow.","They will comes tomorrow."],w:"After will, use V1: come.",c:6},
+    {o:["My father reads the newspaper every morning.","My father reading the newspaper every morning.","My father do reads the newspaper every morning."],w:"It is a habit and “my father” is one person, so add -s: reads.",c:6},
+    {o:["We went to the zoo yesterday.","We go to the zoo yesterday.","We goed to the zoo yesterday."],w:"“Yesterday” shows the past. The V2 of go is went.",c:6},
+    {o:["Meena does not like milk.","Meena do not like milk.","Meena does not likes milk."],w:"“Meena” is one person, so use does not, then V1: like.",c:6},
+    {o:["Do they live in Chennai?","Does they live in Chennai?","Do they lives in Chennai?"],w:"“They” is plural, so use do, then V1: live.",c:6},
+    {o:["The sun rises in the east.","The sun rise in the east.","The sun rising in the east."],w:"It is a fact and “the sun” is one thing, so add -s: rises.",c:6},
+    {o:["Ravi bought a new pen last week.","Ravi buyed a new pen last week.","Ravi buys a new pen last week."],w:"“Last week” shows the past. The V2 of buy is bought.",c:6},
+    {o:["We are in Class 6.","We is in Class 6.","We am in Class 6."],w:"“We” is plural, so use are.",c:6},
+    {o:["There are ten boys in the room.","There is ten boys in the room.","There am ten boys in the room."],w:"“Ten boys” is plural, so use are.",c:6},
+    {o:["My sister was at home yesterday.","My sister were at home yesterday.","My sister is at home yesterday."],w:"“Yesterday” shows the past and “my sister” is one person, so use was.",c:6},
+    {o:["Lakshmi will visit her aunt next week.","Lakshmi will visits her aunt next week.","Lakshmi visited her aunt next week."],w:"“Next week” is in the future, so use will + V1: will visit.",c:6},
     {o:["She is reading a book now.","She are reading a book now.","She is read a book now."],w:"Present continuous: is + V-ing for a singular subject.",c:7},
     {o:["I have seen that film.","I have saw that film.","I have see that film."],w:"After have, use V3: seen.",c:7},
     {o:["They were playing when it rained.","They was playing when it rained.","They were play when it rained."],w:"Past continuous: were + V-ing for a plural subject.",c:7},
     {o:["He has already eaten.","He has already ate.","He have already eaten."],w:"After has, use V3: eaten. “He” takes has.",c:7},
     {o:["She has lived here for five years.","She has live here for five years.","She have lived here for five years."],w:"“She” takes has, followed by V3: lived.",c:7},
     {o:["The children are running.","The children are runing.","The children is running."],w:"Double the n in run, then add -ing: running. “Children” is plural, so use are.",c:7},
+    {o:["I was sleeping when the phone rang.","I were sleeping when the phone rang.","I was sleep when the phone rang."],w:"Past continuous: was + V-ing. “I” takes was.",c:7},
+    {o:["We have finished our homework.","We has finished our homework.","We have finish our homework."],w:"“We” takes have, followed by V3: finished.",c:7},
+    {o:["Look! The baby is smiling.","Look! The baby smiling.","Look! The baby are smiling."],w:"“Look!” shows it is happening now: is + V-ing for one person.",c:7},
+    {o:["Has Arjun written the letter?","Has Arjun wrote the letter?","Have Arjun written the letter?"],w:"“Arjun” takes has, followed by V3: written.",c:7},
     {o:["She can sing well.","She can sings well.","She can sang well."],w:"After a modal, use the base form: sing.",c:8},
     {o:["I enjoy reading.","I enjoy to read.","I enjoy read."],w:"After enjoy, use V-ing: reading.",c:8},
     {o:["He wants to go.","He wants going.","He wants go."],w:"After want, use to + V1.",c:8},
@@ -411,6 +425,9 @@ import LessonNav from '../components/LessonNav.astro';
     {v:"give",f:"V2",ans:"gave",o:["gave","given","gived"],c:6},{v:"play",f:"V2",ans:"played",o:["played","plaid","plaied"],c:6},
     {v:"study",f:"S",ans:"studies",o:["studies","studys","studyes"],c:6},{v:"watch",f:"S",ans:"watches",o:["watches","watchs","watchies"],c:6},
     {v:"go",f:"S",ans:"goes",o:["goes","gos","goies"],c:6},
+    {v:"come",f:"V2",ans:"came",o:["came","comed","come"],c:6},{v:"sit",f:"V2",ans:"sat",o:["sat","sitted","seat"],c:6},
+    {v:"write",f:"V2",ans:"wrote",o:["wrote","writed","written"],c:6},{v:"run",f:"V2",ans:"ran",o:["ran","runned","runs"],c:6},
+    {v:"carry",f:"S",ans:"carries",o:["carries","carrys","carryes"],c:6},{v:"wash",f:"S",ans:"washes",o:["washes","washs","washies"],c:6},
     {v:"write",f:"V3",ans:"written",o:["written","wrote","writed"],c:7},{v:"take",f:"V3",ans:"taken",o:["taken","took","taked"],c:7},
     {v:"eat",f:"V3",ans:"eaten",o:["eaten","ate","eated"],c:7},{v:"see",f:"V3",ans:"seen",o:["seen","saw","seed"],c:7},
     {v:"drink",f:"V3",ans:"drunk",o:["drunk","drank","drinked"],c:7},{v:"sing",f:"V3",ans:"sung",o:["sung","sang","singed"],c:7},
@@ -431,20 +448,70 @@ import LessonNav from '../components/LessonNav.astro';
   }
 
   var mode="fill",S={};
+  /* ---------- sentence generator ---------- */
+  /* subjects: [word, person: 1 = I, 3 = he/she/one person, p = plural] */
+  var SUBJ=[["I","1"],["We","p"],["They","p"],["She","3"],["He","3"],["Ravi","3"],["Meena","3"],["My brother","3"],["My sister","3"],["The boys","p"],["My friends","p"]];
+  /* verbs: [V1, V2, V3, -s form, -ing form, rest of the sentence]. Leave out verbs whose V1 and V2 look
+     the same (read, put, cut), or the options repeat. */
+  var GVERBS=[
+    ["play","played","played","plays","playing","cricket"],["go","went","gone","goes","going","to school"],
+    ["eat","ate","eaten","eats","eating","rice"],["write","wrote","written","writes","writing","a letter"],
+    ["drink","drank","drunk","drinks","drinking","milk"],["watch","watched","watched","watches","watching","TV"],
+    ["visit","visited","visited","visits","visiting","the zoo"],["clean","cleaned","cleaned","cleans","cleaning","the room"],
+    ["sing","sang","sung","sings","singing","a song"],["buy","bought","bought","buys","buying","vegetables"],
+    ["cook","cooked","cooked","cooks","cooking","dinner"],["ride","rode","ridden","rides","riding","a bicycle"],
+    ["fly","flew","flown","flies","flying","a kite"],["swim","swam","swum","swims","swimming","in the pond"],
+    ["draw","drew","drawn","draws","drawing","a picture"],["study","studied","studied","studies","studying","English"],
+    ["carry","carried","carried","carries","carrying","the bag"],["catch","caught","caught","catches","catching","the bus"],
+    ["take","took","taken","takes","taking","a photo"],["bring","brought","brought","brings","bringing","lunch"]
+  ];
+  function be(p,past){return past?(p==="p"?"were":"was"):(p==="1"?"am":p==="3"?"is":"are")}
+  /* each tense: time words, the right form, two wrong forms that cannot fit, and the reason */
+  var GTENSES=[
+    {c:6,m:["every day","every morning","every evening"],
+      ans:function(v,p){return p==="3"?v[3]:v[0]},wrong:function(v,p){return [p==="3"?v[0]:v[3],v[4]]},
+      w:function(v,p,s,m,a){return "“"+m+"” shows a habit"+(p==="3"?" and “"+s+"” is one person, so add -s: ":", so with “"+s+"” use the base form: ")+a+"."}},
+    {c:6,m:["yesterday","last week","two days ago"],
+      ans:function(v){return v[1]},wrong:function(v,p){return [p==="3"?v[3]:v[0],v[2]!==v[1]?v[2]:"will "+v[0]]},
+      w:function(v,p,s,m,a){return "“"+m+"” shows the past. The past form (V2) of "+v[0]+" is "+a+"."}},
+    {c:6,m:["tomorrow","next week","next Sunday"],
+      ans:function(v){return "will "+v[0]},wrong:function(v,p){return [v[1],p==="3"?v[3]:v[0]]},
+      w:function(v,p,s,m,a){return "“"+m+"” is in the future, so use will + V1: "+a+"."}},
+    {c:7,m:["now","right now","at the moment"],
+      ans:function(v,p){return be(p)+" "+v[4]},wrong:function(v,p){return [v[4],(p==="p"?"is ":"are ")+v[4]]},
+      w:function(v,p,s,m,a){return "“"+m+"” shows an action happening at this moment, so use "+be(p)+" + -ing: "+a+"."}},
+    {c:7,m:["at this time yesterday","at eight o’clock last night"],
+      ans:function(v,p){return be(p,1)+" "+v[4]},wrong:function(v,p){return [be(p)+" "+v[4],(p==="p"?"was ":"were ")+v[4]]},
+      w:function(v,p,s,m,a){return "“"+m+"” is a moment in the past when the action was going on, so use "+be(p,1)+" + -ing: "+a+"."}},
+    {c:8,m:["already"],
+      ans:function(v,p){return (p==="3"?"has ":"have ")+v[2]},wrong:function(v,p){return [(p==="3"?"have ":"has ")+v[2],v[4]]},
+      w:function(v,p,s,m,a){return "“already” shows an action that is finished, so use "+(p==="3"?"has":"have")+" + V3: "+a+"."}}
+  ];
+  /* n generated fill-in questions for this class, each with a different verb */
+  function generate(n){
+    var tenses=GTENSES.filter(function(t){return t.c<=cls});
+    return shuffle(GVERBS).slice(0,n).map(function(v){
+      var sb=TLM.pickOne(SUBJ),t=TLM.pickOne(tenses),m=TLM.pickOne(t.m),p=sb[1],a=t.ans(v,p);
+      var o=[a].concat(t.wrong(v,p).filter(function(x,i,all){return x!==a&&all.indexOf(x)===i}));
+      var named=/^(I|Ravi|Meena)$/.test(sb[0])?sb[0]:sb[0].toLowerCase();
+      return {pre:sb[0],v:v[0],post:v[5]+" "+m+".",ans:a,o:shuffle(o),w:t.w(v,p,named,m,a)};
+    });
+  }
+
   function resetPractice(){
     var F=FILL.filter(function(x){return x.c<=cls}),P=PICK.filter(function(x){return x.c<=cls}),M=FORMQ.filter(function(x){return x.c<=cls});
-    S.fill={i:0,score:0,ans:null,q:shuffle(F).slice(0,8).map(function(x){return {pre:x.pre,v:x.v,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
-    S.pick={i:0,score:0,ans:null,q:shuffle(P).slice(0,8).map(function(x){return {ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
-    S.form={i:0,score:0,ans:null,q:shuffle(M).slice(0,8).map(function(x){return {v:x.v,f:x.f,ans:x.ans,o:shuffle(x.o)}})};
+    /* fill: half hand-written, half generated */
+    var fill=TLM.deal("verbs-fill-"+cls,F,4).map(function(x){return {pre:x.pre,v:x.v,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}}).concat(generate(4));
+    S.fill={i:0,score:0,ans:null,miss:[],q:shuffle(fill)};
+    S.pick={i:0,score:0,ans:null,miss:[],q:TLM.deal("verbs-pick-"+cls,P,8).map(function(x){return {ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
+    S.form={i:0,score:0,ans:null,miss:[],q:TLM.deal("verbs-form-"+cls,M,8).map(function(x){return {v:x.v,f:x.f,ans:x.ans,o:shuffle(x.o)}})};
     drawPractice();
   }
   function drawPractice(){
     document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
     var s=S[mode],box=$("#pbody"),n=s.q.length;
     if(s.i>=n){
-      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+s.score+' out of '+n+'</p><p>'+
-        (s.score===n?"Perfect round. Your verbs are in great shape.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the form helper again, then play once more.")+
-        '</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. Your verbs are in great shape.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the form helper again, then play once more.",s.miss.length);
       return;
     }
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
@@ -464,11 +531,12 @@ import LessonNav from '../components/LessonNav.astro';
   $("#pbody").addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
     if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
     var s=S[mode];
     if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
     if(b.dataset.o===undefined||s.ans!==null)return;
     var q=s.q[s.i],chosen=q.o[+b.dataset.o],ok=chosen===q.ans;
-    s.ans=1;if(ok)s.score++;
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
     var why=mode==="form"?formWhy(q):q.w,fb=$("#pbody .fb");
     fb.className="fb "+(ok?"good":"bad");
     fb.textContent=(ok?"Correct. ":"Not quite. ")+why;

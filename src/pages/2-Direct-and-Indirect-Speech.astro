@@ -347,28 +347,67 @@ import LessonNav from '../components/LessonNav.astro';
 
   /* ---------- practice data ---------- */
   var SPOT={
-    6:[["Ravi said, “I am happy.”","D"],["Ravi said that he was happy.","I"],["Mother said, “Wash your hands.”","D"],["Mother told me to wash my hands.","I"],["The boy said that he could swim.","I"],["Tom said, “I can swim.”","D"],["Anu said that she liked sweets.","I"],["The teacher said, “Sit down.”","D"]],
-    7:[["Anu asked me where I lived.","I"],["Raju asked, “Do you like cricket?”","D"],["Hari said that he had finished his work.","I"],["Mother says that she is busy.","I"],["The teacher asked, “Who broke the window?”","D"],["Sita said that she had lost her pen.","I"],["Rani said, “I have seen the film.”","D"],["He asked me if I was ready.","I"]],
-    8:[["The doctor said that I had to rest.","I"],["The captain said, “We must win this match.”","D"],["Rani exclaimed with joy that she had won the prize.","I"],["She said, “Hurrah! I have won the prize!”","D"],["He said that he would meet me there the next day.","I"],["He said, “I will meet you here tomorrow.”","D"],["The teacher said that the earth moves round the sun.","I"],["My father advised me to work hard.","I"]]
+    6:[["Ravi said, “I am happy.”","D"],["Ravi said that he was happy.","I"],["Mother said, “Wash your hands.”","D"],["Mother told me to wash my hands.","I"],["The boy said that he could swim.","I"],["Tom said, “I can swim.”","D"],["Anu said that she liked sweets.","I"],["The teacher said, “Sit down.”","D"],
+      ["Priya said, “I am drawing a picture.”","D"],["Priya said that she was drawing a picture.","I"],["Grandmother told us not to make noise.","I"],["Kiran said to his friend, “Please lend me your bat.”","D"],["Kiran requested his friend to lend him his bat.","I"],["Lakshmi said, “I will bring my lunch box.”","D"],["Arjun said that he was going to the market.","I"],["The teacher said to the boys, “Do not run in the corridor.”","D"]],
+    7:[["Anu asked me where I lived.","I"],["Raju asked, “Do you like cricket?”","D"],["Hari said that he had finished his work.","I"],["Mother says that she is busy.","I"],["The teacher asked, “Who broke the window?”","D"],["Sita said that she had lost her pen.","I"],["Rani said, “I have seen the film.”","D"],["He asked me if I was ready.","I"],
+      ["Kavya asked me, “What is your name?”","D"],["Kavya asked me what my name was.","I"],["Suresh asked his sister if she had seen his bag.","I"],["Ramesh said, “I went to Chennai last week.”","D"],["Deepa said that she had bought a new bag.","I"],["Father says, “The bus is late.”","D"],["The girl asked the shopkeeper how much the pen cost.","I"],["Mohan asked, “Have you finished your homework?”","D"]],
+    8:[["The doctor said that I had to rest.","I"],["The captain said, “We must win this match.”","D"],["Rani exclaimed with joy that she had won the prize.","I"],["She said, “Hurrah! I have won the prize!”","D"],["He said that he would meet me there the next day.","I"],["He said, “I will meet you here tomorrow.”","D"],["The teacher said that the earth moves round the sun.","I"],["My father advised me to work hard.","I"],
+      ["The coach told us that we had to practise every day.","I"],["Grandfather said, “The sun rises in the east.”","D"],["Our teacher said that honesty is the best policy.","I"],["Meera exclaimed with sorrow that she had lost her purse.","I"],["Meera said, “Alas! I have lost my purse!”","D"],["Vikram said that he had met Asha the day before.","I"],["Vikram said, “I met Asha yesterday.”","D"],["The doctor advised Ravi to drink more water.","I"]]
   };
   var PICK={
     6:[
       {d:"Meena said, “I like mangoes.”",o:["Meena said that she likes mangoes.","Meena said that she liked mangoes.","Meena said that I liked mangoes."],a:1,w:"The tense moves back (like → liked) and “I” becomes “she”."},
       {d:"Tom said, “I can swim.”",o:["Tom said that he can swim.","Tom said that he could swim.","Tom said that I could swim."],a:1,w:"“Can” becomes “could”, and “I” becomes “he”."},
       {d:"The teacher said to us, “Sit down.”",o:["The teacher told us to sit down.","The teacher told us that sit down.","The teacher told us we sat down."],a:0,w:"A command becomes told + person + to + verb."},
-      {d:"Ravi said, “We will play.”",o:["Ravi said that we would play.","Ravi said that they would play.","Ravi said that they will play."],a:1,w:"“We” becomes “they” and “will” becomes “would”."}
+      {d:"Ravi said, “We will play.”",o:["Ravi said that we would play.","Ravi said that they would play.","Ravi said that they will play."],a:1,w:"“We” becomes “they” and “will” becomes “would”."},
+      {d:"Priya said, “I am drawing a picture.”",o:["Priya said that she was drawing a picture.","Priya said that she is drawing a picture.","Priya said that I was drawing a picture."],a:0,w:"Present continuous moves back to past continuous (am drawing → was drawing), and “I” becomes “she”."},
+      {d:"Arjun said, “I play cricket every day.”",o:["Arjun said that he plays cricket every day.","Arjun said that I played cricket every day.","Arjun said that he played cricket every day."],a:2,w:"Simple present moves back to simple past (play → played), and “I” becomes “he”."},
+      {d:"Father said to me, “Do not touch the switch.”",o:["Father told me do not touch the switch.","Father told me not to touch the switch.","Father told me that do not touch the switch."],a:1,w:"A negative command becomes told + person + not to + verb."},
+      {d:"Kiran said to his friend, “Please lend me your bat.”",o:["Kiran requested his friend to lend him his bat.","Kiran told his friend that please lend me your bat.","Kiran requested his friend to lend me your bat."],a:0,w:"A request becomes requested + person + to + verb. “Please” is dropped, “me” becomes “him” and “your” becomes “his”."},
+      {d:"Lakshmi said, “I will bring my lunch box.”",o:["Lakshmi said that she will bring her lunch box.","Lakshmi said that she would bring her lunch box.","Lakshmi said that she would bring my lunch box."],a:1,w:"“Will” becomes “would”, “I” becomes “she” and “my” becomes “her”."},
+      {d:"The teacher said to the boys, “Do not run in the corridor.”",o:["The teacher told the boys not to run in the corridor.","The teacher told the boys to run in the corridor.","The teacher told the boys that not run in the corridor."],a:0,w:"A negative command becomes told + person + not to + verb."},
+      {d:"Asha said, “I can ride a bicycle.”",o:["Asha said that she could ride a bicycle.","Asha said that she can ride a bicycle.","Asha said that she could rode a bicycle."],a:0,w:"“Can” becomes “could”, and the verb after it stays in the base form: ride."},
+      {d:"Ravi said, “I am hungry.”",o:["Ravi said that he is hungry.","Ravi said that he was hungry.","Ravi said that I was hungry."],a:1,w:"“Am” becomes “was”, and “I” becomes “he”."},
+      {d:"The children said, “We are playing kabaddi.”",o:["The children said that they were playing kabaddi.","The children said that we were playing kabaddi.","The children said that they are playing kabaddi."],a:0,w:"“We” becomes “they”, and “are playing” moves back to “were playing”."},
+      {d:"Grandmother said to us, “Please sit quietly.”",o:["Grandmother requested us to sit quietly.","Grandmother requested us that we sat quietly.","Grandmother requested us please sit quietly."],a:0,w:"A request becomes requested + person + to + verb, and “please” is dropped."},
+      {d:"The guard said to the boys, “Stand in a line.”",o:["The guard told the boys stand in a line.","The guard told the boys to stand in a line.","The guard told the boys that they stood in a line."],a:1,w:"A command becomes told + person + to + verb."},
+      {d:"Meena said, “My brother likes music.”",o:["Meena said that her brother liked music.","Meena said that my brother liked music.","Meena said that her brother likes music."],a:0,w:"Meena is speaking, so “my” becomes “her”, and “likes” moves back to “liked”."}
     ],
     7:[
       {d:"Sita said, “I lost my pen.”",o:["Sita said that she lost her pen.","Sita said that she had lost her pen.","Sita said that I had lost my pen."],a:1,w:"Simple past moves back to past perfect: had lost."},
       {d:"Anu asked me, “Where do you live?”",o:["Anu asked me where did I live.","Anu asked me where I lived.","Anu asked me where you lived."],a:1,w:"A reported question uses statement order, with no “did”."},
       {d:"Raju asked me, “Do you like cricket?”",o:["Raju asked me that I liked cricket.","Raju asked me if I liked cricket.","Raju asked me if did I like cricket."],a:1,w:"A yes or no question uses “if”, with statement order."},
-      {d:"Hari said, “I have finished.”",o:["Hari said that he had finished.","Hari said that he has finished.","Hari said that I had finished."],a:0,w:"Present perfect moves back to past perfect: had finished."}
+      {d:"Hari said, “I have finished.”",o:["Hari said that he had finished.","Hari said that he has finished.","Hari said that I had finished."],a:0,w:"Present perfect moves back to past perfect: had finished."},
+      {d:"Kavya asked me, “What is your name?”",o:["Kavya asked me what my name was.","Kavya asked me what was my name.","Kavya asked me what your name was."],a:0,w:"A reported question uses statement order (my name was), and “your” becomes “my”."},
+      {d:"Mohan asked me, “Have you finished your homework?”",o:["Mohan asked me if I had finished my homework.","Mohan asked me if had I finished my homework.","Mohan asked me that I had finished my homework."],a:0,w:"A yes or no question uses “if” with statement order, and “have finished” becomes “had finished”."},
+      {d:"Ramesh said, “I visited my uncle.”",o:["Ramesh said that he visited his uncle.","Ramesh said that he had visited his uncle.","Ramesh said that he has visited his uncle."],a:1,w:"Simple past moves back to past perfect: visited → had visited."},
+      {d:"Father says, “The bus is late.”",o:["Father says that the bus was late.","Father says that the bus is late.","Father says that the bus had been late."],a:1,w:"The reporting verb “says” is in the present, so the tense does not change."},
+      {d:"The girl asked the shopkeeper, “How much does this pen cost?”",o:["The girl asked the shopkeeper how much that pen cost.","The girl asked the shopkeeper how much does that pen cost.","The girl asked the shopkeeper how much this pen costs."],a:0,w:"Use statement order with no “does” (that pen cost), and “this” becomes “that”."},
+      {d:"Suresh asked his sister, “Have you seen my bag?”",o:["Suresh asked his sister if she had seen his bag.","Suresh asked his sister if she had seen my bag.","Suresh asked his sister if she has seen his bag."],a:0,w:"“You” becomes “she”, “my” becomes “his”, and “have seen” becomes “had seen”."},
+      {d:"Deepa said, “I bought a new bag.”",o:["Deepa said that she had bought a new bag.","Deepa said that she has bought a new bag.","Deepa said that I had bought a new bag."],a:0,w:"Simple past moves back to past perfect (bought → had bought), and “I” becomes “she”."},
+      {d:"Nisha asked me, “Why are you crying?”",o:["Nisha asked me why I was crying.","Nisha asked me why was I crying.","Nisha asked me why I am crying."],a:0,w:"A reported question uses statement order (I was crying), and “are crying” moves back to “was crying”."},
+      {d:"The teacher asked Raju, “Did you bring your book?”",o:["The teacher asked Raju if he had brought his book.","The teacher asked Raju if did he bring his book.","The teacher asked Raju that he had brought his book."],a:0,w:"A yes or no question uses “if” with statement order, and “did bring” becomes “had brought”."},
+      {d:"Anil said, “I am busy now.”",o:["Anil said that he was busy then.","Anil said that he was busy now.","Anil said that he is busy then."],a:0,w:"“Am” becomes “was”, and “now” becomes “then”."},
+      {d:"Gita said, “I have lost my ring here.”",o:["Gita said that she had lost her ring there.","Gita said that she had lost her ring here.","Gita said that she has lost her ring there."],a:0,w:"“Have lost” becomes “had lost”, and “here” becomes “there”."},
+      {d:"Ravi asked me, “Where did you go?”",o:["Ravi asked me where I had gone.","Ravi asked me where did I go.","Ravi asked me where you had gone."],a:0,w:"Use statement order with no “did”. “Did go” becomes “had gone”, and “you” becomes “I”."}
     ],
     8:[
       {d:"He said, “I will meet you here tomorrow.”",o:["He said that he would meet me here tomorrow.","He said that he would meet me there the next day.","He said that he will meet you there the next day."],a:1,w:"“Here” becomes “there”, “tomorrow” becomes “the next day”, and “you” becomes “me”."},
       {d:"Rani said, “Hurrah! I have won!”",o:["Rani exclaimed with joy that she had won.","Rani asked with joy that she had won.","Rani said Hurrah that she won."],a:0,w:"An exclamation is reported with “exclaimed with joy that”."},
       {d:"The teacher said, “The earth moves round the sun.”",o:["The teacher said that the earth moved round the sun.","The teacher said that the earth moves round the sun.","The teacher said that the earth had moved round the sun."],a:1,w:"A universal truth keeps its tense."},
-      {d:"Father said to me, “Work hard.”",o:["Father advised me to work hard.","Father advised me that work hard.","Father said me to work hard."],a:0,w:"Advice is reported with advised + person + to + verb."}
+      {d:"Father said to me, “Work hard.”",o:["Father advised me to work hard.","Father advised me that work hard.","Father said me to work hard."],a:0,w:"Advice is reported with advised + person + to + verb."},
+      {d:"The coach said to us, “You must practise every day.”",o:["The coach told us that we had to practise every day.","The coach told us that we must practised every day.","The coach told us that you had to practise every day."],a:0,w:"“Must” becomes “had to”, and “you” becomes “we”."},
+      {d:"Grandfather said, “The sun rises in the east.”",o:["Grandfather said that the sun rose in the east.","Grandfather said that the sun rises in the east.","Grandfather said that the sun had risen in the east."],a:1,w:"A universal truth keeps its tense."},
+      {d:"Meera said, “Alas! I have lost my purse!”",o:["Meera exclaimed with sorrow that she had lost her purse.","Meera exclaimed with joy that she had lost her purse.","Meera exclaimed with sorrow that I had lost my purse."],a:0,w:"“Alas” shows sorrow, so use “exclaimed with sorrow that”. “Have lost” becomes “had lost”."},
+      {d:"Vikram said, “I met Asha yesterday.”",o:["Vikram said that he had met Asha the day before.","Vikram said that he had met Asha yesterday.","Vikram said that he had met Asha the next day."],a:0,w:"Simple past moves back to past perfect, and “yesterday” becomes “the day before”."},
+      {d:"Neha said, “I will finish this work today.”",o:["Neha said that she would finish that work that day.","Neha said that she would finish this work today.","Neha said that she will finish that work that day."],a:0,w:"“Will” becomes “would”, “this” becomes “that” and “today” becomes “that day”."},
+      {d:"The doctor said to Ravi, “Drink more water.”",o:["The doctor advised Ravi to drink more water.","The doctor advised Ravi that drink more water.","The doctor asked Ravi if he drank more water."],a:0,w:"Advice is reported with advised + person + to + verb."},
+      {d:"Our teacher said, “Honesty is the best policy.”",o:["Our teacher said that honesty was the best policy.","Our teacher said that honesty is the best policy.","Our teacher said that honesty had been the best policy."],a:1,w:"A universal truth keeps its tense. A proverb is always true, so “is” stays."},
+      {d:"The players said, “Hurrah! We have won the match!”",o:["The players exclaimed with joy that they had won the match.","The players exclaimed with sorrow that they had won the match.","The players exclaimed with joy that we had won the match."],a:0,w:"“Hurrah” shows joy, “we” becomes “they”, and “have won” becomes “had won”."},
+      {d:"Sunil said, “I came here two days ago.”",o:["Sunil said that he had come there two days before.","Sunil said that he had come here two days ago.","Sunil said that he came there two days ago."],a:0,w:"Simple past becomes past perfect, “here” becomes “there” and “ago” becomes “before”."},
+      {d:"Mother said to me, “You must go to bed early.”",o:["Mother told me that I had to go to bed early.","Mother told me that I must went to bed early.","Mother told me that you had to go to bed early."],a:0,w:"“Must” becomes “had to”, and “you” becomes “I”."},
+      {d:"The principal said, “The school will remain closed tomorrow.”",o:["The principal said that the school would remain closed the next day.","The principal said that the school would remain closed tomorrow.","The principal said that the school will remain closed the next day."],a:0,w:"“Will” becomes “would”, and “tomorrow” becomes “the next day”."},
+      {d:"My uncle said to me, “Save some money every month.”",o:["My uncle advised me to save some money every month.","My uncle advised me that save some money every month.","My uncle advised me to saved some money every month."],a:0,w:"Advice is reported with advised + person + to + verb (base form)."}
     ]
   };
   var BUILD={
@@ -376,27 +415,63 @@ import LessonNav from '../components/LessonNav.astro';
       {d:"Meena said, “I like mangoes.”",ans:["Meena said","that","she liked mangoes"],x:["she likes mangoes","I liked mangoes"]},
       {d:"Tom said, “I can swim.”",ans:["Tom said","that","he could swim"],x:["he can swim","if"]},
       {d:"The teacher said to us, “Sit down.”",ans:["The teacher told us","to","sit down"],x:["that","sat down"]},
-      {d:"Ravi said, “I am reading.”",ans:["Ravi said","that","he was reading"],x:["he is reading","I was reading"]}
+      {d:"Ravi said, “I am reading.”",ans:["Ravi said","that","he was reading"],x:["he is reading","I was reading"]},
+      {d:"Priya said, “I am drawing a picture.”",ans:["Priya said","that","she was drawing a picture"],x:["she is drawing a picture","to"]},
+      {d:"Arjun said, “I play cricket every day.”",ans:["Arjun said","that","he played cricket every day"],x:["he plays cricket every day","if"]},
+      {d:"Father said to me, “Do not touch the switch.”",ans:["Father told me","not to","touch the switch"],x:["that","touched the switch"]},
+      {d:"Kiran said to his friend, “Please lend me your bat.”",ans:["Kiran requested his friend","to","lend him his bat"],x:["lend me your bat","that"]},
+      {d:"Lakshmi said, “I will bring my lunch box.”",ans:["Lakshmi said","that","she would bring her lunch box"],x:["she will bring her lunch box","to"]},
+      {d:"Asha said, “I can ride a bicycle.”",ans:["Asha said","that","she could ride a bicycle"],x:["she can ride a bicycle","I could ride a bicycle"]},
+      {d:"The children said, “We are playing kabaddi.”",ans:["The children said","that","they were playing kabaddi"],x:["we were playing kabaddi","they are playing kabaddi"]},
+      {d:"Grandmother said to us, “Please sit quietly.”",ans:["Grandmother requested us","to","sit quietly"],x:["that","sat quietly"]},
+      {d:"The guard said to the boys, “Stand in a line.”",ans:["The guard told the boys","to","stand in a line"],x:["that","stood in a line"]},
+      {d:"Ravi said, “I am hungry.”",ans:["Ravi said","that","he was hungry"],x:["he is hungry","I was hungry"]},
+      {d:"Meena said, “My brother likes music.”",ans:["Meena said","that","her brother liked music"],x:["my brother liked music","her brother likes music"]},
+      {d:"The teacher said to the boys, “Do not run in the corridor.”",ans:["The teacher told the boys","not to","run in the corridor"],x:["that","ran in the corridor"]}
     ],
     7:[
       {d:"Anu asked me, “Where do you live?”",ans:["Anu asked me","where","I lived"],x:["where do I live","that"]},
       {d:"Raju asked me, “Do you like cricket?”",ans:["Raju asked me","if","I liked cricket"],x:["that","did I like cricket"]},
       {d:"Sita said, “I lost my pen.”",ans:["Sita said","that","she had lost her pen"],x:["she lost her pen","I had lost my pen"]},
-      {d:"Hari said, “I have finished my work.”",ans:["Hari said","that","he had finished his work"],x:["he has finished his work","if"]}
+      {d:"Hari said, “I have finished my work.”",ans:["Hari said","that","he had finished his work"],x:["he has finished his work","if"]},
+      {d:"Kavya asked me, “What is your name?”",ans:["Kavya asked me","what","my name was"],x:["was my name","that"]},
+      {d:"Mohan asked me, “Have you finished your homework?”",ans:["Mohan asked me","if","I had finished my homework"],x:["had I finished my homework","that"]},
+      {d:"Ramesh said, “I visited my uncle.”",ans:["Ramesh said","that","he had visited his uncle"],x:["he visited his uncle","if"]},
+      {d:"Father says, “The bus is late.”",ans:["Father says","that","the bus is late"],x:["the bus was late","if"]},
+      {d:"The girl asked the shopkeeper, “How much does this pen cost?”",ans:["The girl asked the shopkeeper","how much","that pen cost"],x:["does that pen cost","this pen costs"]},
+      {d:"Suresh asked his sister, “Have you seen my bag?”",ans:["Suresh asked his sister","if","she had seen his bag"],x:["she had seen my bag","that"]},
+      {d:"Deepa said, “I bought a new bag.”",ans:["Deepa said","that","she had bought a new bag"],x:["she has bought a new bag","if"]},
+      {d:"Nisha asked me, “Why are you crying?”",ans:["Nisha asked me","why","I was crying"],x:["was I crying","that"]},
+      {d:"The teacher asked Raju, “Did you bring your book?”",ans:["The teacher asked Raju","if","he had brought his book"],x:["did he bring his book","that"]},
+      {d:"Anil said, “I am busy now.”",ans:["Anil said","that","he was busy","then"],x:["now","he is busy"]},
+      {d:"Gita said, “I have lost my ring here.”",ans:["Gita said","that","she had lost her ring","there"],x:["here","she has lost her ring"]},
+      {d:"Ravi asked me, “Where did you go?”",ans:["Ravi asked me","where","I had gone"],x:["did I go","that"]}
     ],
     8:[
       {d:"He said, “I will meet you here tomorrow.”",ans:["He said","that","he would meet me","there","the next day"],x:["here","tomorrow"]},
       {d:"The doctor said to me, “You must rest.”",ans:["The doctor told me","that","I had to rest"],x:["you must rest","if"]},
       {d:"Rani said, “Hurrah! I have won the prize!”",ans:["Rani exclaimed with joy","that","she had won the prize"],x:["Rani asked with joy","she has won the prize"]},
-      {d:"My father said to me, “Work hard.”",ans:["My father advised me","to","work hard"],x:["that","worked hard"]}
+      {d:"My father said to me, “Work hard.”",ans:["My father advised me","to","work hard"],x:["that","worked hard"]},
+      {d:"The coach said to us, “You must practise every day.”",ans:["The coach told us","that","we had to practise every day"],x:["you must practise every day","if"]},
+      {d:"Grandfather said, “The sun rises in the east.”",ans:["Grandfather said","that","the sun rises in the east"],x:["the sun rose in the east","if"]},
+      {d:"Meera said, “Alas! I have lost my purse!”",ans:["Meera exclaimed with sorrow","that","she had lost her purse"],x:["Meera exclaimed with joy","she has lost her purse"]},
+      {d:"Vikram said, “I met Asha yesterday.”",ans:["Vikram said","that","he had met Asha","the day before"],x:["yesterday","the next day"]},
+      {d:"Neha said, “I will finish this work today.”",ans:["Neha said","that","she would finish","that work","that day"],x:["this work","today"]},
+      {d:"The doctor said to Ravi, “Drink more water.”",ans:["The doctor advised Ravi","to","drink more water"],x:["that","drank more water"]},
+      {d:"Our teacher said, “Honesty is the best policy.”",ans:["Our teacher said","that","honesty is the best policy"],x:["honesty was the best policy","if"]},
+      {d:"The players said, “Hurrah! We have won the match!”",ans:["The players exclaimed with joy","that","they had won the match"],x:["The players exclaimed with sorrow","we had won the match"]},
+      {d:"Sunil said, “I came here two days ago.”",ans:["Sunil said","that","he had come","there","two days before"],x:["here","two days ago"]},
+      {d:"Mother said to me, “You must go to bed early.”",ans:["Mother told me","that","I had to go to bed early"],x:["you must go to bed early","to"]},
+      {d:"The principal said, “The school will remain closed tomorrow.”",ans:["The principal said","that","the school would remain closed","the next day"],x:["tomorrow","the school will remain closed"]},
+      {d:"My uncle said to me, “Save some money every month.”",ans:["My uncle advised me","to","save some money every month"],x:["that","saved some money every month"]}
     ]
   };
 
   var mode="spot",sp,pk,bd;
   function resetPractice(){
-    sp={i:0,score:0,ans:null,q:shuffle(SPOT[cls])};
-    pk={i:0,score:0,ans:null,q:shuffle(PICK[cls]).map(function(x){var c=x.o[x.a];return {d:x.d,w:x.w,c:c,o:shuffle(x.o)}})};
-    bd={i:0,score:0,picked:[],checked:false,ok:false,q:BUILD[cls].map(function(x){return {d:x.d,ans:x.ans,bank:shuffle(x.ans.concat(x.x))}})};
+    sp={i:0,score:0,ans:null,miss:[],q:TLM.deal("speech-spot-"+cls,SPOT[cls],8)};
+    pk={i:0,score:0,ans:null,miss:[],q:TLM.deal("speech-pick-"+cls,PICK[cls],8).map(function(x){var c=x.o[x.a];return {d:x.d,w:x.w,c:c,o:shuffle(x.o)}})};
+    bd={i:0,score:0,picked:[],checked:false,ok:false,miss:[],q:TLM.deal("speech-build-"+cls,BUILD[cls],6).map(function(x){return {d:x.d,ans:x.ans,bank:shuffle(x.ans.concat(x.x))}})};
     drawPractice();
   }
   function drawPractice(){
@@ -408,13 +483,11 @@ import LessonNav from '../components/LessonNav.astro';
       :score>=n*0.7?"Great work. Review the ones you missed and try again."
       :"Good start. Look at the three steps again, then play once more.";
   }
-  function resultHTML(score,n){
-    return '<div class="result"><p class="count">Round complete</p><p class="big">'+score+' out of '+n+'</p><p>'+ending(score,n)+'</p><button type="button" class="btn" data-act="again">Play again</button></div>';
-  }
+  function resultHTML(score,n,misses){return TLM.result(score,n,ending(score,n),misses)}
 
   function drawSpot(){
     var box=$("#pbody"),n=sp.q.length;
-    if(sp.i>=n){box.innerHTML=resultHTML(sp.score,n);return}
+    if(sp.i>=n){box.innerHTML=resultHTML(sp.score,n,sp.miss.length);return}
     var q=sp.q[sp.i];
     box.innerHTML='<p class="count">Sentence '+(sp.i+1)+' of '+n+'</p>'+
       '<p class="qs">'+q[0]+'</p>'+
@@ -424,7 +497,7 @@ import LessonNav from '../components/LessonNav.astro';
   }
   function drawPick(){
     var box=$("#pbody"),n=pk.q.length;
-    if(pk.i>=n){box.innerHTML=resultHTML(pk.score,n);return}
+    if(pk.i>=n){box.innerHTML=resultHTML(pk.score,n,pk.miss.length);return}
     var q=pk.q[pk.i];
     box.innerHTML='<p class="count">Sentence '+(pk.i+1)+' of '+n+'</p>'+
       '<p class="qs">Report this: '+q.d+'</p>'+
@@ -434,7 +507,7 @@ import LessonNav from '../components/LessonNav.astro';
   }
   function drawBuild(){
     var box=$("#pbody"),n=bd.q.length;
-    if(bd.i>=n){box.innerHTML=resultHTML(bd.score,n);return}
+    if(bd.i>=n){box.innerHTML=resultHTML(bd.score,n,bd.miss.length);return}
     var q=bd.q[bd.i];
     var tray=bd.picked.map(function(w,i){return '<button type="button" class="pick" data-rm="'+i+'"'+(bd.checked?' disabled':'')+'>'+esc(w)+'</button>'}).join("");
     var bank=q.bank.filter(function(w){return bd.picked.indexOf(w)<0}).map(function(w){return '<button type="button" class="pick" data-add="'+esc(w)+'">'+esc(w)+'</button>'}).join("");
@@ -458,11 +531,17 @@ import LessonNav from '../components/LessonNav.astro';
   $("#pbody").addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
     if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){
+      if(mode==="spot")sp=TLM.retry(sp.miss);
+      else if(mode==="pick")pk=TLM.retry(pk.miss.map(function(x){return {d:x.d,w:x.w,c:x.c,o:shuffle(x.o)}}));
+      else bd=TLM.retry(bd.miss.map(function(x){return {d:x.d,ans:x.ans,bank:shuffle(x.bank)}}));
+      drawPractice();return;
+    }
     if(mode==="spot"){
       if(b.dataset.act==="next"){sp.i++;sp.ans=null;drawSpot();return}
       if(b.dataset.a&&!sp.ans){
         var q=sp.q[sp.i],ok=b.dataset.a===q[1];
-        sp.ans=b.dataset.a;if(ok)sp.score++;
+        sp.ans=b.dataset.a;if(ok)sp.score++;else sp.miss.push(q);
         var fb=$("#pbody .fb");
         fb.className="fb "+(ok?"good":"bad");
         fb.textContent=(ok?"Correct. ":"Not quite. ")+(q[1]==="D"?"The exact words are inside quotation marks, so this is direct speech.":"There are no quotation marks, and the parts are joined by that, if, to or a wh-word, so this is indirect speech.");
@@ -477,7 +556,7 @@ import LessonNav from '../components/LessonNav.astro';
       if(b.dataset.act==="next"){pk.i++;pk.ans=null;drawPick();return}
       if(b.dataset.o!==undefined&&pk.ans===null){
         var p=pk.q[pk.i],idx=+b.dataset.o,ok2=p.o[idx]===p.c;
-        pk.ans=idx;if(ok2)pk.score++;
+        pk.ans=idx;if(ok2)pk.score++;else pk.miss.push(p);
         var f2=$("#pbody .fb");
         f2.className="fb "+(ok2?"good":"bad");
         f2.textContent=(ok2?"Correct. ":"Not quite. ")+p.w;
@@ -493,7 +572,7 @@ import LessonNav from '../components/LessonNav.astro';
       if(b.dataset.act==="check"){
         var q2=bd.q[bd.i];
         bd.checked=true;bd.ok=bd.picked.join("|")===q2.ans.join("|");
-        if(bd.ok)bd.score++;
+        if(bd.ok)bd.score++;else bd.miss.push(q2);
         drawBuild();return;
       }
       if(b.dataset.act==="clear"){bd.picked=[];drawBuild();return}

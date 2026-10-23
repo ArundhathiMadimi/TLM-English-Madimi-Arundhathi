@@ -12,6 +12,7 @@ const { title, lesson = false } = Astro.props;
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
+{lesson && <script is:inline src="practice.js"></script>}
 <slot name="head" />
 </head>
 <body>

@@ -360,6 +360,14 @@ import LessonNav from '../components/LessonNav.astro';
     {pre:"She",post:"speak three languages.",ans:"can",o:["can","should","must"],w:"It shows ability.",c:6},
     {pre:"Students",post:"not run in the corridor.",ans:"must",o:["must","may","can"],w:"It is a school rule, so use must (not).",c:6},
     {pre:"He",post:"not swim. He is afraid of water.",ans:"can",o:["can","may","should"],w:"The reason is about ability: he is not able to swim.",c:6},
+    {pre:"My grandmother is eighty, but she",post:"still read without glasses.",ans:"can",o:["can","must","should"],w:"It shows ability: what she is able to do.",c:6},
+    {pre:"",post:"I borrow your pencil, please?",ans:"May",o:["May","Must","Will"],w:"“May” asks for permission politely.",c:6},
+    {pre:"Milk is good for your bones. You",post:"drink a glass every day.",ans:"should",o:["should","might","should to"],w:"It is advice, so use should. Never put “to” after should.",c:6},
+    {pre:"All players",post:"wear the team shirt. It is the rule.",ans:"must",o:["must","might","can"],w:"A rule is a duty, so use must.",c:6},
+    {pre:"Take an umbrella. It",post:"rain in the evening.",ans:"may",o:["may","must","shall"],w:"It is possible but not certain, so use may.",c:6},
+    {pre:"Arjun",post:"ride a bicycle now. His father taught him last week.",ans:"can",o:["can","must","should"],w:"It shows ability: he is now able to ride.",c:6},
+    {pre:"Tomorrow is a holiday. I",post:"visit my grandparents.",ans:"will",o:["will","will to","wills"],w:"It is about the future, so use will. A modal never takes “to” or -s.",c:6},
+    {pre:"Raju is a good climber. He",post:"climb a coconut tree.",ans:"can",o:["can","cans","should"],w:"It shows ability. A modal never takes -s.",c:6},
     {pre:"",post:"you please pass the salt?",ans:"Could",o:["Could","Must","Should"],w:"“Could” makes a polite request.",c:7},
     {pre:"",post:"I carry your bag?",ans:"Shall",o:["Shall","Must","Would"],w:"“Shall I” offers help.",c:7},
     {pre:"Ravi",post:"be at home, but I am not sure.",ans:"might",o:["might","must","can"],w:"“Not sure” shows a weak possibility: might.",c:7},
@@ -383,6 +391,16 @@ import LessonNav from '../components/LessonNav.astro';
     {o:["You should study daily.","You should studying daily.","You should studied daily."],w:"After a modal use V1.",c:6},
     {o:["We must obey the rules.","We must obeys the rules.","We musts obey the rules."],w:"The modal and the verb after it do not take -s.",c:6},
     {o:["They cannot swim.","They cannot swims.","They not can swim."],w:"“Not” goes after the modal, and the verb stays V1.",c:6},
+    {o:["Ravi can ride a bicycle.","Ravi can rides a bicycle.","Ravi can to ride a bicycle."],w:"After can use V1, with no -s and no “to”.",c:6},
+    {o:["Can you swim?","Can you to swim?","You can swim?"],w:"In a question the modal comes before the subject, and there is no “to”.",c:6},
+    {o:["It may rain today.","It mays rain today.","It may rains today."],w:"A modal never takes -s, and the verb after it stays V1.",c:6},
+    {o:["You should eat fruit every day.","You should to eat fruit every day.","You should eats fruit every day."],w:"After should use V1, with no “to” and no -s.",c:6},
+    {o:["We must wear our uniform.","We must to wear our uniform.","We must wearing our uniform."],w:"After must use V1, with no “to”.",c:6},
+    {o:["I will call you tomorrow.","I will calls you tomorrow.","I will called you tomorrow."],w:"After will use V1.",c:6},
+    {o:["She cannot come today.","She cannot comes today.","She not can come today."],w:"“Not” goes after the modal, and the verb stays V1.",c:6},
+    {o:["Should I close the door?","Should I closed the door?","I should close the door?"],w:"In a question the modal comes first, and the verb stays V1.",c:6},
+    {o:["Meena can draw well.","Meena cans draw well.","Meena can drew well."],w:"A modal never changes form, and the next verb stays V1.",c:6},
+    {o:["You must not shout in class.","You must not to shout in class.","You do not must shout in class."],w:"Put not after the modal. Do not use “do”, and do not add “to”.",c:6},
     {o:["Could you help me?","Could you helped me?","You could help me?"],w:"A question puts the modal before the subject, and the verb stays V1.",c:7},
     {o:["Shall I open the door?","Shall I opening the door?","Shall I opened the door?"],w:"After shall use V1.",c:7},
     {o:["You mustn’t talk in class.","You don’t must talk in class.","You mustn’t to talk in class."],w:"Add not to the modal. Do not use “do”, and do not add “to”.",c:7},
@@ -405,6 +423,15 @@ import LessonNav from '../components/LessonNav.astro';
     {t:"It {{may}} rain today.",a:"possibility",w:"It is possible, but not certain.",c:6},
     {t:"You {{should}} wake up early.",a:"advice",w:"The speaker says what is a good thing to do.",c:6},
     {t:"We {{must}} follow the rules.",a:"duty",w:"It is necessary, so it is a duty.",c:6},
+    {t:"My little brother {{can}} count to a hundred.",a:"ability",w:"It shows what he is able to do.",c:6},
+    {t:"Ravi {{can}} play the flute.",a:"ability",w:"It shows what Ravi is able to do.",c:6},
+    {t:"{{May}} I sit here, Madam?",a:"permission",w:"The speaker is asking for permission.",c:6},
+    {t:"{{May}} I go home early today?",a:"permission",w:"The speaker is asking for permission.",c:6},
+    {t:"Take a sweater. It {{may}} get cold tonight.",a:"possibility",w:"It is possible, but not certain.",c:6},
+    {t:"Leela {{may}} come to the party, but she is not sure.",a:"possibility",w:"She is not sure, so it is only possible.",c:6},
+    {t:"You {{should}} drink more water in summer.",a:"advice",w:"The speaker says what is a good thing to do.",c:6},
+    {t:"You {{should}} say sorry to your friend.",a:"advice",w:"The speaker says what is a good thing to do.",c:6},
+    {t:"All drivers {{must}} stop at a red light.",a:"duty",w:"It is a rule, so it is a duty.",c:6},
     {t:"{{Could}} you help me?",a:"request",w:"The speaker is making a polite request.",c:7},
     {t:"{{Would}} you close the door?",a:"request",w:"The speaker is making a polite request.",c:7},
     {t:"{{Shall}} I open the window?",a:"offer",w:"The speaker is offering to do something.",c:7},
@@ -423,9 +450,9 @@ import LessonNav from '../components/LessonNav.astro';
   function resetPractice(){
     var F=FILL.filter(function(x){return x.c<=cls}),X=FIX.filter(function(x){return x.c<=cls}),N=NAME.filter(function(x){return x.c<=cls});
     var jobs=[];N.forEach(function(x){if(jobs.indexOf(x.a)<0)jobs.push(x.a)});
-    S.fill={i:0,score:0,ans:null,q:shuffle(F).slice(0,8).map(function(x){return {pre:x.pre,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
-    S.fix={i:0,score:0,ans:null,q:shuffle(X).slice(0,8).map(function(x){return {ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
-    S.name={i:0,score:0,ans:null,q:shuffle(N).slice(0,8).map(function(x){
+    S.fill={i:0,score:0,ans:null,miss:[],q:TLM.deal("modals-fill-"+cls,F,8).map(function(x){return {pre:x.pre,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
+    S.fix={i:0,score:0,ans:null,miss:[],q:TLM.deal("modals-fix-"+cls,X,8).map(function(x){return {ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
+    S.name={i:0,score:0,ans:null,miss:[],q:TLM.deal("modals-name-"+cls,N,8).map(function(x){
       var others=shuffle(jobs.filter(function(j){return j!==x.a})).slice(0,2);
       return {t:x.t,ans:JL[x.a],w:x.w,o:shuffle([JL[x.a]].concat(others.map(function(j){return JL[j]})))};
     })};
@@ -435,9 +462,7 @@ import LessonNav from '../components/LessonNav.astro';
     document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
     var s=S[mode],box=$("#pbody"),n=s.q.length;
     if(s.i>=n){
-      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+s.score+' out of '+n+'</p><p>'+
-        (s.score===n?"Perfect round. You are a modal master.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the modal jobs again, then play once more.")+
-        '</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You are a modal master.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the modal jobs again, then play once more.",s.miss.length);
       return;
     }
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
@@ -457,11 +482,12 @@ import LessonNav from '../components/LessonNav.astro';
   $("#pbody").addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
     if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
     var s=S[mode];
     if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
     if(b.dataset.o===undefined||s.ans!==null)return;
     var q=s.q[s.i],ok=q.o[+b.dataset.o]===q.ans;
-    s.ans=1;if(ok)s.score++;
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
     var fb=$("#pbody .fb");
     fb.className="fb "+(ok?"good":"bad");
     fb.textContent=(ok?"Correct. ":"Not quite. ")+(mode==="name"?q.ans+": ":"")+q.w;

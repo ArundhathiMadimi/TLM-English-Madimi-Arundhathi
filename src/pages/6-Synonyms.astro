@@ -199,6 +199,16 @@ import LessonNav from '../components/LessonNav.astro';
     {id:"look",c:6,w:"look",sc:0,rows:[["glance","a quick look"],["look","the everyday word"],["stare","look for a long time"],["gaze","look steadily, often in wonder"]],x:["listen","taste"]},
     {id:"begin",c:6,w:"begin",sc:0,rows:[["begin","the everyday word"],["start","everyday and a little casual"],["commence","a formal word"]],x:["end","stop"]},
     {id:"fast",c:6,w:"fast",sc:0,rows:[["quick","takes very little time"],["fast","moves at high speed"],["rapid","very fast, used for change"],["swift","fast and smooth"]],x:["slow","lazy"]},
+    {id:"hot",c:6,w:"hot",sc:1,rows:["lukewarm","warm","hot","boiling"],x:["cold","icy"]},
+    {id:"like",c:6,w:"like",sc:1,rows:["like","love","adore"],x:["hate","dislike"]},
+    {id:"dirty",c:6,w:"dirty",sc:1,rows:["dusty","dirty","filthy"],x:["clean","spotless"]},
+    {id:"run",c:6,w:"run",sc:1,rows:["jog","run","sprint"],x:["sit","rest"]},
+    {id:"bright",c:6,w:"bright",sc:1,rows:["bright","dazzling","blinding"],x:["dark","dim"]},
+    {id:"wet",c:6,w:"wet",sc:1,rows:["damp","wet","soaked"],x:["dry","parched"]},
+    {id:"rain",c:6,w:"rain",sc:1,rows:["drizzle","rain","downpour"],x:["sunshine","drought"]},
+    {id:"pain",c:6,w:"pain",sc:1,rows:["ache","pain","agony"],x:["comfort","relief"]},
+    {id:"loud",c:6,w:"loud",sc:1,rows:["loud","booming","deafening"],x:["quiet","silent"]},
+    {id:"break",c:6,w:"break",sc:1,rows:["crack","break","shatter"],x:["mend","fix"]},
 
     {id:"angry",c:7,w:"angry",sc:1,rows:["annoyed","cross","angry","furious","enraged"],x:["calm","pleased"]},
     {id:"tired",c:7,w:"tired",sc:1,rows:["sleepy","tired","weary","exhausted"],x:["lively","energetic"]},
@@ -272,16 +282,16 @@ import LessonNav from '../components/LessonNav.astro';
   var mode="match",S={};
   function resetPractice(){
     var P=pool(),SC=P.filter(function(g){return g.sc});
-    S.match={i:0,score:0,ans:null,q:shuffle(P).slice(0,8).map(function(g){
+    S.match={i:0,score:0,ans:null,miss:[],q:TLM.deal("synonyms-match-"+cls,P,8).map(function(g){
       var ws=shuffle(wordsOf(g)),w0=ws[0],w1=ws[1];
       return {g:g,w0:w0,ans:w1,o:shuffle([w1,g.x[0],g.x[1]])};
     })};
-    S.ladder={i:0,score:0,picked:[],checked:false,ok:false,q:shuffle(SC).slice(0,Math.min(8,SC.length)).map(function(g){
+    S.ladder={i:0,score:0,picked:[],checked:false,ok:false,miss:[],q:TLM.deal("synonyms-ladder-"+cls,SC,8).map(function(g){
       var ws=wordsOf(g).slice();
       if(ws.length===5){ws.splice(Math.floor(Math.random()*5),1)}
       return {g:g,ans:ws,bank:shuffle(ws)};
     })};
-    S.odd={i:0,score:0,ans:null,q:shuffle(P).slice(0,8).map(function(g){
+    S.odd={i:0,score:0,ans:null,miss:[],q:TLM.deal("synonyms-odd-"+cls,P,8).map(function(g){
       var ws=shuffle(wordsOf(g)).slice(0,3),odd=g.x[Math.floor(Math.random()*2)];
       return {g:g,ans:odd,o:shuffle(ws.concat([odd]))};
     })};
@@ -291,9 +301,7 @@ import LessonNav from '../components/LessonNav.astro';
     document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
     var s=S[mode],box=$("#pbody"),n=s.q.length;
     if(s.i>=n){
-      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+s.score+' out of '+n+'</p><p>'+
-        (s.score===n?"Perfect round. You have a rich vocabulary.":s.score>=n*0.7?"Great work. Check the word groups you missed and try again.":"Good start. Read the word groups again, then play once more.")+
-        '</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You have a rich vocabulary.":s.score>=n*0.7?"Great work. Check the word groups you missed and try again.":"Good start. Read the word groups again, then play once more.",s.miss.length);
       return;
     }
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>',last=s.i===n-1;
@@ -324,11 +332,12 @@ import LessonNav from '../components/LessonNav.astro';
   $("#pbody").addEventListener("click",function(e){
     var b=e.target.closest("button");if(!b)return;
     if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(mode==="ladder"?S[mode].miss.map(function(x){return {g:x.g,ans:x.ans,bank:shuffle(x.ans)}}):S[mode].miss);drawPractice();return}
     var s=S[mode];
     if(b.dataset.act==="next"){s.i++;s.ans=null;if(mode==="ladder"){s.picked=[];s.checked=false}drawPractice();return}
     if(mode==="ladder"){
       var q=s.q[s.i];
-      if(b.dataset.act==="check"){s.checked=true;s.ok=s.picked.join("|")===q.ans.join("|");if(s.ok)s.score++;drawPractice();return}
+      if(b.dataset.act==="check"){s.checked=true;s.ok=s.picked.join("|")===q.ans.join("|");if(s.ok)s.score++;else s.miss.push(q);drawPractice();return}
       if(b.dataset.act==="clear"){s.picked=[];drawPractice();return}
       if(s.checked)return;
       if(b.dataset.add!==undefined){s.picked.push(b.dataset.add);drawPractice();return}
@@ -337,7 +346,7 @@ import LessonNav from '../components/LessonNav.astro';
     }
     if(b.dataset.o===undefined||s.ans!==null)return;
     var qq=s.q[s.i],chosen=qq.o[+b.dataset.o],ok=chosen===qq.ans;
-    s.ans=1;if(ok)s.score++;
+    s.ans=1;if(ok)s.score++;else s.miss.push(qq);
     var all=wordsOf(qq.g).join(", "),fb=$("#pbody .fb");
     fb.className="fb "+(ok?"good":"bad");
     fb.textContent=(ok?"Correct. ":"Not quite. ")+(mode==="match"

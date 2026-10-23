@@ -14,6 +14,8 @@ src/pages/index.astro     start page
 src/pages/N-Topic.astro   one lesson per topic (1-Voices.astro ... 7-Modal-Verbs.astro)
 public/theme.css          shared colours, fonts and common components, copied to the site as-is
 public/feedback.js        right/wrong sounds (Web Audio, no files), confetti and the Sound on/off button
+public/practice.js        TLM helpers for lesson scripts: deal (random, no repeats), result screen, retry round
+tests/check.mjs           npm test: checks practice.js and the Voices/Verbs sentence generators
 astro.config.mjs          build.format "file" -> pages build to 1-Voices.html, not 1-Voices/
 vercel.json               tells Vercel to build with Astro and serve dist/
 ```
@@ -25,6 +27,7 @@ npm install        once
 npm run dev        local server at http://localhost:4321
 npm run build      build the site into dist/ (run before pushing)
 npm run preview    serve the built dist/
+npm test           practice logic checks (run after changing practice.js or a generator)
 ```
 
 ## Hard rules
@@ -61,6 +64,12 @@ Every lesson uses `<Base title="..." lesson>` and keeps the same layout and IDs:
 3. `main.wrap` with `section`s: topic-specific sections, then `#practice` (`#modeSeg`, `#pbody`), then `#teacher` (teacher notes in `<details>`).
 4. `<LessonNav slug="..." />`, then `footer` with "Prepared by Madimi Arundhathi".
 
+**Practice games follow one pattern** (see any lesson's `resetPractice`):
+- Pick questions with `TLM.deal("<lesson>-<mode>-"+cls, list, n)`. It returns a random set and shows questions this device hasn't seen before repeats. Never use a fixed order.
+- Each game state has `miss:[]`. Push the question on a wrong answer, end the round with `TLM.result(score, n, message, miss.length)`, and handle `data-act="retry"` with `TLM.retry(miss)`.
+- Every class should be able to draw at least 16 questions per game. Each question must have exactly one defensible answer, with distractors that are clearly wrong.
+- Voices and Correct Form of Verbs also **generate** questions from word tables (the `sentence generator` block) and mix them with the hand-written ones. To add variety there, add verbs or subjects to those tables. Leave out verbs whose V1 and V2 look the same (read, put, cut), then run `npm test`.
+
 **Answer feedback is automatic.** `feedback.js` watches clicks inside `#pbody`. When a click gives a `.fb` element the class `good` or `bad`, it plays the matching sound (plus confetti for a correct answer). When a `.result` box appears, it plays the end-of-round fanfare. A new practice game gets all of this for free as long as it keeps that markup. Never call `feedback.js` directly from a lesson.
 
 ## Adding a new topic
@@ -77,6 +86,6 @@ Every lesson uses `<Base title="..." lesson>` and keeps the same layout and IDs:
 
 ## Before you push
 
-- Run `npm run build`; it must succeed.
+- Run `npm run build` and `npm test`; both must succeed.
 - Open the changed pages with `npm run dev` or `npm run preview` at 375px and desktop width. Click through the demo, the class switch, one practice round and the nav buttons, and check that the console shows no errors.
 - Commit straight to `main`; pushing deploys to Vercel. Don't add AI or co-author attribution lines to commit messages.
