@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Synonyms | TLM by Madimi Arundhathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --display:"Baloo 2","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Verdana,system-ui,sans-serif;
+  --bg:#F6F8FC; --surface:#FFFFFF; --ink:#17203A; --muted:#55607A; --line:#D5DCEB;
+  --accent:#3347C7; --accent-ink:#FFFFFF;
+  --S-bg:#FFE3E6; --S-c:#D6334A; --S-t:#8F1226;
+  --V-bg:#FFF0C2; --V-c:#D99A00; --V-t:#6B4A00;
+  --C-bg:#D5F3EE; --C-c:#13927F; --C-t:#0B5E55;
+  --good:#0E6B45; --good-bg:#DDF5E8; --bad:#B3261E; --bad-bg:#FDE4E1;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+    --accent:#9AA8FF; --accent-ink:#10152A;
+    --S-bg:#4A1B26; --S-c:#FF7A8C; --S-t:#FFC2CA;
+    --V-bg:#4A3A0A; --V-c:#F2B91D; --V-t:#FFDE8A;
+    --C-bg:#0F3F3B; --C-c:#3CC4AE; --C-t:#9BEBDE;
+    --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+  --accent:#9AA8FF; --accent-ink:#10152A;
+  --S-bg:#4A1B26; --S-c:#FF7A8C; --S-t:#FFC2CA;
+  --V-bg:#4A3A0A; --V-c:#F2B91D; --V-t:#FFDE8A;
+  --C-bg:#0F3F3B; --C-c:#3CC4AE; --C-t:#9BEBDE;
+  --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4rem);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.55 var(--body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.1rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0}
+h2{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}
+p{margin:.4rem 0}
+section{padding:2.4rem 0 .6rem}
+.lead{color:var(--muted);max-width:36rem}
+
+.hero{padding-top:1.6rem}
+.hero h1{font-size:clamp(2.8rem,13.5vw,4.6rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.by{margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.by strong{color:var(--ink)}
+.demo{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem}
+.sent{font:800 clamp(1.4rem,6.6vw,2.1rem)/1.55 var(--display);min-height:6.6rem;margin:.1rem 0 .6rem}
+.hl{border-radius:8px;padding:0 .25em;background:var(--V-bg);border-bottom:4px solid var(--V-c);color:var(--V-t);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.meter{display:flex;align-items:center;gap:.8rem;margin:.2rem 0 .3rem}
+.bars{display:inline-flex;gap:4px}
+.bars i{width:.8rem;height:1.1rem;border-radius:4px;background:var(--line);display:block;transition:background .25s}
+.bars i.on{background:var(--S-c)}
+.bars.big i{width:1.7rem;height:1.7rem;border-radius:6px}
+.meter b{font:800 1.15rem var(--display)}
+.note{color:var(--muted);min-height:3.2rem;margin:0 0 .6rem}
+.scale{display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;margin:.9rem 0 .3rem}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pills button{appearance:none;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1 var(--body);padding:.7rem 1rem;min-height:2.9rem;border-radius:30px;cursor:pointer}
+.pills button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.btn{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--bg);font:700 1rem/1 var(--body);padding:.8rem 1.1rem;border-radius:14px;cursor:pointer;min-height:2.9rem}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.alt:hover{border-color:var(--ink)}
+.btn[hidden]{display:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink);font:700 1rem/1 var(--body);padding:.75rem 1.05rem;min-height:2.9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.key{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:.4rem}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+.key .V{background:var(--V-bg);border-color:var(--V-c)}
+.key .S{background:var(--S-bg);border-color:var(--S-c)}
+
+.classbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:2px solid var(--line);margin-top:2rem}
+.classbar .wrap{display:flex;align-items:center;gap:.8rem;padding-top:.6rem;padding-bottom:.6rem}
+.classbar b{font:800 1.1rem var(--display)}
+
+.card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem;margin-top:1rem}
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--accent);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use.S{border-left-color:var(--S-c)} .use.V{border-left-color:var(--V-c)} .use.C{border-left-color:var(--C-c)}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.2rem 0}
+
+.glist{display:grid;gap:.8rem;margin-top:1rem}
+.gcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.gcard h3{font-size:1.25rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.tag{font:700 .75rem var(--body);border-radius:20px;padding:.2rem .6rem;border:2px solid}
+.tag.sc{background:var(--S-bg);border-color:var(--S-c);color:var(--S-t)}
+.tag.ns{background:var(--C-bg);border-color:var(--C-c);color:var(--C-t)}
+.wrow{display:flex;align-items:center;gap:.7rem;padding:.4rem 0;border-top:1px solid var(--line)}
+.wrow:first-of-type{margin-top:.5rem}
+.wrow b{font:800 1.1rem var(--display);min-width:6.4rem}
+.wrow span.n{color:var(--muted);font-size:.95rem}
+
+.pbox{min-height:19rem}
+.count{color:var(--muted);font-size:.9rem;margin:0}
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.4 var(--display);margin:.6rem 0 1rem}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.fb.good{color:var(--good)} .fb.bad{color:var(--bad)}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:800 1.15rem/1.3 var(--display);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.tray{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;min-height:3.6rem;padding:.6rem;border:2px dashed var(--line);border-radius:16px;margin:.6rem 0}
+.tray.good{border-color:var(--good);background:var(--good-bg)} .tray.bad{border-color:var(--bad);background:var(--bad-bg)}
+.pick{appearance:none;border:2px solid var(--accent);background:var(--surface);color:var(--ink);font:800 1.1rem var(--display);padding:.55rem .9rem;border-radius:12px;cursor:pointer;min-height:2.7rem}
+.tray .pick{background:var(--accent);color:var(--accent-ink)}
+.pick:disabled{opacity:.5;cursor:default}
+.bank{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0}
+.ends{display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+.result{padding:1rem 0}
+.result .big{font:800 2.6rem/1 var(--display);margin:.4rem 0}
+
+details{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.2rem 1rem;margin-top:1rem}
+summary{cursor:pointer;font:800 1.2rem var(--display);padding:.8rem 0}
+details ul,details ol{padding-left:1.2rem;margin:.3rem 0 .9rem}
+details li{margin:.35rem 0}
+footer{margin:3rem 0 2rem;padding-top:1.2rem;border-top:2px solid var(--line);color:var(--muted);font-size:.95rem}
+footer strong{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bars i{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <h1>Synonyms</h1>
+  <p class="sub">Words with almost the same meaning are not always equal. Tap a word and see how strong it is.</p>
+
+  <div class="demo">
+    <p class="sent" id="heroSent" aria-live="polite"></p>
+    <div class="meter"><span class="bars big" id="heroBars" aria-hidden="true"></span><b id="heroLvl"></b></div>
+    <p class="note" id="heroNote"></p>
+    <div class="scale"><span>mildest</span><span>strongest</span></div>
+    <div class="pills" id="heroPills" role="group" aria-label="Choose a word"></div>
+    <div class="row" style="margin-top:1rem">
+      <button type="button" class="btn alt" id="nextEx">Next word group</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="V"></em>word in the sentence</span>
+      <span><em class="S"></em>strength of the word</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="what">
+    <h2>What is a synonym?</h2>
+    <p class="lead">A synonym is a word that means the same, or almost the same, as another word. Big and large are synonyms.</p>
+    <div class="uses">
+      <div class="use C"><b>Same meaning</b><p>big, large</p><p>The house is <b>big</b>. The house is <b>large</b>.</p></div>
+      <div class="use S"><b>Different strength</b><p>glad, happy, delighted, overjoyed</p><p>Each one is a little happier than the one before.</p></div>
+      <div class="use V"><b>Different feel</b><p>start, begin, commence</p><p>“Commence” sounds formal. “Start” is everyday.</p></div>
+    </div>
+    <div class="card">
+      <h3>Choose with care</h3>
+      <p>Synonyms are close, but not always swappable. We say “heavy rain”, not “big rain”. Read the whole sentence before you choose a word.</p>
+    </div>
+  </section>
+
+  <section id="groups">
+    <h2>Word groups</h2>
+    <p class="lead" id="groupLead"></p>
+    <div class="glist" id="glist"></div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead" id="pracLead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="match" aria-pressed="true">Match it</button>
+        <button type="button" data-m="ladder" aria-pressed="false">Ladder it</button>
+        <button type="button" data-m="odd" aria-pressed="false">Odd one</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>name synonyms for common words and use them in sentences;</li>
+        <li>arrange synonyms from mild to strong and choose the word that fits the situation;</li>
+        <li>use more formal synonyms in writing (Class 8) and tell synonyms from antonyms.</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, word cards, a long piece of string or chalk line.</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Write “big” on the board. Students call out other words for big. Collect them all.</li>
+        <li><b>Teach (10 min).</b> Project the hero. Tap each word. Ask: is it milder or stronger than the last one?</li>
+        <li><b>Human ladder (8 min).</b> Five volunteers each hold a word card and line up from mildest to strongest. The class checks the order.</li>
+        <li><b>Word groups (7 min).</b> Pick your class on the bar. Students copy two groups into their notebooks with an example sentence each.</li>
+        <li><b>Practice (8 min).</b> Teams play Match it, Ladder it and Odd one on the count of three.</li>
+        <li><b>Exit ticket.</b> Each student writes one sentence using a mild word and one using a strong word from the same group.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Thinking every synonym can replace the other in every sentence.</li>
+        <li>Using a very strong word for a small matter (“The tea was freezing” for slightly cool tea).</li>
+        <li>Mixing up synonyms (same meaning) and antonyms (opposite meaning).</li>
+        <li>Using formal words in friendly talk, or everyday words in a formal letter.</li>
+        <li>Forgetting that some words go together by habit (“strong tea”, “heavy rain”).</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer>
+    Teaching learning material (TLM) on Synonyms for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function lvl(i,n){return n<=1?1:Math.round(1+i*(4/(n-1)))}
+  var LVLNAME=["","very mild","mild","medium","strong","very strong"];
+  function barsHTML(l){var h="";for(var i=1;i<=5;i++)h+='<i class="'+(i<=l?"on":"")+'"></i>';return h}
+
+  /* ---------- data ---------- */
+  var G=[
+    {id:"big",c:6,w:"big",sc:1,rows:["big","large","huge","enormous","gigantic"],x:["small","tiny"]},
+    {id:"small",c:6,w:"small",sc:1,rows:["small","little","tiny","minute"],x:["huge","enormous"]},
+    {id:"happy",c:6,w:"happy",sc:1,rows:["glad","happy","cheerful","delighted","overjoyed"],x:["sad","gloomy"]},
+    {id:"sad",c:6,w:"sad",sc:1,rows:["unhappy","sad","gloomy","miserable","heartbroken"],x:["cheerful","delighted"]},
+    {id:"good",c:6,w:"good",sc:1,rows:["fine","good","great","excellent","superb"],x:["bad","poor"]},
+    {id:"cold",c:6,w:"cold",sc:1,rows:["cool","chilly","cold","freezing"],x:["warm","hot"]},
+    {id:"look",c:6,w:"look",sc:0,rows:[["glance","a quick look"],["look","the everyday word"],["stare","look for a long time"],["gaze","look steadily, often in wonder"]],x:["listen","taste"]},
+    {id:"begin",c:6,w:"begin",sc:0,rows:[["begin","the everyday word"],["start","everyday and a little casual"],["commence","a formal word"]],x:["end","stop"]},
+    {id:"fast",c:6,w:"fast",sc:0,rows:[["quick","takes very little time"],["fast","moves at high speed"],["rapid","very fast, used for change"],["swift","fast and smooth"]],x:["slow","lazy"]},
+
+    {id:"angry",c:7,w:"angry",sc:1,rows:["annoyed","cross","angry","furious","enraged"],x:["calm","pleased"]},
+    {id:"tired",c:7,w:"tired",sc:1,rows:["sleepy","tired","weary","exhausted"],x:["lively","energetic"]},
+    {id:"scared",c:7,w:"scared",sc:1,rows:["nervous","afraid","frightened","terrified"],x:["calm","fearless"]},
+    {id:"clever",c:7,w:"clever",sc:1,rows:["smart","clever","intelligent","brilliant"],x:["foolish","dull"]},
+    {id:"brave",c:7,w:"brave",sc:1,rows:["bold","brave","fearless","heroic"],x:["timid","cowardly"]},
+    {id:"beautiful",c:7,w:"beautiful",sc:1,rows:["pretty","beautiful","gorgeous","stunning"],x:["ugly","plain"]},
+    {id:"strange",c:7,w:"strange",sc:1,rows:["odd","strange","peculiar","bizarre"],x:["normal","ordinary"]},
+    {id:"funny",c:7,w:"funny",sc:1,rows:["funny","amusing","comical","hilarious"],x:["serious","gloomy"]},
+    {id:"difficult",c:7,w:"difficult",sc:0,rows:[["hard","the everyday word"],["difficult","needs effort or skill"],["tough","hard and tiring"],["challenging","hard, but in an interesting way"]],x:["easy","simple"]},
+    {id:"walk",c:7,w:"walk",sc:0,rows:[["stroll","walk slowly and happily"],["march","walk in a firm, steady way"],["wander","walk without a plan"],["stride","walk with long, confident steps"]],x:["sit","sleep"]},
+
+    {id:"important",c:8,w:"important",sc:1,rows:["useful","important","vital","crucial"],x:["trivial","minor"]},
+    {id:"many",c:8,w:"many",sc:1,rows:["several","many","numerous","countless"],x:["few","single"]},
+    {id:"surprised",c:8,w:"surprised",sc:1,rows:["surprised","amazed","astonished","astounded"],x:["bored","unmoved"]},
+    {id:"help",c:8,w:"help",sc:0,rows:[["help","the everyday word"],["aid","help in a time of need"],["assist","a formal word for help"],["support","help someone keep going"]],x:["harm","hinder"]},
+    {id:"end",c:8,w:"end",sc:0,rows:[["end","the everyday word"],["finish","complete something"],["conclude","a formal word for bring to an end"],["terminate","very formal, often official"]],x:["begin","start"]},
+    {id:"enough",c:8,w:"enough",sc:0,rows:[["enough","the everyday word"],["sufficient","a formal word for enough"],["adequate","just enough for the need"],["ample","more than enough"]],x:["scarce","lacking"]},
+    {id:"show",c:8,w:"show",sc:0,rows:[["show","the everyday word"],["display","put something where people can see it"],["exhibit","show in public, such as at a fair"],["demonstrate","show how something works"]],x:["hide","conceal"]},
+    {id:"get",c:8,w:"get",sc:0,rows:[["get","the everyday word"],["obtain","a formal word for get"],["acquire","get by effort over time"],["gain","get something useful or valuable"]],x:["lose","give"]},
+    {id:"old",c:8,w:"old",sc:0,rows:[["old","the everyday word"],["aged","very old, for people and animals"],["ancient","from a very long time ago"],["antique","old and valuable"]],x:["new","modern"]},
+    {id:"reluctant",c:8,w:"reluctant",sc:0,rows:[["unwilling","does not want to do it"],["reluctant","slow to act, not wanting to"],["hesitant","pausing because of doubt"]],x:["eager","willing"]}
+  ];
+  function wordsOf(g){return g.rows.map(function(r){return typeof r==="string"?r:r[0]})}
+  function gById(id){return G.filter(function(g){return g.id===id})[0]}
+
+  /* ---------- hero ---------- */
+  var HG=[
+    {id:"big",pre:"The elephant at the zoo was",post:".",start:0,n:["The everyday word for something large.","The same idea as big, a little more formal.","Much bigger than usual.","Huge, almost too big to believe.","As big as a giant. The strongest word here."]},
+    {id:"happy",pre:"Meena was",post:"to see her friend.",start:1,n:["Pleased, a mild kind of happy.","The everyday word.","Happy and smiling, in a good mood.","Very happy, full of joy.","Extremely happy, bursting with joy."]},
+    {id:"angry",pre:"The teacher was",post:"at the noise.",start:2,n:["A little angry, irritated.","Angry in a grumpy way.","The everyday word.","Extremely angry.","So angry that it is hard to control."]},
+    {id:"scared",pre:"The little boy was",post:"of the dark.",start:1,n:["A little worried.","Feeling fear.","Afraid because something scared you.","Extremely afraid."]},
+    {id:"cold",pre:"The water in the lake was",post:".",start:2,n:["A little cold, and pleasant.","Cold enough to need a sweater.","The everyday word.","So cold that it hurts."]},
+    {id:"tired",pre:"After the long walk, we were",post:".",start:1,n:["Ready to go to sleep.","The everyday word.","Tired for a long time.","Completely worn out."]}
+  ];
+  var hi=0,hsel=HG[0].start,pillsBox=$("#heroPills");
+  function heroText(){var h=HG[hi],w=wordsOf(gById(h.id))[hsel];return h.pre+" "+w+(h.post.charAt(0)==="."?h.post:" "+h.post)}
+  function drawHero(pop,rebuild){
+    var h=HG[hi],ws=wordsOf(gById(h.id)),w=ws[hsel],l=lvl(hsel,ws.length);
+    $("#heroSent").innerHTML=esc(h.pre)+' <span class="hl" id="hw">'+esc(w)+'</span>'+(h.post.charAt(0)==="."?esc(h.post):" "+esc(h.post));
+    $("#heroBars").innerHTML=barsHTML(l);
+    $("#heroLvl").textContent=LVLNAME[l];
+    $("#heroNote").textContent=h.n[hsel];
+    if(rebuild){
+      pillsBox.innerHTML=ws.map(function(x,i){return '<button type="button" data-i="'+i+'" aria-pressed="false">'+esc(x)+'</button>'}).join("");
+    }
+    pillsBox.querySelectorAll("button").forEach(function(b,i){b.setAttribute("aria-pressed",i===hsel)});
+    if(pop&&!reduce){var el=$("#hw");if(el.animate)el.animate([{transform:"scale(.8)",opacity:.3},{transform:"none",opacity:1}],{duration:320,easing:"cubic-bezier(.3,.7,.2,1)"})}
+  }
+  pillsBox.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;hsel=+b.dataset.i;drawHero(true,false)});
+  $("#nextEx").addEventListener("click",function(){hi=(hi+1)%HG.length;hsel=HG[hi].start;drawHero(false,true)});
+  $("#listen").addEventListener("click",function(){
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(heroText());u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+  drawHero(false,true);
+
+  /* ---------- word groups ---------- */
+  function drawGroups(){
+    $("#groupLead").textContent="These are the word groups for Class "+cls+(cls>6?". Words from earlier classes come back in the practice games.":". Some groups climb from mild to strong. Others differ in feel or use.");
+    $("#glist").innerHTML=G.filter(function(g){return g.c===cls}).map(function(g){
+      var rows=g.rows.map(function(r,i){
+        if(g.sc){return '<div class="wrow"><b>'+r+'</b><span class="bars" aria-label="strength '+lvl(i,g.rows.length)+' of 5">'+barsHTML(lvl(i,g.rows.length))+'</span></div>'}
+        return '<div class="wrow"><b>'+r[0]+'</b><span class="n">'+r[1]+'</span></div>';
+      }).join("");
+      return '<article class="gcard"><h3>'+g.w+'<span class="tag '+(g.sc?"sc":"ns")+'">'+(g.sc?"mild to strong":"different uses")+'</span></h3>'+rows+'</article>';
+    }).join("");
+  }
+
+  /* ---------- practice ---------- */
+  function pool(){return G.filter(function(g){return g.c<=cls})}
+  var mode="match",S={};
+  function resetPractice(){
+    var P=pool(),SC=P.filter(function(g){return g.sc});
+    S.match={i:0,score:0,ans:null,q:shuffle(P).slice(0,8).map(function(g){
+      var ws=shuffle(wordsOf(g)),w0=ws[0],w1=ws[1];
+      return {g:g,w0:w0,ans:w1,o:shuffle([w1,g.x[0],g.x[1]])};
+    })};
+    S.ladder={i:0,score:0,picked:[],checked:false,ok:false,q:shuffle(SC).slice(0,Math.min(8,SC.length)).map(function(g){
+      var ws=wordsOf(g).slice();
+      if(ws.length===5){ws.splice(Math.floor(Math.random()*5),1)}
+      return {g:g,ans:ws,bank:shuffle(ws)};
+    })};
+    S.odd={i:0,score:0,ans:null,q:shuffle(P).slice(0,8).map(function(g){
+      var ws=shuffle(wordsOf(g)).slice(0,3),odd=g.x[Math.floor(Math.random()*2)];
+      return {g:g,ans:odd,o:shuffle(ws.concat([odd]))};
+    })};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+s.score+' out of '+n+'</p><p>'+
+        (s.score===n?"Perfect round. You have a rich vocabulary.":s.score>=n*0.7?"Great work. Check the word groups you missed and try again.":"Good start. Read the word groups again, then play once more.")+
+        '</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>',last=s.i===n-1;
+    if(mode==="match"){
+      html+='<p class="qs">Which word means almost the same as “'+esc(q.w0)+'”?</p><div class="opts row3">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'+
+        '<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(last?"See my score":"Next question")+'</button>';
+    }else if(mode==="odd"){
+      html+='<p class="qs">Which word does not belong with the others?</p><div class="opts row3">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'+
+        '<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(last?"See my score":"Next question")+'</button>';
+    }else{
+      var tray=s.picked.map(function(w,i){return '<button type="button" class="pick" data-rm="'+i+'"'+(s.checked?' disabled':'')+'>'+esc(w)+'</button>'}).join("");
+      var bank=q.bank.filter(function(w){return s.picked.indexOf(w)<0}).map(function(w){return '<button type="button" class="pick" data-add="'+esc(w)+'">'+esc(w)+'</button>'}).join("");
+      var fbCls="fb",fbText="";
+      if(s.checked){fbCls+=s.ok?" good":" bad";fbText=s.ok?"Correct. Well ordered.":"Not quite. The order is: "+q.ans.join(", ")+"."}
+      html+='<p class="qs">Words for “'+esc(q.g.w)+'”. Tap them from mildest to strongest.</p>'+
+        '<div class="ends"><span>mildest first</span><span>strongest last</span></div>'+
+        '<div class="tray'+(s.checked?(s.ok?" good":" bad"):"")+'">'+(tray||'<span class="count">Tap the words in order</span>')+'</div>'+
+        '<div class="bank">'+bank+'</div><p class="'+fbCls+'" aria-live="polite">'+fbText+'</p><div class="row">'+
+        (s.checked
+          ?'<button type="button" class="btn" data-act="next">'+(last?"See my score":"Next question")+'</button>'
+          :'<button type="button" class="btn" data-act="check"'+(s.picked.length===q.ans.length?'':' disabled')+'>Check</button><button type="button" class="btn alt" data-act="clear"'+(s.picked.length?'':' disabled')+'>Clear</button>')+
+        '</div>';
+    }
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;if(mode==="ladder"){s.picked=[];s.checked=false}drawPractice();return}
+    if(mode==="ladder"){
+      var q=s.q[s.i];
+      if(b.dataset.act==="check"){s.checked=true;s.ok=s.picked.join("|")===q.ans.join("|");if(s.ok)s.score++;drawPractice();return}
+      if(b.dataset.act==="clear"){s.picked=[];drawPractice();return}
+      if(s.checked)return;
+      if(b.dataset.add!==undefined){s.picked.push(b.dataset.add);drawPractice();return}
+      if(b.dataset.rm!==undefined){s.picked.splice(+b.dataset.rm,1);drawPractice();return}
+      return;
+    }
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var qq=s.q[s.i],chosen=qq.o[+b.dataset.o],ok=chosen===qq.ans;
+    s.ans=1;if(ok)s.score++;
+    var all=wordsOf(qq.g).join(", "),fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+(mode==="match"
+      ?"“"+qq.w0+"” and “"+qq.ans+"” are synonyms. The word group: "+all+"."
+      :"“"+qq.ans+"” is not a synonym here. The others all belong to the “"+qq.g.w+"” group.");
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(qq.o[+x.dataset.o]===qq.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawGroups();resetPractice();
+  });
+
+  drawGroups();resetPractice();
+})();
+</script>
+</body>
+</html>

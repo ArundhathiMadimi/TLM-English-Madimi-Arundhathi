@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voices: Active and Passive | TLM by Madimi Arundhathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --display:"Baloo 2","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Verdana,system-ui,sans-serif;
+  --bg:#F6F8FC; --surface:#FFFFFF; --ink:#17203A; --muted:#55607A; --line:#D5DCEB;
+  --accent:#3347C7; --accent-ink:#FFFFFF;
+  --s-bg:#FFE3E6; --s-c:#D6334A; --s-t:#8F1226;
+  --v-bg:#FFF0C2; --v-c:#D99A00; --v-t:#6B4A00;
+  --o-bg:#D5F3EE; --o-c:#13927F; --o-t:#0B5E55;
+  --good:#0E6B45; --good-bg:#DDF5E8; --bad:#B3261E; --bad-bg:#FDE4E1;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+    --accent:#9AA8FF; --accent-ink:#10152A;
+    --s-bg:#4A1B26; --s-c:#FF7A8C; --s-t:#FFC2CA;
+    --v-bg:#4A3A0A; --v-c:#F2B91D; --v-t:#FFDE8A;
+    --o-bg:#0F3F3B; --o-c:#3CC4AE; --o-t:#9BEBDE;
+    --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+  --accent:#9AA8FF; --accent-ink:#10152A;
+  --s-bg:#4A1B26; --s-c:#FF7A8C; --s-t:#FFC2CA;
+  --v-bg:#4A3A0A; --v-c:#F2B91D; --v-t:#FFDE8A;
+  --o-bg:#0F3F3B; --o-c:#3CC4AE; --o-t:#9BEBDE;
+  --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4rem);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.55 var(--body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.1rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0}
+h2{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}
+p{margin:.4rem 0}
+section{padding:2.4rem 0 .6rem}
+.lead{color:var(--muted);max-width:36rem}
+
+/* hero */
+.hero{padding-top:1.6rem}
+.hero h1{font-size:clamp(3rem,15vw,5rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.5rem 0 1.2rem;max-width:30rem}
+.by{margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.by strong{color:var(--ink)}
+.demo{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem}
+.stage{display:flex;flex-wrap:wrap;gap:.6rem;align-items:flex-start;min-height:6.2rem;margin:.2rem 0 .9rem}
+.chip{display:inline-flex;flex-direction:column;gap:.15rem;padding:.5rem .85rem .4rem;border-radius:16px;border:2px solid;font:800 clamp(1.15rem,5.4vw,1.65rem)/1.15 var(--display)}
+.chip i{font:700 .75rem/1 var(--body);font-style:normal;opacity:.85}
+.chip.S{background:var(--s-bg);border-color:var(--s-c);color:var(--s-t)}
+.chip.V{background:var(--v-bg);border-color:var(--v-c);color:var(--v-t)}
+.chip.O{background:var(--o-bg);border-color:var(--o-c);color:var(--o-t)}
+.vlabel{font:800 1.25rem/1.25 var(--display);min-height:2.6rem;margin:0 0 .2rem}
+.tense{color:var(--muted);font-size:.95rem;margin:0 0 .9rem}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.btn{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--bg);font:700 1rem/1 var(--body);padding:.8rem 1.1rem;border-radius:14px;cursor:pointer;min-height:2.9rem}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.alt:hover{border-color:var(--ink)}
+.btn[hidden]{display:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink);font:700 1rem/1 var(--body);padding:.75rem 1.05rem;min-height:2.9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.key{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:.4rem}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+.key .S{background:var(--s-bg);border-color:var(--s-c)}
+.key .V{background:var(--v-bg);border-color:var(--v-c)}
+.key .O{background:var(--o-bg);border-color:var(--o-c)}
+
+/* class bar */
+.classbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:2px solid var(--line);margin-top:2rem}
+.classbar .wrap{display:flex;align-items:center;gap:.8rem;padding-top:.6rem;padding-bottom:.6rem}
+.classbar b{font:800 1.1rem var(--display)}
+.classbar small{color:var(--muted);margin-left:auto;font-size:.85rem}
+
+/* steps */
+.card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem;margin-top:1rem}
+.stepmsg{min-height:5.2rem;margin:.2rem 0 .8rem}
+.stepmsg b{font-family:var(--display);font-size:1.15rem}
+.progress{display:flex;gap:.35rem;margin:0 0 .8rem}
+.progress span{flex:1;height:.4rem;border-radius:9px;background:var(--line)}
+.progress span.on{background:var(--accent)}
+.pron{display:grid;grid-template-columns:repeat(auto-fill,minmax(7.2rem,1fr));gap:.5rem;margin-top:.8rem}
+.pron div{border:2px solid var(--line);border-radius:12px;padding:.45rem .6rem;text-align:center;font-weight:700}
+.pron span{color:var(--muted);font-weight:400}
+
+/* tenses */
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--v-c);background:var(--v-bg);color:var(--v-t);font-weight:700}
+.tcard p{margin:.2rem 0}
+.tcard .lab{color:var(--muted);font-size:.9rem;display:inline-block;min-width:4.6rem}
+
+/* practice */
+.pbox{min-height:19rem}
+.count{color:var(--muted);font-size:.9rem;margin:0}
+.qs{font:800 clamp(1.3rem,6vw,1.8rem)/1.25 var(--display);margin:.6rem 0 1rem}
+.fb{min-height:3.2rem;margin:.9rem 0 .6rem;font-weight:700}
+.fb.good{color:var(--good)} .fb.bad{color:var(--bad)}
+.seg.big{display:flex}
+.btn.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.btn.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.tray{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;min-height:3.6rem;padding:.6rem;border:2px dashed var(--line);border-radius:16px;margin:.6rem 0}
+.tray.good{border-color:var(--good);background:var(--good-bg)} .tray.bad{border-color:var(--bad);background:var(--bad-bg)}
+.pick{appearance:none;border:2px solid var(--accent);background:var(--surface);color:var(--ink);font:700 1.05rem var(--body);padding:.55rem .85rem;border-radius:12px;cursor:pointer;min-height:2.7rem}
+.tray .pick{background:var(--accent);color:var(--accent-ink)}
+.pick:disabled{opacity:.5;cursor:default}
+.punct{font:800 1.3rem var(--display)}
+.bank{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0}
+.result{text-align:left;padding:1rem 0}
+.result .big{font:800 2.6rem/1 var(--display);margin:.4rem 0}
+
+/* use + teacher */
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--accent);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.2rem 0}
+details{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.2rem 1rem;margin-top:1rem}
+summary{cursor:pointer;font:800 1.2rem var(--display);padding:.8rem 0}
+details ul,details ol{padding-left:1.2rem;margin:.3rem 0 .9rem}
+details li{margin:.35rem 0}
+footer{margin:3rem 0 2rem;padding-top:1.2rem;border-top:2px solid var(--line);color:var(--muted);font-size:.95rem}
+footer strong{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <h1>Voices</h1>
+  <p class="sub">Who does the action, and who receives it? Tap the switch and watch the sentence turn around.</p>
+
+  <div class="demo">
+    <div class="stage" id="heroStage" aria-live="polite"></div>
+    <p class="vlabel" id="vlabel"></p>
+    <p class="tense" id="vtense"></p>
+    <div class="row">
+      <div class="seg" id="voiceSeg" role="group" aria-label="Voice">
+        <button type="button" data-v="active" aria-pressed="true">Active</button>
+        <button type="button" data-v="passive" aria-pressed="false">Passive</button>
+      </div>
+      <button type="button" class="btn alt" id="nextEx">Next sentence</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="S"></em>doer</span>
+      <span><em class="V"></em>action</span>
+      <span><em class="O"></em>receiver</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="steps">
+    <h2>Change the voice in three steps</h2>
+    <p class="lead">Every passive sentence is built from an active one. Tap through the steps with Ravi and the ball.</p>
+    <div class="card">
+      <div class="progress" id="prog" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="stage" id="stepStage"></div>
+      <div class="stepmsg" id="stepMsg" aria-live="polite"></div>
+      <div class="row">
+        <button type="button" class="btn alt" id="stepPrev">Back</button>
+        <button type="button" class="btn" id="stepNext">Next step</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Pronouns change too</h3>
+      <p class="lead">When a pronoun is the doer, use its “by” form in the passive.</p>
+      <div class="pron">
+        <div>I <span>→ by me</span></div>
+        <div>We <span>→ by us</span></div>
+        <div>He <span>→ by him</span></div>
+        <div>She <span>→ by her</span></div>
+        <div>They <span>→ by them</span></div>
+        <div>You <span>→ by you</span></div>
+        <div>It <span>→ by it</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tenses">
+    <h2>Tense helper</h2>
+    <p class="lead" id="tenseLead"></p>
+    <div class="tlist" id="tlist"></div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="spot" aria-pressed="true">Spot the voice</button>
+        <button type="button" data-m="build" aria-pressed="false">Build the sentence</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="when">
+    <h2>When do we use the passive?</h2>
+    <div class="uses">
+      <div class="use"><b>The doer is unknown</b><p>My bike was stolen.</p></div>
+      <div class="use"><b>The receiver matters more</b><p>The Charminar was built in 1591.</p></div>
+      <div class="use"><b>Science, notices and rules</b><p>Water is boiled at 100°C. Silence is requested.</p></div>
+    </div>
+    <div class="card">
+      <h3>Only sentences with a receiver can turn passive</h3>
+      <p>“The bell rings.” has no receiver, so it stays active. Ask yourself: <em>who or what receives the action?</em> If nothing does, there is nothing to bring to the front.</p>
+    </div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>tell active and passive sentences apart by finding the doer, action and receiver;</li>
+        <li>change sentences from active to passive in the tenses listed for their class;</li>
+        <li>choose the voice that suits the purpose of a sentence.</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, pink, yellow and green chalk (doer, action, receiver).</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Project the Voices switch. Ask: who comes first now?</li>
+        <li><b>Teach (10 min).</b> Walk through the three steps. Colour each word on the board with the same chalk colours.</li>
+        <li><b>Tense helper (10 min).</b> Pick your class on the bar. Students copy the formulas and say each example aloud.</li>
+        <li><b>Spot the voice (8 min).</b> Teams answer on the count of three. Discuss every wrong answer.</li>
+        <li><b>Build the sentence (7 min).</b> Pairs decide the order before anyone taps.</li>
+        <li><b>Exit ticket.</b> Each student turns three active sentences into passive on a slip of paper.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Using the verb itself (“was kick”) instead of be + V3 (“was kicked”).</li>
+        <li>Forgetting to change the pronoun (“by he” instead of “by him”).</li>
+        <li>Keeping the active tense: “is eating” must become “is being eaten”, not “is eaten”.</li>
+        <li>Trying to make a passive from a sentence with no receiver.</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer>
+    Teaching learning material (TLM) on Active and Passive Voice for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var CAP={S:"doer",V:"action",O:"receiver"};
+  var cls=6;
+
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+
+  /* ---------- reusable animated sentence stage ---------- */
+  function makeStage(box){
+    var els={};
+    return function(tokens,end,animate){
+      var first={},k;
+      if(animate){for(k in els){first[k]=els[k].getBoundingClientRect()}}
+      var list=tokens.map(function(t,i){
+        var role=t[0],el=els[role];
+        if(!el){el=document.createElement("span");el.className="chip "+role;el.dataset.role=role;el.innerHTML="<b></b><i></i>";els[role]=el}
+        el.firstChild.textContent=t[1]+(i===tokens.length-1?end:"");
+        el.lastChild.textContent=CAP[role];
+        return el;
+      });
+      box.replaceChildren.apply(box,list);
+      if(animate&&!reduce){
+        list.forEach(function(el){
+          var f=first[el.dataset.role];if(!f||!el.animate)return;
+          var l=el.getBoundingClientRect();
+          var dx=f.left-l.left,dy=f.top-l.top;
+          if(Math.abs(dx)<1&&Math.abs(dy)<1)return;
+          el.animate([{transform:"translate("+dx+"px,"+dy+"px)"},{transform:"none"}],{duration:520,easing:"cubic-bezier(.3,.7,.2,1)"});
+        });
+      }
+    };
+  }
+
+  /* ---------- hero demo ---------- */
+  var EX=[
+    {s:"Ravi",sP:"by Ravi",v:"kicked",vP:"was kicked",o:"the ball",oP:"The ball",t:"Simple past"},
+    {s:"Our teacher",sP:"by our teacher",v:"teaches",vP:"is taught",o:"grammar",oP:"Grammar",t:"Simple present"},
+    {s:"The students",sP:"by the students",v:"will sing",vP:"will be sung",o:"the song",oP:"The song",t:"Simple future"},
+    {s:"The children",sP:"by the children",v:"are painting",vP:"is being painted",o:"the wall",oP:"The wall",t:"Present continuous"},
+    {s:"Birds",sP:"by birds",v:"have built",vP:"has been built",o:"a nest",oP:"A nest",t:"Present perfect"},
+    {s:"The police",sP:"by the police",v:"had caught",vP:"had been caught",o:"the thief",oP:"The thief",t:"Past perfect"}
+  ];
+  var exI=0,voice="active",heroSet=makeStage($("#heroStage")),lastText="";
+  function heroTokens(){
+    var e=EX[exI];
+    return voice==="active"?[["S",e.s],["V",e.v],["O",e.o]]:[["O",e.oP],["V",e.vP],["S",e.sP]];
+  }
+  function drawHero(animate){
+    var t=heroTokens();
+    heroSet(t,".",animate);
+    lastText=t.map(function(x){return x[1]}).join(" ")+".";
+    $("#vlabel").textContent=voice==="active"?"Active voice: the doer comes first.":"Passive voice: the receiver comes first.";
+    $("#vtense").textContent=EX[exI].t;
+    document.querySelectorAll("#voiceSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v===voice)});
+  }
+  $("#voiceSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.v===voice)return;
+    voice=b.dataset.v;drawHero(true);
+  });
+  $("#nextEx").addEventListener("click",function(){exI=(exI+1)%EX.length;drawHero(false)});
+  $("#listen").addEventListener("click",function(){
+    try{
+      speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(lastText);u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u);
+    }catch(err){}
+  });
+  drawHero(false);
+
+  /* ---------- three steps ---------- */
+  var STEPS=[
+    {t:[["S","Ravi"],["V","kicked"],["O","the ball"]],m:"<b>Start with the active sentence.</b> Find the doer (Ravi), the action (kicked) and the receiver (the ball)."},
+    {t:[["O","The ball"],["V","kicked"],["S","Ravi"]],m:"<b>Step 1: swap places.</b> The receiver moves to the front. The doer moves to the end."},
+    {t:[["O","The ball"],["V","was kicked"],["S","Ravi"]],m:"<b>Step 2: change the verb.</b> Use a form of “be” that matches the tense (was), then the past participle (kicked)."},
+    {t:[["O","The ball"],["V","was kicked"],["S","by Ravi"]],m:"<b>Step 3: add “by” before the doer.</b> Now the passive sentence is complete."}
+  ];
+  var st=0,stepSet=makeStage($("#stepStage"));
+  function drawStep(animate){
+    var s=STEPS[st];
+    stepSet(s.t,".",animate);
+    $("#stepMsg").innerHTML=s.m;
+    document.querySelectorAll("#prog span").forEach(function(p,i){p.className=i<st?"on":""});
+    $("#stepPrev").disabled=st===0;
+    $("#stepNext").textContent=st===STEPS.length-1?"Start again":"Next step";
+  }
+  $("#stepNext").addEventListener("click",function(){
+    if(st===STEPS.length-1){st=0;drawStep(true)}else{st++;drawStep(true)}
+  });
+  $("#stepPrev").addEventListener("click",function(){if(st>0){st--;drawStep(true)}});
+  drawStep(false);
+
+  /* ---------- tense helper ---------- */
+  var TENSES=[
+    {c:6,n:"Simple present",f:"am / is / are + V3",a:"She writes a letter.",p:"A letter is written by her."},
+    {c:6,n:"Simple past",f:"was / were + V3",a:"Tom broke the glass.",p:"The glass was broken by Tom."},
+    {c:6,n:"Simple future",f:"will be + V3",a:"They will plant trees.",p:"Trees will be planted by them."},
+    {c:7,n:"Present continuous",f:"am / is / are being + V3",a:"Mother is cooking dinner.",p:"Dinner is being cooked by mother."},
+    {c:7,n:"Past continuous",f:"was / were being + V3",a:"The boys were flying kites.",p:"Kites were being flown by the boys."},
+    {c:7,n:"Present perfect",f:"has / have been + V3",a:"I have finished the work.",p:"The work has been finished by me."},
+    {c:8,n:"Past perfect",f:"had been + V3",a:"The thief had stolen the bag.",p:"The bag had been stolen by the thief."},
+    {c:8,n:"Modals (can, may, must, should)",f:"modal + be + V3",a:"We must obey the rules.",p:"The rules must be obeyed by us."},
+    {c:8,n:"Questions in the simple past",f:"Was / Were + receiver + V3 + by …?",a:"Did she sing the song?",p:"Was the song sung by her?"},
+    {c:8,n:"Commands",f:"Let + receiver + be + V3",a:"Close the door.",p:"Let the door be closed."}
+  ];
+  function drawTenses(){
+    $("#tenseLead").textContent=cls===6
+      ?"Class 6 learns three tenses. Each one has its own “be” pattern."
+      :"Class "+cls+" revises everything from earlier classes and adds new patterns. The new ones are marked.";
+    $("#tlist").innerHTML=TENSES.filter(function(t){return t.c<=cls}).map(function(t){
+      return '<article class="tcard"><h3>'+t.n+(t.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<span class="formula">'+t.f+'</span>'+
+        '<p><span class="lab">Active</span>'+t.a+'</p>'+
+        '<p><span class="lab">Passive</span><b>'+t.p+'</b></p></article>';
+    }).join("");
+  }
+
+  /* ---------- practice data ---------- */
+  var SPOT={
+    6:[["The dog chased the cat.","A"],["The cake was baked by Meena.","P"],["Mother cooks food every day.","A"],["The window was broken by the boys.","P"],["We sing the national anthem.","A"],["The letter will be posted tomorrow.","P"],["Paddy is grown in many villages.","P"],["The bell rings at nine.","A"]],
+    7:[["The gardener is watering the plants.","A"],["The plants are being watered by the gardener.","P"],["The match has been won by our school.","P"],["I have seen that film.","A"],["Kites were being flown by the children.","P"],["Raju was reading a storybook.","A"],["The homework has been completed.","P"],["The baby is sleeping.","A"]],
+    8:[["Rules must be followed by everyone.","P"],["The police had caught the thief.","A"],["The bag had been stolen before noon.","P"],["Students should respect their elders.","A"],["Was the song sung by Lakshmi?","P"],["Who painted this picture?","A"],["Let the door be closed.","P"],["By whom was the letter written?","P"]]
+  };
+  var BUILD={
+    6:[
+      {a:"Ravi eats an apple.",ans:["An apple","is eaten","by Ravi"],d:["was eaten","Ravi"],e:"."},
+      {a:"Tom broke the glass.",ans:["The glass","was broken","by Tom"],d:["is broken","Tom"],e:"."},
+      {a:"Farmers will plant trees.",ans:["Trees","will be planted","by farmers"],d:["will plant","are planted"],e:"."},
+      {a:"The girl sings a song.",ans:["A song","is sung","by the girl"],d:["was sung","sang"],e:"."}
+    ],
+    7:[
+      {a:"Mother is cooking dinner.",ans:["Dinner","is being cooked","by mother"],d:["is cooked","was being cooked"],e:"."},
+      {a:"The boys were flying kites.",ans:["Kites","were being flown","by the boys"],d:["were flown","are being flown"],e:"."},
+      {a:"I have finished the work.",ans:["The work","has been finished","by me"],d:["have been finished","by I"],e:"."},
+      {a:"She is writing a letter.",ans:["A letter","is being written","by her"],d:["by she","is written"],e:"."}
+    ],
+    8:[
+      {a:"We must obey the rules.",ans:["The rules","must be obeyed","by us"],d:["must obey","by we"],e:"."},
+      {a:"The thief had stolen the bag.",ans:["The bag","had been stolen","by the thief"],d:["has been stolen","was stolen"],e:"."},
+      {a:"Did she sing the song?",ans:["Was","the song","sung","by her"],d:["Is","sang"],e:"?"},
+      {a:"The teacher can explain this lesson.",ans:["This lesson","can be explained","by the teacher"],d:["can explain","is explained"],e:"."}
+    ]
+  };
+
+  var mode="spot",sp,bd;
+  function resetPractice(){
+    sp={i:0,score:0,ans:null,q:shuffle(SPOT[cls])};
+    bd={i:0,score:0,picked:[],checked:false,ok:false,q:BUILD[cls].map(function(x){return {a:x.a,ans:x.ans,e:x.e,bank:shuffle(x.ans.concat(x.d))}})};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    if(mode==="spot")drawSpot();else drawBuild();
+  }
+  function ending(score,n){
+    return score===n?"Perfect round. You can tell voices apart like a pro."
+      :score>=n*0.7?"Great work. Review the ones you missed and try again."
+      :"Good start. Look at the three steps again, then play once more.";
+  }
+
+  function drawSpot(){
+    var box=$("#pbody"),n=sp.q.length;
+    if(sp.i>=n){
+      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+sp.score+' out of '+n+'</p><p>'+ending(sp.score,n)+'</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      return;
+    }
+    var q=sp.q[sp.i];
+    box.innerHTML='<p class="count">Sentence '+(sp.i+1)+' of '+n+'</p>'+
+      '<p class="qs">“'+q[0]+'”</p>'+
+      '<div class="seg big" role="group" aria-label="Your answer"><button type="button" data-a="A">Active</button><button type="button" data-a="P">Passive</button></div>'+
+      '<p class="fb" aria-live="polite"></p>'+
+      '<button type="button" class="btn" data-act="next" hidden>'+(sp.i===n-1?"See my score":"Next sentence")+'</button>';
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(mode==="spot"){
+      if(b.dataset.act==="again"){resetPractice();return}
+      if(b.dataset.act==="next"){sp.i++;sp.ans=null;drawSpot();return}
+      if(b.dataset.a&&!sp.ans){
+        var q=sp.q[sp.i],ok=b.dataset.a===q[1];
+        sp.ans=b.dataset.a;if(ok)sp.score++;
+        var fb=$("#pbody .fb");
+        fb.className="fb "+(ok?"good":"bad");
+        var why=q[1]==="A"?"The doer comes first and does the action, so this is active.":"The receiver comes first, with be + V3, so this is passive.";
+        fb.textContent=(ok?"Correct. ":"Not quite. ")+why;
+        document.querySelectorAll("#pbody .seg button").forEach(function(x){
+          x.disabled=true;
+          if(x.dataset.a===q[1])x.style.cssText="background:var(--good-bg);color:var(--good)";
+          else if(x===b)x.style.cssText="background:var(--bad-bg);color:var(--bad)";
+        });
+        $("#pbody [data-act=next]").hidden=false;
+      }
+    }else{
+      if(b.dataset.act==="again"){resetPractice();return}
+      if(b.dataset.act==="next"){bd.i++;bd.picked=[];bd.checked=false;drawBuild();return}
+      if(b.dataset.act==="check"){
+        var q2=bd.q[bd.i];
+        bd.checked=true;bd.ok=bd.picked.join("|")===q2.ans.join("|");
+        if(bd.ok)bd.score++;
+        drawBuild();return;
+      }
+      if(b.dataset.act==="clear"){bd.picked=[];drawBuild();return}
+      if(bd.checked)return;
+      if(b.dataset.add!==undefined){bd.picked.push(b.dataset.add);drawBuild();return}
+      if(b.dataset.rm!==undefined){bd.picked.splice(+b.dataset.rm,1);drawBuild();return}
+    }
+  });
+  function esc(s){return s.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function drawBuild(){
+    var box=$("#pbody"),n=bd.q.length;
+    if(bd.i>=n){
+      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+bd.score+' out of '+n+'</p><p>'+ending(bd.score,n)+'</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      return;
+    }
+    var q=bd.q[bd.i];
+    var tray=bd.picked.map(function(w,i){return '<button type="button" class="pick" data-rm="'+i+'"'+(bd.checked?' disabled':'')+'>'+esc(w)+'</button>'}).join("");
+    var bank=q.bank.filter(function(w){return bd.picked.indexOf(w)<0}).map(function(w){return '<button type="button" class="pick" data-add="'+esc(w)+'">'+esc(w)+'</button>'}).join("");
+    var fbText="",fbCls="fb";
+    if(bd.checked){
+      fbCls+=bd.ok?" good":" bad";
+      fbText=bd.ok?"Correct. Well built.":"Not quite. The passive sentence is: “"+q.ans.join(" ")+q.e+"”";
+    }
+    box.innerHTML='<p class="count">Sentence '+(bd.i+1)+' of '+n+'</p>'+
+      '<p class="qs">Make this passive:<br>“'+q.a+'”</p>'+
+      '<div class="tray'+(bd.checked?(bd.ok?" good":" bad"):"")+'" aria-label="Your sentence">'+tray+(bd.picked.length?'<span class="punct">'+q.e+'</span>':'<span class="count">Tap the pieces in order</span>')+'</div>'+
+      '<div class="bank">'+bank+'</div>'+
+      '<p class="'+fbCls+'" aria-live="polite">'+fbText+'</p>'+
+      '<div class="row">'+
+        (bd.checked
+          ?'<button type="button" class="btn" data-act="next">'+(bd.i===n-1?"See my score":"Next sentence")+'</button>'
+          :'<button type="button" class="btn" data-act="check"'+(bd.picked.length===q.ans.length?'':' disabled')+'>Check</button><button type="button" class="btn alt" data-act="clear"'+(bd.picked.length?'':' disabled')+'>Clear</button>')+
+      '</div>';
+  }
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawTenses();resetPractice();
+  });
+
+  drawTenses();resetPractice();
+})();
+</script>
+</body>
+</html>

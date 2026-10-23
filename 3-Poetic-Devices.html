@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Poetic Devices | TLM by Madimi Arundhathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --display:"Baloo 2","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Verdana,system-ui,sans-serif;
+  --bg:#F6F8FC; --surface:#FFFFFF; --ink:#17203A; --muted:#55607A; --line:#D5DCEB;
+  --accent:#3347C7; --accent-ink:#FFFFFF;
+  --cmp-bg:#FFE3E6; --cmp-c:#D6334A; --cmp-t:#8F1226;
+  --snd-bg:#FFF0C2; --snd-c:#D99A00; --snd-t:#6B4A00;
+  --pic-bg:#D5F3EE; --pic-c:#13927F; --pic-t:#0B5E55;
+  --good:#0E6B45; --good-bg:#DDF5E8; --bad:#B3261E; --bad-bg:#FDE4E1;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+    --accent:#9AA8FF; --accent-ink:#10152A;
+    --cmp-bg:#4A1B26; --cmp-c:#FF7A8C; --cmp-t:#FFC2CA;
+    --snd-bg:#4A3A0A; --snd-c:#F2B91D; --snd-t:#FFDE8A;
+    --pic-bg:#0F3F3B; --pic-c:#3CC4AE; --pic-t:#9BEBDE;
+    --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+  --accent:#9AA8FF; --accent-ink:#10152A;
+  --cmp-bg:#4A1B26; --cmp-c:#FF7A8C; --cmp-t:#FFC2CA;
+  --snd-bg:#4A3A0A; --snd-c:#F2B91D; --snd-t:#FFDE8A;
+  --pic-bg:#0F3F3B; --pic-c:#3CC4AE; --pic-t:#9BEBDE;
+  --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4rem);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.55 var(--body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.1rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0}
+h2{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}
+p{margin:.4rem 0}
+section{padding:2.4rem 0 .6rem}
+.lead{color:var(--muted);max-width:36rem}
+
+.hero{padding-top:1.6rem}
+.hero h1{font-size:clamp(2.6rem,12.5vw,4.4rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.by{margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.by strong{color:var(--ink)}
+.demo{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem}
+.line{font:800 clamp(1.5rem,7vw,2.2rem)/1.5 var(--display);min-height:7.4rem;margin:.1rem 0 .8rem}
+.hl{background-image:linear-gradient(var(--h),var(--h));background-repeat:no-repeat;background-size:100% 100%;border-bottom:3px solid var(--hc);color:var(--ht);border-radius:6px;padding:0 .15em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hl.cmp{--h:var(--cmp-bg);--hc:var(--cmp-c);--ht:var(--cmp-t)}
+.hl.snd{--h:var(--snd-bg);--hc:var(--snd-c);--ht:var(--snd-t)}
+.hl.pic{--h:var(--pic-bg);--hc:var(--pic-c);--ht:var(--pic-t)}
+.sweep .hl{animation:sweep .8s ease-out}
+@keyframes sweep{from{background-size:0% 100%}}
+.dtag{display:inline-block;font:800 1.15rem/1 var(--display);padding:.4rem .8rem;border-radius:12px;border:2px solid;margin:0 0 .4rem}
+.dtag.cmp{background:var(--cmp-bg);border-color:var(--cmp-c);color:var(--cmp-t)}
+.dtag.snd{background:var(--snd-bg);border-color:var(--snd-c);color:var(--snd-t)}
+.dtag.pic{background:var(--pic-bg);border-color:var(--pic-c);color:var(--pic-t)}
+.dtag.plain{background:transparent;border-color:var(--line);color:var(--muted)}
+.dsc{min-height:4.4rem;margin:0 0 .9rem}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.btn{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--bg);font:700 1rem/1 var(--body);padding:.8rem 1.1rem;border-radius:14px;cursor:pointer;min-height:2.9rem}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.alt:hover{border-color:var(--ink)}
+.btn[hidden]{display:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink);font:700 1rem/1 var(--body);padding:.75rem 1.05rem;min-height:2.9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.key{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:.4rem}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+.key .cmp{background:var(--cmp-bg);border-color:var(--cmp-c)}
+.key .snd{background:var(--snd-bg);border-color:var(--snd-c)}
+.key .pic{background:var(--pic-bg);border-color:var(--pic-c)}
+
+.classbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:2px solid var(--line);margin-top:2rem}
+.classbar .wrap{display:flex;align-items:center;gap:.8rem;padding-top:.6rem;padding-bottom:.6rem}
+.classbar b{font:800 1.1rem var(--display)}
+
+.card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem;margin-top:1rem}
+
+.dlist{display:grid;gap:.8rem;margin-top:1rem}
+.dcard{background:var(--surface);border:2px solid var(--line);border-left-width:8px;border-radius:18px;padding:.95rem 1rem}
+.dcard.cmp{border-left-color:var(--cmp-c)} .dcard.snd{border-left-color:var(--snd-c)} .dcard.pic{border-left-color:var(--pic-c)}
+.dcard h3{font-size:1.3rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.dcard p{margin:.3rem 0}
+.dcard .look{color:var(--muted);font-size:.97rem}
+.dcard .ex{font:800 1.15rem/1.6 var(--display);margin-top:.5rem}
+.fam{font:700 .75rem var(--body);border-radius:20px;padding:.2rem .6rem;border:2px solid}
+.fam.cmp{background:var(--cmp-bg);border-color:var(--cmp-c);color:var(--cmp-t)}
+.fam.snd{background:var(--snd-bg);border-color:var(--snd-c);color:var(--snd-t)}
+.fam.pic{background:var(--pic-bg);border-color:var(--pic-c);color:var(--pic-t)}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+
+.pbox{min-height:19rem}
+.count{color:var(--muted);font-size:.9rem;margin:0}
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.35 var(--display);margin:.6rem 0 1rem}
+.fb{min-height:4.6rem;margin:.9rem 0 .6rem;font-weight:700}
+.fb.good{color:var(--good)} .fb.bad{color:var(--bad)}
+.opts{display:grid;gap:.55rem}
+.opts.inline{display:flex;flex-wrap:wrap}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.02rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opts.inline .opt{width:auto;font:800 1.1rem/1.3 var(--display)}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+.result .big{font:800 2.6rem/1 var(--display);margin:.4rem 0}
+.res{border-radius:16px;border:2px solid;padding:.9rem 1rem;margin:.8rem 0}
+.res.cmp{background:var(--cmp-bg);border-color:var(--cmp-c);color:var(--cmp-t)}
+.res.snd{background:var(--snd-bg);border-color:var(--snd-c);color:var(--snd-t)}
+.res.pic{background:var(--pic-bg);border-color:var(--pic-c);color:var(--pic-t)}
+.res h3{font-size:1.5rem;font-weight:800}
+
+details{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.2rem 1rem;margin-top:1rem}
+summary{cursor:pointer;font:800 1.2rem var(--display);padding:.8rem 0}
+details ul,details ol{padding-left:1.2rem;margin:.3rem 0 .9rem}
+details li{margin:.35rem 0}
+footer{margin:3rem 0 2rem;padding-top:1.2rem;border-top:2px solid var(--line);color:var(--muted);font-size:.95rem}
+footer strong{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sweep .hl{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <h1>Poetic Devices</h1>
+  <p class="sub">Plain words tell us. Poetic words make us feel. Flip the switch and see the difference.</p>
+
+  <div class="demo">
+    <p class="line" id="heroLine" aria-live="polite"></p>
+    <div id="heroTag"></div>
+    <p class="dsc" id="heroDsc"></p>
+    <div class="row">
+      <div class="seg" id="styleSeg" role="group" aria-label="Style of the line">
+        <button type="button" data-v="plain" aria-pressed="true">Plain</button>
+        <button type="button" data-v="poetic" aria-pressed="false">Poetic</button>
+      </div>
+      <button type="button" class="btn alt" id="nextEx">Next line</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="cmp"></em>compare</span>
+      <span><em class="snd"></em>sound</span>
+      <span><em class="pic"></em>picture and meaning</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="devices">
+    <h2>Meet the devices</h2>
+    <p class="lead" id="devLead"></p>
+    <div class="dlist" id="dlist"></div>
+  </section>
+
+  <section id="detective">
+    <h2>Device detective</h2>
+    <p class="lead">Not sure which device a line uses? Answer the questions and the detective will name it.</p>
+    <div class="card" id="detBox"></div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="name" aria-pressed="true">Name it</button>
+        <button type="button" data-m="pick" aria-pressed="false">Pick it</button>
+        <button type="button" data-m="find" aria-pressed="false">Find it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>name and explain the poetic devices for their class (Class 6: simile, metaphor, personification, alliteration, onomatopoeia, rhyme; Class 7: adds hyperbole, repetition, imagery; Class 8: adds oxymoron, assonance, symbol);</li>
+        <li>find these devices in a line of poetry and say what effect they create;</li>
+        <li>use a device in lines of their own.</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, a poem from the class textbook, pink, yellow and green chalk (compare, sound, picture and meaning).</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Read a plain line, then its poetic version. Ask: which one made you see something?</li>
+        <li><b>Meet the devices (12 min).</b> Pick your class on the bar. Read each card aloud and colour the device on the board.</li>
+        <li><b>Device detective (6 min).</b> Take one textbook line and answer the detective’s questions together.</li>
+        <li><b>Practice (10 min).</b> Teams play Name it, Pick it and Find it on the count of three.</li>
+        <li><b>Hunt (7 min).</b> Pairs find three devices in the textbook poem and write them on slips.</li>
+        <li><b>Exit ticket.</b> Each student writes one simile, one metaphor and one personification about the school ground.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Calling a simile a metaphor. A simile always has “like” or “as”.</li>
+        <li>Mixing up alliteration (same first sound), assonance (same vowel sound inside words) and rhyme (same ending sound).</li>
+        <li>Treating hyperbole as a lie. It exaggerates on purpose, and nobody believes it literally.</li>
+        <li>Confusing personification with a metaphor. Personification gives human actions to a non-human thing.</li>
+        <li>Thinking imagery means only pictures. It includes sound, smell, taste and touch.</li>
+        <li>Naming a device without saying its effect. Always ask: what does it make us feel or see?</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer>
+    Teaching learning material (TLM) on Poetic Devices for Classes 6 to 8. All example lines are original.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
+  /* ---------- data ---------- */
+  var FAM={cmp:"Compare",snd:"Sound",pic:"Picture and meaning"};
+  var DEV={
+    simile:{f:"cmp",c:6,def:"Compares two different things using “like” or “as”.",look:"Look for “like” or “as … as”."},
+    metaphor:{f:"cmp",c:6,def:"Says one thing is another, without “like” or “as”.",look:"Look for “is”, “was” or “are” joining two unlike things."},
+    personification:{f:"cmp",c:6,def:"Gives human actions or feelings to something that is not human.",look:"Look for wind, clocks or trees that whisper, yawn, dance or cry."},
+    alliteration:{f:"snd",c:6,def:"Repeats the same starting sound in words that are close together.",look:"Say it aloud and listen to the first sounds."},
+    onomatopoeia:{f:"snd",c:6,def:"A word that sounds like the noise it names.",look:"Look for words like buzz, splash and creak."},
+    rhyme:{f:"snd",c:6,def:"Words that end with the same sound, often at the ends of lines.",look:"Listen to the last word of each line."},
+    hyperbole:{f:"pic",c:7,def:"Exaggerates on purpose to make a point stronger.",look:"Ask: could this really be true? If not, it may be hyperbole."},
+    repetition:{f:"snd",c:7,def:"Says a word or phrase again to add rhythm or stress.",look:"Look for the same word or phrase twice or more."},
+    imagery:{f:"pic",c:7,def:"Words that help us see, hear, smell, taste or touch what is described.",look:"Look for words that appeal to the five senses."},
+    oxymoron:{f:"pic",c:8,def:"Puts two opposite words side by side.",look:"Look for a pair like “deafening silence”."},
+    assonance:{f:"snd",c:8,def:"Repeats the same vowel sound inside words that are close together.",look:"Listen for the vowel in the middle of the words, not the first letter."},
+    symbol:{f:"pic",c:8,def:"A thing that stands for a bigger idea.",look:"Ask: what idea does this object stand for?"}
+  };
+  var FORDER={cmp:0,snd:1,pic:2};
+  var LINES=[
+    {t:"The moon was like a silver coin in the sky.",w:"like a silver coin",d:"simile",c:6},
+    {t:"Her smile was as bright as the sun.",w:"as bright as the sun",d:"simile",c:6},
+    {t:"The classroom was a busy beehive this morning.",w:"a busy beehive",d:"metaphor",c:6},
+    {t:"My grandmother is a warm blanket on cold nights.",w:"a warm blanket",d:"metaphor",c:6},
+    {t:"The wind whispered secrets to the trees.",w:"whispered secrets",d:"personification",c:6},
+    {t:"The old clock yawned and groaned at midnight.",w:"yawned and groaned",d:"personification",c:6},
+    {t:"Silent snakes slither softly through the sand.",w:"Silent snakes slither softly",d:"alliteration",c:6},
+    {t:"The rain went pitter-patter on the roof.",w:"pitter-patter",d:"onomatopoeia",c:6},
+    {t:"The sky was blue and the grass was new.",hl:["blue","new"],d:"rhyme",c:6},
+    {t:"The baby slept like a little angel in her cradle.",w:"like a little angel",d:"simile",c:7},
+    {t:"Time is a thief that steals our days.",w:"a thief",d:"metaphor",c:7},
+    {t:"The flowers danced happily in the breeze.",w:"danced happily",d:"personification",c:7},
+    {t:"Big blue balloons bobbed above the bridge.",w:"Big blue balloons bobbed",d:"alliteration",c:7},
+    {t:"The bees buzzed around the flowers.",w:"buzzed",d:"onomatopoeia",c:7},
+    {t:"I have told you a million times to close the door.",w:"a million times",d:"hyperbole",c:7},
+    {t:"I was so hungry I could eat a horse.",w:"I could eat a horse",d:"hyperbole",c:7},
+    {t:"The tired travellers walked on and on and on till evening.",w:"on and on and on",d:"repetition",c:7},
+    {t:"The smell of fresh bread, warm and golden, filled the kitchen.",hl:["smell of fresh bread","warm and golden"],d:"imagery",c:7},
+    {t:"Life is a long road with many turns.",w:"a long road",d:"metaphor",c:8},
+    {t:"The angry sea roared and clawed at the rocks.",w:"roared and clawed",d:"personification",c:8},
+    {t:"This bag weighs a ton.",w:"weighs a ton",d:"hyperbole",c:8},
+    {t:"There was a deafening silence in the hall.",w:"deafening silence",d:"oxymoron",c:8},
+    {t:"Everyone knew it was an open secret.",w:"open secret",d:"oxymoron",c:8},
+    {t:"We heard the low moan of the old ghost in the hall.",w:"low moan of the old ghost",d:"assonance",c:8},
+    {t:"A white dove rose above the village, and peace returned.",w:"A white dove",d:"symbol",c:8},
+    {t:"Dreams, dreams, dreams, they fill our nights with colour.",w:"Dreams, dreams, dreams",d:"repetition",c:8},
+    {t:"The wild wind whistled through the old oak tree.",w:"The wild wind whistled",d:"alliteration",c:8},
+    {t:"The door creaked open slowly.",w:"creaked",d:"onomatopoeia",c:8},
+    {t:"He ran as fast as the wind to catch the bus.",w:"as fast as the wind",d:"simile",c:8},
+    {t:"The sharp smell of rain rose from the hot, dusty road.",hl:["sharp smell of rain","hot, dusty road"],d:"imagery",c:8},
+    {t:"The sun went low behind the hill, and all the fields grew calm and still.",hl:["hill","still"],d:"rhyme",c:8}
+  ];
+  LINES.forEach(function(l){l.hl=l.hl||[l.w]});
+  function byStart(s){return LINES.filter(function(l){return l.t.indexOf(s)===0})[0]}
+  var HERO=[
+    {l:byStart("The moon was like"),p:"The moon was bright and round."},
+    {l:byStart("The classroom was a busy"),p:"The classroom was very noisy this morning."},
+    {l:byStart("The wind whispered"),p:"The wind blew through the trees."},
+    {l:byStart("Silent snakes"),p:"The snakes moved quietly across the sand."},
+    {l:byStart("The rain went"),p:"The rain fell on the roof."},
+    {l:byStart("I was so hungry"),p:"I was very hungry."},
+    {l:byStart("There was a deafening"),p:"It was very quiet in the hall."}
+  ];
+
+  function hlHTML(l){
+    var out=esc(l.t);
+    l.hl.forEach(function(x){out=out.replace(esc(x),'<span class="hl '+DEV[l.d].f+'">'+esc(x)+'</span>')});
+    return out;
+  }
+
+  /* ---------- hero ---------- */
+  var exI=0,style="plain";
+  function drawHero(sweep){
+    var h=HERO[exI],l=h.l,d=DEV[l.d];
+    var line=$("#heroLine");
+    if(style==="plain"){
+      line.className="line";line.textContent=h.p;
+      $("#heroTag").innerHTML='<span class="dtag plain">Plain words</span>';
+      $("#heroDsc").textContent="This tells us what happened, but we do not see or feel much.";
+    }else{
+      line.className="line"+(sweep?" sweep":"");line.innerHTML=hlHTML(l);
+      $("#heroTag").innerHTML='<span class="dtag '+d.f+'">'+cap(l.d)+'</span>';
+      $("#heroDsc").textContent=d.def;
+    }
+    document.querySelectorAll("#styleSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v===style)});
+  }
+  $("#styleSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.v===style)return;
+    style=b.dataset.v;drawHero(true);
+  });
+  $("#nextEx").addEventListener("click",function(){exI=(exI+1)%HERO.length;drawHero(false)});
+  $("#listen").addEventListener("click",function(){
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(style==="plain"?HERO[exI].p:HERO[exI].l.t);u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+  drawHero(false);
+
+  /* ---------- device cards ---------- */
+  function drawDevices(){
+    $("#devLead").textContent=cls===6
+      ?"Class 6 learns six devices. They come in two families: ones that compare, and ones that play with sound."
+      :"Class "+cls+" revises the earlier devices and adds new ones. The new ones are marked.";
+    var names=Object.keys(DEV).filter(function(n){return DEV[n].c<=cls});
+    names.sort(function(a,b){return FORDER[DEV[a].f]-FORDER[DEV[b].f]||DEV[a].c-DEV[b].c});
+    $("#dlist").innerHTML=names.map(function(n){
+      var d=DEV[n],ex=LINES.filter(function(l){return l.d===n&&l.c<=cls})[0];
+      return '<article class="dcard '+d.f+'"><h3>'+cap(n)+'<span class="fam '+d.f+'">'+FAM[d.f]+'</span>'+(d.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<p>'+d.def+'</p><p class="look">'+d.look+'</p><p class="ex">'+hlHTML(ex)+'</p></article>';
+    }).join("");
+  }
+
+  /* ---------- device detective ---------- */
+  var TREE={
+    start:{q:"What is the line doing?",o:[["Comparing two things","cmp1"],["Playing with sounds","snd1"],["Painting a picture or stretching meaning","pic1"]]},
+    cmp1:{q:"Does it use “like” or “as”?",o:[["Yes","=simile"],["No","cmp2"]]},
+    cmp2:{q:"Is something that is not human acting like a person?",o:[["Yes","=personification"],["No, it says one thing is another","=metaphor"]]},
+    snd1:{q:"Which sound trick do you hear?",o:[["Same first sound in nearby words","=alliteration"],["Same vowel sound inside nearby words","=assonance"],["Same ending sound at the ends of lines","=rhyme"],["A word that sounds like a noise","=onomatopoeia"],["A word or phrase said again","=repetition"]]},
+    pic1:{q:"What does the line do?",o:[["It exaggerates hugely","=hyperbole"],["It puts two opposite words together","=oxymoron"],["It describes what we see, hear, smell, taste or touch","=imagery"],["An object stands for a big idea","=symbol"]]}
+  };
+  var path=["start"],resultKey=null;
+  function drawDet(){
+    var box=$("#detBox");
+    if(resultKey){
+      var d=DEV[resultKey],ex=LINES.filter(function(l){return l.d===resultKey})[0];
+      box.innerHTML='<div class="res '+d.f+'"><p class="count" style="color:inherit">The detective says</p><h3>'+cap(resultKey)+'</h3><p>'+d.def+'</p>'+
+        (d.c>cls?'<p><b>You will meet this one in Class '+d.c+'.</b></p>':'')+
+        '<p class="ex" style="font:800 1.1rem/1.6 var(--display)">'+hlHTML(ex)+'</p></div>'+
+        '<div class="row"><button type="button" class="btn alt" data-act="back">Back</button><button type="button" class="btn" data-act="restart">Start again</button></div>';
+      return;
+    }
+    var node=TREE[path[path.length-1]];
+    box.innerHTML='<p class="count">Question '+path.length+'</p><p class="qs">'+node.q+'</p>'+
+      '<div class="opts">'+node.o.map(function(o,i){return '<button type="button" class="opt" data-o="'+i+'">'+o[0]+'</button>'}).join("")+'</div>'+
+      '<div class="row" style="margin-top:.9rem"><button type="button" class="btn alt" data-act="back"'+(path.length===1?' disabled':'')+'>Back</button></div>';
+  }
+  $("#detBox").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="restart"){path=["start"];resultKey=null;drawDet();return}
+    if(b.dataset.act==="back"){
+      if(resultKey)resultKey=null;else if(path.length>1)path.pop();
+      drawDet();return;
+    }
+    if(b.dataset.o!==undefined){
+      var nx=TREE[path[path.length-1]].o[+b.dataset.o][1];
+      if(nx.charAt(0)==="=")resultKey=nx.slice(1);else path.push(nx);
+      drawDet();
+    }
+  });
+  drawDet();
+
+  /* ---------- practice ---------- */
+  function chunksOf(l){
+    var i=l.t.indexOf(l.w),b=l.t.slice(0,i).trim(),a=l.t.slice(i+l.w.length).trim(),parts=[];
+    if(b)parts.push({s:b,k:0});
+    parts.push({s:l.w,k:1});
+    if(a)parts.push({s:a,k:0});
+    while(parts.length<3){
+      var bi=-1,bl=0;
+      parts.forEach(function(p,ix){if(!p.k&&p.s.split(" ").length>1&&p.s.length>bl){bl=p.s.length;bi=ix}});
+      if(bi<0)break;
+      var ws=parts[bi].s.split(" "),m=Math.ceil(ws.length/2);
+      parts.splice(bi,1,{s:ws.slice(0,m).join(" "),k:0},{s:ws.slice(m).join(" "),k:0});
+    }
+    return parts;
+  }
+  function pool(){return LINES.filter(function(l){return l.c<=cls})}
+  function devNames(){return Object.keys(DEV).filter(function(n){return DEV[n].c<=cls})}
+  var mode="name",S={};
+  function resetPractice(){
+    var P=pool(),names=devNames(),n=Math.min(8,P.length);
+    S.name={i:0,score:0,ans:null,q:shuffle(P).slice(0,n).map(function(l){
+      var others=shuffle(names.filter(function(x){return x!==l.d})).slice(0,2);
+      return {l:l,o:shuffle([l.d].concat(others))};
+    })};
+    S.pick={i:0,score:0,ans:null,q:shuffle(P).slice(0,n).map(function(l){
+      var others=shuffle(P.filter(function(x){return x.d!==l.d})).slice(0,2);
+      return {l:l,o:shuffle([l].concat(others))};
+    })};
+    var F=P.filter(function(l){return l.w});
+    S.find={i:0,score:0,ans:null,q:shuffle(F).slice(0,n).map(function(l){return {l:l,ch:chunksOf(l)}})};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+s.score+' out of '+n+'</p><p>'+
+        (s.score===n?"Perfect round. You have a poet’s ear.":s.score>=n*0.7?"Great work. Check the devices you missed and try again.":"Good start. Read the device cards again, then play once more.")+
+        '</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    if(mode==="name"){
+      html+='<p class="qs">“'+esc(q.l.t)+'”<br>Which device is this?</p><div class="opts">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+cap(x)+'</button>'}).join("")+'</div>';
+    }else if(mode==="pick"){
+      html+='<p class="qs">Which line uses '+cap(q.l.d)+'?</p><div class="opts">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x.t)+'</button>'}).join("")+'</div>';
+    }else{
+      html+='<p class="qs">Find the '+cap(q.l.d)+'.<br>Tap the part of the line that uses it.</p><div class="opts inline">'+
+        q.ch.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x.s)+'</button>'}).join("")+'</div>';
+    }
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var q=s.q[s.i],idx=+b.dataset.o,ok,correctIdx;
+    if(mode==="name"){correctIdx=q.o.indexOf(q.l.d);ok=idx===correctIdx}
+    else if(mode==="pick"){correctIdx=q.o.indexOf(q.l);ok=idx===correctIdx}
+    else{correctIdx=q.ch.findIndex(function(x){return x.k===1});ok=idx===correctIdx}
+    s.ans=idx;if(ok)s.score++;
+    var d=DEV[q.l.d],fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+cap(q.l.d)+": "+d.def+" Clue: “"+q.l.hl.join("” and “")+"”.";
+    document.querySelectorAll("#pbody .opt").forEach(function(x,i){
+      x.disabled=true;
+      if(i===correctIdx)x.classList.add("good");else if(i===idx)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawDevices();resetPractice();
+  });
+
+  drawDevices();resetPractice();
+})();
+</script>
+</body>
+</html>

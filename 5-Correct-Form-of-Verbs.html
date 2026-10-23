@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Correct Form of Verbs | TLM by Madimi Arundhathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --display:"Baloo 2","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Verdana,system-ui,sans-serif;
+  --bg:#F6F8FC; --surface:#FFFFFF; --ink:#17203A; --muted:#55607A; --line:#D5DCEB;
+  --accent:#3347C7; --accent-ink:#FFFFFF;
+  --S-bg:#FFE3E6; --S-c:#D6334A; --S-t:#8F1226;
+  --V-bg:#FFF0C2; --V-c:#D99A00; --V-t:#6B4A00;
+  --C-bg:#D5F3EE; --C-c:#13927F; --C-t:#0B5E55;
+  --good:#0E6B45; --good-bg:#DDF5E8; --bad:#B3261E; --bad-bg:#FDE4E1;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+    --accent:#9AA8FF; --accent-ink:#10152A;
+    --S-bg:#4A1B26; --S-c:#FF7A8C; --S-t:#FFC2CA;
+    --V-bg:#4A3A0A; --V-c:#F2B91D; --V-t:#FFDE8A;
+    --C-bg:#0F3F3B; --C-c:#3CC4AE; --C-t:#9BEBDE;
+    --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+  --accent:#9AA8FF; --accent-ink:#10152A;
+  --S-bg:#4A1B26; --S-c:#FF7A8C; --S-t:#FFC2CA;
+  --V-bg:#4A3A0A; --V-c:#F2B91D; --V-t:#FFDE8A;
+  --C-bg:#0F3F3B; --C-c:#3CC4AE; --C-t:#9BEBDE;
+  --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4rem);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.55 var(--body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.1rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0}
+h2{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}
+p{margin:.4rem 0}
+section{padding:2.4rem 0 .6rem}
+.lead{color:var(--muted);max-width:36rem}
+
+.hero{padding-top:1.6rem}
+.hero h1{font-size:clamp(2.3rem,10.5vw,3.8rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.by{margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.by strong{color:var(--ink)}
+.demo{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem}
+.stage{display:flex;flex-wrap:wrap;gap:.6rem;align-items:flex-start;min-height:5.6rem;margin:.2rem 0 .8rem}
+.chip{display:inline-flex;flex-direction:column;gap:.15rem;padding:.5rem .85rem .4rem;border-radius:16px;border:2px solid;font:800 clamp(1.15rem,5.4vw,1.65rem)/1.15 var(--display)}
+.chip i{font:700 .75rem/1 var(--body);font-style:normal;opacity:.85}
+.chip.S{background:var(--S-bg);border-color:var(--S-c);color:var(--S-t)}
+.chip.V{background:var(--V-bg);border-color:var(--V-c);color:var(--V-t);border-width:3px}
+.chip.C{background:var(--C-bg);border-color:var(--C-c);color:var(--C-t)}
+.chip.O{background:transparent;border-color:var(--line);color:var(--ink)}
+.tense{font:800 1.15rem/1.2 var(--display);margin:0 0 .2rem}
+.note{color:var(--muted);min-height:4.4rem;margin:0 0 .8rem}
+.lab{font-weight:700;margin:.8rem 0 .4rem;font-size:.95rem}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pills button{appearance:none;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1rem/1 var(--body);padding:.7rem 1rem;min-height:2.9rem;border-radius:30px;cursor:pointer}
+.pills button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(4.6rem,1fr));gap:.5rem;margin:.4rem 0 1rem}
+.tile{border:2px solid var(--line);border-radius:14px;padding:.45rem .3rem;text-align:center;transition:background .2s,border-color .2s}
+.tile small{display:block;color:var(--muted);font-size:.72rem;font-weight:700}
+.tile b{font:800 1.05rem var(--display)}
+.tile.on{background:var(--V-bg);border-color:var(--V-c);color:var(--V-t)}
+.tile.on small{color:var(--V-t)}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.btn{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--bg);font:700 1rem/1 var(--body);padding:.8rem 1.1rem;border-radius:14px;cursor:pointer;min-height:2.9rem}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.alt:hover{border-color:var(--ink)}
+.btn[hidden]{display:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink);font:700 1rem/1 var(--body);padding:.75rem 1.05rem;min-height:2.9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.key{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:.4rem}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+.key .S{background:var(--S-bg);border-color:var(--S-c)}
+.key .V{background:var(--V-bg);border-color:var(--V-c)}
+.key .C{background:var(--C-bg);border-color:var(--C-c)}
+
+.classbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:2px solid var(--line);margin-top:2rem}
+.classbar .wrap{display:flex;align-items:center;gap:.8rem;padding-top:.6rem;padding-bottom:.6rem}
+.classbar b{font:800 1.1rem var(--display)}
+
+.card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem;margin-top:1rem}
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--accent);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use.S{border-left-color:var(--S-c)} .use.V{border-left-color:var(--V-c)} .use.C{border-left-color:var(--C-c)}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.2rem 0}
+.hl{border-radius:6px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid}
+.hl.V{background:var(--V-bg);border-color:var(--V-c);color:var(--V-t);font-weight:800}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--V-c);background:var(--V-bg);color:var(--V-t);font-weight:700}
+.tcard p{margin:.25rem 0}
+.tcard .ex{font:800 1.12rem/1.8 var(--display);margin-top:.5rem}
+
+.irr{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-top:.8rem;text-align:center}
+.irr div{border:2px solid var(--line);border-radius:10px;padding:.35rem .2rem;font-weight:700}
+.irr .h{background:var(--V-bg);border-color:var(--V-c);color:var(--V-t);font-family:var(--display);font-weight:800}
+
+.pbox{min-height:19rem}
+.count{color:var(--muted);font-size:.9rem;margin:0}
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.45 var(--display);margin:.6rem 0 1rem}
+.gap{display:inline-block;min-width:4.5rem;border-bottom:4px solid var(--ink);text-align:center;padding:0 .3em}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.fb.good{color:var(--good)} .fb.bad{color:var(--bad)}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+.result .big{font:800 2.6rem/1 var(--display);margin:.4rem 0}
+.res{border-radius:16px;border:2px solid var(--V-c);background:var(--V-bg);color:var(--V-t);padding:.9rem 1rem;margin:.8rem 0}
+.res h3{font-size:1.5rem;font-weight:800}
+.res .ex{font:800 1.15rem/1.7 var(--display);margin:.5rem 0 0}
+
+details{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.2rem 1rem;margin-top:1rem}
+summary{cursor:pointer;font:800 1.2rem var(--display);padding:.8rem 0}
+details ul,details ol{padding-left:1.2rem;margin:.3rem 0 .9rem}
+details li{margin:.35rem 0}
+footer{margin:3rem 0 2rem;padding-top:1.2rem;border-top:2px solid var(--line);color:var(--muted);font-size:.95rem}
+footer strong{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tile{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <h1>Correct Form of Verbs</h1>
+  <p class="sub">One verb, many forms. The time clue and the subject choose the right one. Try it with “go”.</p>
+
+  <div class="demo">
+    <div class="stage" id="heroStage" aria-live="polite"></div>
+    <p class="tense" id="hTense"></p>
+    <p class="note" id="hNote"></p>
+
+    <p class="lab">Who is doing it?</p>
+    <div class="seg" id="subjSeg" role="group" aria-label="Subject">
+      <button type="button" data-s="I" aria-pressed="false">I</button>
+      <button type="button" data-s="She" aria-pressed="true">She</button>
+      <button type="button" data-s="They" aria-pressed="false">They</button>
+    </div>
+
+    <p class="lab">When does it happen?</p>
+    <div class="pills" id="clues" role="group" aria-label="Time clue"></div>
+
+    <p class="lab" id="tilesLab"></p>
+    <div class="tiles" id="tiles"></div>
+
+    <div class="row">
+      <button type="button" class="btn alt" id="nextVerb">Next verb</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="S"></em>subject</span>
+      <span><em class="V"></em>verb form</span>
+      <span><em class="C"></em>time clue</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="agree">
+    <h2>Match the subject</h2>
+    <p class="lead">The verb must agree with its subject. Ask: is the subject singular or plural?</p>
+    <div class="uses">
+      <div class="use S"><b>Singular: he, she, it, one person or thing</b>
+        <p>is, was, has, does, V1 + s</p><p>The boy <b>plays</b>. She <b>has</b> a pen.</p></div>
+      <div class="use C"><b>Plural: you, we, they, more than one</b>
+        <p>are, were, have, do, V1</p><p>The boys <b>play</b>. They <b>have</b> pens.</p></div>
+      <div class="use V"><b>“I” is special</b>
+        <p>am, was, have, do, V1</p><p>I <b>am</b> happy. I <b>play</b> cricket.</p></div>
+    </div>
+  </section>
+
+  <section id="helper">
+    <h2>Form helper</h2>
+    <p class="lead" id="helpLead"></p>
+    <div class="tlist" id="tlist"></div>
+    <div class="card">
+      <h3>Irregular verbs</h3>
+      <p class="lead">These do not add -ed. Learn the three forms together.</p>
+      <div class="irr" id="irr"></div>
+    </div>
+  </section>
+
+  <section id="finder">
+    <h2>Clue finder</h2>
+    <p class="lead">Spot the clue in the sentence, then the finder shows which form to use.</p>
+    <div class="card" id="finBox"></div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="fill" aria-pressed="true">Fill it</button>
+        <button type="button" data-m="pick" aria-pressed="false">Pick it</button>
+        <button type="button" data-m="form" aria-pressed="false">Form it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>choose the correct verb form for the time clue and the subject;</li>
+        <li>use V1, V1 + s, V2, V3 and V-ing correctly, including common irregular verbs;</li>
+        <li>apply the rules for their class (Class 6: simple tenses and agreement; Class 7: continuous and perfect tenses; Class 8: past perfect, modals, infinitive, gerund, passive and if-sentences).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, pink, yellow and green chalk (subject, verb form, time clue).</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Shout a clue word such as “yesterday!” Students stand and say the verb form for “go”.</li>
+        <li><b>Teach (10 min).</b> Project the hero. Change the subject and the clue. Ask students to predict the form before you tap.</li>
+        <li><b>Form helper (10 min).</b> Pick your class on the bar. Students copy the formulas and the irregular verb table.</li>
+        <li><b>Clue finder (5 min).</b> Take sentences from the textbook exercise. Students find the clue first, then the form.</li>
+        <li><b>Practice (8 min).</b> Teams play Fill it, Pick it and Form it on the count of three.</li>
+        <li><b>Exit ticket.</b> Each student writes five sentences with the verb “eat”, each in a different form.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Forgetting -s after he, she, it: “She go to school.”</li>
+        <li>Using V2 after do, does or did: “Did she went?” should be “Did she go?”</li>
+        <li>Mixing V2 and V3: “I have went” should be “I have gone”.</li>
+        <li>Using V1 after have or has: “He has eat” should be “He has eaten”.</li>
+        <li>Dropping the helper in continuous tenses: “They playing” should be “They are playing”.</li>
+        <li>Spelling errors in -ing forms: “runing”, “makeing”.</li>
+        <li>Adding -ed to irregular verbs: “goed”, “buyed”.</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer>
+    Teaching learning material (TLM) on the Correct Form of Verbs for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function hlSent(s){return esc(s).replace(/\{\{(.+?)\}\}/g,'<span class="hl V">$1</span>')}
+
+  /* ---------- hero: subject + time clue choose the form ---------- */
+  var HV=[
+    {b:"go",s:"goes",p:"went",pp:"gone",i:"going",o:"to school"},
+    {b:"eat",s:"eats",p:"ate",pp:"eaten",i:"eating",o:"an apple"},
+    {b:"write",s:"writes",p:"wrote",pp:"written",i:"writing",o:"a letter"},
+    {b:"play",s:"plays",p:"played",pp:"played",i:"playing",o:"cricket"},
+    {b:"buy",s:"buys",p:"bought",pp:"bought",i:"buying",o:"a pen"}
+  ];
+  var SUBJ={I:{be:"am",have:"have",t:false},She:{be:"is",have:"has",t:true},They:{be:"are",have:"have",t:false}};
+  var CLUES=["Every day","Yesterday","Tomorrow","Right now","Already"];
+  var PH=["every day","yesterday","tomorrow","right now","already"];
+  var hv=0,hs="She",hc=0;
+
+  function compute(){
+    var v=HV[hv],sb=SUBJ[hs],r={};
+    switch(hc){
+      case 0:r.form=sb.t?v.s:v.b;r.cap=sb.t?"V1 + s":"V1";r.idx=sb.t?1:0;r.tense="Simple present";
+        r.note="A habit or fact. "+(sb.t?"After he, she or it, add -s or -es to the verb.":"After I, you, we and they, use the base form.");break;
+      case 1:r.form=v.p;r.cap="V2";r.idx=2;r.tense="Simple past";
+        r.note="It finished in the past, so use the past form (V2). The form is the same for every subject.";break;
+      case 2:r.form="will "+v.b;r.cap="will + V1";r.idx=0;r.tense="Simple future";
+        r.note="It has not happened yet, so use will + V1. The form is the same for every subject.";break;
+      case 3:r.form=sb.be+" "+v.i;r.cap="am / is / are + V-ing";r.idx=4;r.tense="Present continuous";
+        r.note="It is happening now, so use am, is or are with V-ing. Match the helper to the subject: I am, she is, they are.";break;
+      default:r.form=sb.have+" "+v.pp;r.cap="have / has + V3";r.idx=3;r.tense="Present perfect";
+        r.note="It is recent or still matters, so use have or has with V3. Match the helper: she has, I and they have.";
+    }
+    return r;
+  }
+  function drawHero(pop){
+    var v=HV[hv],r=compute();
+    $("#heroStage").innerHTML=
+      '<span class="chip S">'+hs+'<i>subject</i></span>'+
+      '<span class="chip V" id="vchip">'+r.form+'<i>'+r.cap+'</i></span>'+
+      '<span class="chip O">'+v.o+'</span>'+
+      '<span class="chip C">'+PH[hc]+'.<i>time clue</i></span>';
+    $("#hTense").textContent=r.tense;
+    $("#hNote").textContent=r.note;
+    $("#tilesLab").textContent="The forms of “"+v.b+"”";
+    var tl=[["V1",v.b],["V1 + s",v.s],["V2",v.p],["V3",v.pp],["V-ing",v.i]];
+    $("#tiles").innerHTML=tl.map(function(t,i){return '<div class="tile'+(i===r.idx?" on":"")+'"><small>'+t[0]+'</small><b>'+t[1]+'</b></div>'}).join("");
+    document.querySelectorAll("#subjSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.s===hs)});
+    document.querySelectorAll("#clues button").forEach(function(b,i){b.setAttribute("aria-pressed",i===hc)});
+    if(pop&&!reduce){var c=$("#vchip");if(c.animate)c.animate([{transform:"scale(.85)",opacity:.35},{transform:"none",opacity:1}],{duration:320,easing:"cubic-bezier(.3,.7,.2,1)"})}
+    return hs+" "+r.form+" "+v.o+" "+PH[hc]+".";
+  }
+  $("#clues").innerHTML=CLUES.map(function(c,i){return '<button type="button" data-i="'+i+'" aria-pressed="false">'+c+'</button>'}).join("");
+  $("#clues").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;hc=+b.dataset.i;drawHero(true)});
+  $("#subjSeg").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;hs=b.dataset.s;drawHero(true)});
+  $("#nextVerb").addEventListener("click",function(){hv=(hv+1)%HV.length;drawHero(true)});
+  $("#listen").addEventListener("click",function(){
+    try{
+      var r=compute(),txt=hs+" "+r.form+" "+HV[hv].o+" "+PH[hc]+".";
+      speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(txt);u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u);
+    }catch(err){}
+  });
+  drawHero(false);
+
+  /* ---------- form helper ---------- */
+  var RULES=[
+    {c:6,n:"Simple present",f:"V1 (add -s or -es after he, she, it)",d:"Habits and facts. Clues: every day, always, usually.",ex:"She {{goes}} to school every day. The sun {{rises}} in the east."},
+    {c:6,n:"Simple past",f:"V2",d:"Finished actions. Clues: yesterday, last week, ago.",ex:"We {{played}} cricket yesterday. She {{went}} home."},
+    {c:6,n:"Simple future",f:"will + V1",d:"Things that will happen. Clues: tomorrow, next week.",ex:"They {{will visit}} us tomorrow."},
+    {c:6,n:"After do, does, did",f:"do / does / did + V1",d:"After these helpers the main verb stays in its base form.",ex:"Does she {{like}} tea? He did not {{come}}."},
+    {c:6,n:"Regular verbs",f:"V1 + -ed = V2 = V3",d:"Regular verbs add -ed for the past and for the past participle.",ex:"play, {{played}}, {{played}}. walk, {{walked}}, {{walked}}."},
+    {c:6,n:"Spelling of -s and -es",f:"-es after ch, sh, s, x, o; y becomes ies",d:"Use -es after ch, sh, s, x and o. After a consonant, change y to ies.",ex:"She {{watches}} TV. He {{studies}} hard."},
+    {c:7,n:"Present continuous",f:"am / is / are + V-ing",d:"Actions happening now. Clues: now, at the moment, look!",ex:"The children {{are playing}} in the park."},
+    {c:7,n:"Past continuous",f:"was / were + V-ing",d:"An action in progress at a moment in the past.",ex:"She {{was reading}} when I called."},
+    {c:7,n:"Present perfect",f:"have / has + V3",d:"Recent actions, or actions that still matter. Clues: already, just, ever, never, yet.",ex:"He {{has finished}} his homework."},
+    {c:7,n:"Since and for",f:"have / has + V3 + since / for",d:"Use “since” with a point in time and “for” with a length of time.",ex:"I {{have lived}} here since 2018, for eight years."},
+    {c:7,n:"Spelling of -ing",f:"drop the silent e, or double the last letter",d:"Drop the silent e (make, making). Double the last letter after a short vowel (run, running).",ex:"She is {{making}} tea. They are {{running}}."},
+    {c:8,n:"Past perfect",f:"had + V3",d:"The earlier of two past actions.",ex:"The train {{had left}} before we reached."},
+    {c:8,n:"After a modal",f:"can / may / must / should / will + V1",d:"A modal is always followed by the base form, with no -s.",ex:"She can {{swim}}. You should {{listen}}."},
+    {c:8,n:"Infinitive",f:"to + V1",d:"After want, decide, hope, plan.",ex:"He wants {{to be}} a doctor. We decided {{to go}}."},
+    {c:8,n:"Gerund",f:"V-ing",d:"After enjoy, finish, mind, avoid, stop, and after prepositions.",ex:"She enjoys {{singing}}. He finished {{reading}}."},
+    {c:8,n:"Passive voice",f:"is / was + V3",d:"The doer is not the subject. See the Voices TLM for more.",ex:"The window was {{broken}} by the wind."},
+    {c:8,n:"If-sentences",f:"if + V1, will + V1  /  if + V2, would + V1",d:"Real conditions use the present. Imaginary ones use the past.",ex:"If it {{rains}}, we {{will stay}} home. If I {{were}} a bird, I {{would fly}}."}
+  ];
+  var VT={go:["went","gone"],eat:["ate","eaten"],see:["saw","seen"],buy:["bought","bought"],bring:["brought","brought"],take:["took","taken"],give:["gave","given"],play:["played","played"],write:["wrote","written"],run:["ran","run"],make:["made","made"],drink:["drank","drunk"],sing:["sang","sung"],begin:["began","begun"],swim:["swam","swum"],break:["broke","broken"],know:["knew","known"],grow:["grew","grown"],throw:["threw","thrown"],wear:["wore","worn"],steal:["stole","stolen"],forget:["forgot","forgotten"],choose:["chose","chosen"],fly:["flew","flown"],speak:["spoke","spoken"]};
+  var IRR={6:["go","eat","see","buy","bring","take","give","write"],7:["run","drink","sing","begin","speak","fly","make","swim"],8:["break","know","grow","throw","wear","steal","forget","choose"]};
+  function drawHelper(){
+    $("#helpLead").textContent=cls===6
+      ?"Class 6 learns the simple tenses, agreement and the first irregular verbs."
+      :"Class "+cls+" revises the earlier rules and adds new ones. The new ones are marked.";
+    $("#tlist").innerHTML=RULES.filter(function(r){return r.c<=cls}).map(function(r){
+      return '<article class="tcard"><h3>'+r.n+(r.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<span class="formula">'+r.f+'</span><p>'+r.d+'</p><p class="ex">'+hlSent(r.ex)+'</p></article>';
+    }).join("");
+    var rows=[];
+    for(var c=6;c<=cls;c++)IRR[c].forEach(function(v){rows.push(v)});
+    $("#irr").innerHTML='<div class="h">V1</div><div class="h">V2</div><div class="h">V3</div>'+
+      rows.map(function(v){return '<div>'+v+'</div><div>'+VT[v][0]+'</div><div>'+VT[v][1]+'</div>'}).join("");
+  }
+
+  /* ---------- clue finder ---------- */
+  var FIND=[
+    {c:6,o:"A habit or fact (every day, always, usually)",n:"Simple present",f:"V1 (add -s or -es after he, she, it)",ex:"She {{goes}} to school every day."},
+    {c:6,o:"Finished in the past (yesterday, last week, ago)",n:"Simple past",f:"V2",ex:"She {{went}} to school yesterday."},
+    {c:6,o:"Will happen later (tomorrow, next week)",n:"Simple future",f:"will + V1",ex:"She {{will go}} to school tomorrow."},
+    {c:6,o:"The verb comes after do, does or did",n:"After do, does, did",f:"do / does / did + V1",ex:"Did she {{go}} to school?"},
+    {c:7,o:"Happening right now (now, at the moment, look!)",n:"Present continuous",f:"am / is / are + V-ing",ex:"She {{is going}} to school now."},
+    {c:7,o:"In progress at a moment in the past (while, when I called)",n:"Past continuous",f:"was / were + V-ing",ex:"She {{was reading}} when I called."},
+    {c:7,o:"Recent or still matters (already, just, ever, never, yet, since, for)",n:"Present perfect",f:"have / has + V3",ex:"She {{has gone}} to school already."},
+    {c:8,o:"Happened before another past action",n:"Past perfect",f:"had + V3",ex:"She {{had left}} before I arrived."},
+    {c:8,o:"The verb comes after can, may, must, should or will",n:"After a modal",f:"modal + V1",ex:"She can {{swim}} well."},
+    {c:8,o:"The verb comes after to",n:"Infinitive",f:"to + V1",ex:"She wants {{to sing}}."},
+    {c:8,o:"The verb comes after enjoy, finish, mind, avoid or stop",n:"Gerund",f:"V-ing",ex:"She enjoys {{singing}}."},
+    {c:8,o:"The sentence starts with if",n:"If-sentence",f:"if + V1, will + V1",ex:"If it {{rains}}, we {{will stay}} home."},
+    {c:8,o:"The doer comes after “by”, or the receiver is the subject",n:"Passive voice",f:"is / was + V3",ex:"The glass was {{broken}} by Tom."}
+  ];
+  var finRes=null;
+  function drawFinder(){
+    var box=$("#finBox");
+    if(finRes!==null){
+      var r=finRes;
+      box.innerHTML='<div class="res"><p class="count" style="color:inherit">Use this form</p><h3>'+r.n+'</h3><p><b>'+r.f+'</b></p>'+
+        '<p class="ex">'+hlSent(r.ex)+'</p></div>'+
+        '<div class="row"><button type="button" class="btn" data-act="restart">Try another clue</button></div>';
+      return;
+    }
+    box.innerHTML='<p class="qs">What is the clue in the sentence?</p><div class="opts">'+
+      FIND.map(function(x,i){return x.c<=cls?'<button type="button" class="opt" data-i="'+i+'">'+x.o+'</button>':""}).join("")+'</div>';
+  }
+  $("#finBox").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="restart"){finRes=null;drawFinder();return}
+    if(b.dataset.i!==undefined){finRes=FIND[+b.dataset.i];drawFinder()}
+  });
+
+  /* ---------- practice data ---------- */
+  var FILL=[
+    {pre:"My brother",v:"play",post:"cricket every evening.",ans:"plays",o:["plays","play","played"],w:"It is a habit and “my brother” is singular, so add -s: plays.",c:6},
+    {pre:"The boys",v:"play",post:"football every Sunday.",ans:"play",o:["play","plays","played"],w:"It is a habit and “the boys” is plural, so use the base form: play.",c:6},
+    {pre:"She",v:"go",post:"to the market yesterday.",ans:"went",o:["went","goes","gone"],w:"“Yesterday” shows the past. The past form (V2) of go is went.",c:6},
+    {pre:"I",v:"eat",post:"rice for lunch yesterday.",ans:"ate",o:["ate","eaten","eats"],w:"“Yesterday” shows the past. The past form (V2) of eat is ate.",c:6},
+    {pre:"We",v:"visit",post:"our grandmother next Sunday.",ans:"will visit",o:["will visit","visited","visits"],w:"“Next Sunday” is in the future, so use will + V1.",c:6},
+    {pre:"Does she",v:"like",post:"tea?",ans:"like",o:["like","likes","liked"],w:"After does, the main verb stays in its base form (V1).",c:6},
+    {pre:"He did not",v:"come",post:"to school.",ans:"come",o:["come","came","comes"],w:"After did, the main verb stays in its base form (V1).",c:6},
+    {pre:"The sun",v:"rise",post:"in the east.",ans:"rises",o:["rises","rise","rose"],w:"A fact with a singular subject, so add -s: rises.",c:6},
+    {pre:"They",v:"be",post:"happy.",ans:"are",o:["are","is","am"],w:"“They” is plural, so use are.",c:6},
+    {pre:"She",v:"have",post:"a red bag.",ans:"has",o:["has","have","had"],w:"“She” is singular, so use has.",c:6},
+    {pre:"Ravi",v:"write",post:"a letter last week.",ans:"wrote",o:["wrote","written","writes"],w:"“Last week” shows the past. The past form (V2) of write is wrote.",c:6},
+    {pre:"I",v:"be",post:"in class six.",ans:"am",o:["am","is","are"],w:"“I” always takes am.",c:6},
+    {pre:"The children",v:"play",post:"in the park now.",ans:"are playing",o:["are playing","is playing","play"],w:"“Now” shows it is happening. Use are + V-ing with a plural subject.",c:7},
+    {pre:"She",v:"read",post:"a book when I called.",ans:"was reading",o:["was reading","is reading","reads"],w:"It was in progress in the past: was + V-ing.",c:7},
+    {pre:"I have already",v:"finish",post:"my homework.",ans:"finished",o:["finished","finish","finishing"],w:"After have, use V3. Finish is regular, so V3 is finished.",c:7},
+    {pre:"He has",v:"write",post:"three letters.",ans:"written",o:["written","wrote","writing"],w:"After has, use V3. The V3 of write is written.",c:7},
+    {pre:"They have",v:"live",post:"here for ten years.",ans:"lived",o:["lived","live","living"],w:"After have, use V3: lived.",c:7},
+    {pre:"Look! The baby",v:"sleep",post:".",ans:"is sleeping",o:["is sleeping","sleeps","slept"],w:"“Look!” shows it is happening now: is + V-ing.",c:7},
+    {pre:"I",v:"see",post:"that film last week.",ans:"saw",o:["saw","seen","see"],w:"“Last week” shows the past. The past form (V2) of see is saw.",c:7},
+    {pre:"She has never",v:"eat",post:"mangoes.",ans:"eaten",o:["eaten","ate","eat"],w:"After has, use V3. The V3 of eat is eaten.",c:7},
+    {pre:"While I",v:"walk",post:"home, it started to rain.",ans:"was walking",o:["was walking","walked","am walking"],w:"“While” shows an action in progress in the past: was + V-ing.",c:7},
+    {pre:"Have you",v:"do",post:"your homework?",ans:"done",o:["done","did","doing"],w:"After have, use V3. The V3 of do is done.",c:7},
+    {pre:"The train had",v:"leave",post:"before we reached.",ans:"left",o:["left","leaves","leaving"],w:"After had, use V3. The V3 of leave is left.",c:8},
+    {pre:"She can",v:"swim",post:"very well.",ans:"swim",o:["swim","swims","swam"],w:"After a modal, use the base form with no -s.",c:8},
+    {pre:"He wants",v:"be",post:"a doctor.",ans:"to be",o:["to be","being","be"],w:"After want, use to + V1.",c:8},
+    {pre:"She enjoys",v:"sing",post:".",ans:"singing",o:["singing","to sing","sing"],w:"After enjoy, use V-ing.",c:8},
+    {pre:"If it rains, we",v:"stay",post:"at home.",ans:"will stay",o:["will stay","would stay","stayed"],w:"A real condition: if + present, will + V1.",c:8},
+    {pre:"If I",v:"be",post:"a bird, I would fly.",ans:"were",o:["were","am","will be"],w:"An imaginary condition uses were with every subject.",c:8},
+    {pre:"The letter was",v:"write",post:"by Raju.",ans:"written",o:["written","wrote","writing"],w:"The passive uses be + V3. The V3 of write is written.",c:8},
+    {pre:"You should",v:"listen",post:"to your teacher.",ans:"listen",o:["listen","listens","to listen"],w:"After a modal (should), use the base form.",c:8},
+    {pre:"He finished",v:"read",post:"the book.",ans:"reading",o:["reading","to read","read"],w:"After finish, use V-ing.",c:8},
+    {pre:"When I reached, the film had already",v:"begin",post:".",ans:"begun",o:["begun","began","beginning"],w:"After had, use V3. The V3 of begin is begun.",c:8},
+    {pre:"The window was",v:"break",post:"by the wind.",ans:"broken",o:["broken","broke","breaking"],w:"The passive uses be + V3. The V3 of break is broken.",c:8},
+    {pre:"We decided",v:"go",post:"by bus.",ans:"to go",o:["to go","going","go"],w:"After decide, use to + V1.",c:8}
+  ];
+  var PICK=[
+    {o:["She goes to school every day.","She go to school every day.","She going to school every day."],w:"“She” is singular, so the habit takes -s: goes.",c:6},
+    {o:["Did you go there?","Did you went there?","Did you gone there?"],w:"After did, use V1: go.",c:6},
+    {o:["The boys play cricket.","The boys plays cricket.","The boys playing cricket."],w:"“The boys” is plural, so use play with no -s.",c:6},
+    {o:["He has two sisters.","He have two sisters.","He haves two sisters."],w:"“He” is singular, so use has.",c:6},
+    {o:["I am happy.","I is happy.","I are happy."],w:"“I” always takes am.",c:6},
+    {o:["They will come tomorrow.","They will came tomorrow.","They will comes tomorrow."],w:"After will, use V1: come.",c:6},
+    {o:["She is reading a book now.","She are reading a book now.","She is read a book now."],w:"Present continuous: is + V-ing for a singular subject.",c:7},
+    {o:["I have seen that film.","I have saw that film.","I have see that film."],w:"After have, use V3: seen.",c:7},
+    {o:["They were playing when it rained.","They was playing when it rained.","They were play when it rained."],w:"Past continuous: were + V-ing for a plural subject.",c:7},
+    {o:["He has already eaten.","He has already ate.","He have already eaten."],w:"After has, use V3: eaten. “He” takes has.",c:7},
+    {o:["She has lived here for five years.","She has live here for five years.","She have lived here for five years."],w:"“She” takes has, followed by V3: lived.",c:7},
+    {o:["The children are running.","The children are runing.","The children is running."],w:"Double the n in run, then add -ing: running. “Children” is plural, so use are.",c:7},
+    {o:["She can sing well.","She can sings well.","She can sang well."],w:"After a modal, use the base form: sing.",c:8},
+    {o:["I enjoy reading.","I enjoy to read.","I enjoy read."],w:"After enjoy, use V-ing: reading.",c:8},
+    {o:["He wants to go.","He wants going.","He wants go."],w:"After want, use to + V1.",c:8},
+    {o:["If it rains, we will stay home.","If it will rain, we will stay home.","If it rained, we will stay home."],w:"A real condition: if + present, will + V1.",c:8},
+    {o:["The glass was broken by Tom.","The glass was broke by Tom.","The glass was breaking by Tom."],w:"The passive uses be + V3: broken.",c:8},
+    {o:["The film had begun before we arrived.","The film had began before we arrived.","The film has begun before we arrived."],w:"Past perfect: had + V3. The V3 of begin is begun.",c:8}
+  ];
+  var FORMQ=[
+    {v:"go",f:"V2",ans:"went",o:["went","goed","gone"],c:6},{v:"eat",f:"V2",ans:"ate",o:["ate","eated","eaten"],c:6},
+    {v:"see",f:"V2",ans:"saw",o:["saw","seen","seed"],c:6},{v:"buy",f:"V2",ans:"bought",o:["bought","buyed","boughten"],c:6},
+    {v:"bring",f:"V2",ans:"brought",o:["brought","brang","bringed"],c:6},{v:"take",f:"V2",ans:"took",o:["took","taken","taked"],c:6},
+    {v:"give",f:"V2",ans:"gave",o:["gave","given","gived"],c:6},{v:"play",f:"V2",ans:"played",o:["played","plaid","plaied"],c:6},
+    {v:"study",f:"S",ans:"studies",o:["studies","studys","studyes"],c:6},{v:"watch",f:"S",ans:"watches",o:["watches","watchs","watchies"],c:6},
+    {v:"go",f:"S",ans:"goes",o:["goes","gos","goies"],c:6},
+    {v:"write",f:"V3",ans:"written",o:["written","wrote","writed"],c:7},{v:"take",f:"V3",ans:"taken",o:["taken","took","taked"],c:7},
+    {v:"eat",f:"V3",ans:"eaten",o:["eaten","ate","eated"],c:7},{v:"see",f:"V3",ans:"seen",o:["seen","saw","seed"],c:7},
+    {v:"drink",f:"V3",ans:"drunk",o:["drunk","drank","drinked"],c:7},{v:"sing",f:"V3",ans:"sung",o:["sung","sang","singed"],c:7},
+    {v:"begin",f:"V3",ans:"begun",o:["begun","began","beginned"],c:7},
+    {v:"run",f:"ING",ans:"running",o:["running","runing","runeing"],c:7},{v:"make",f:"ING",ans:"making",o:["making","makeing","makking"],c:7},
+    {v:"swim",f:"ING",ans:"swimming",o:["swimming","swiming","swimeing"],c:7},
+    {v:"break",f:"V3",ans:"broken",o:["broken","broke","breaked"],c:8},{v:"know",f:"V3",ans:"known",o:["known","knew","knowed"],c:8},
+    {v:"grow",f:"V3",ans:"grown",o:["grown","grew","growed"],c:8},{v:"throw",f:"V3",ans:"thrown",o:["thrown","threw","throwed"],c:8},
+    {v:"wear",f:"V3",ans:"worn",o:["worn","wore","weared"],c:8},{v:"steal",f:"V3",ans:"stolen",o:["stolen","stole","stealed"],c:8},
+    {v:"forget",f:"V3",ans:"forgotten",o:["forgotten","forgot","forgetted"],c:8},{v:"choose",f:"V3",ans:"chosen",o:["chosen","chose","choosed"],c:8},
+    {v:"fly",f:"V3",ans:"flown",o:["flown","flew","flied"],c:8},{v:"speak",f:"V3",ans:"spoken",o:["spoken","spoke","speaked"],c:8}
+  ];
+  var FLAB={V2:"past form (V2)",V3:"past participle (V3)",ING:"-ing form",S:"form used with he, she, it"};
+  function formWhy(q){
+    if(q.f==="V2"||q.f==="V3"){var t=VT[q.v];return q.v+", "+t[0]+", "+t[1]+"."}
+    if(q.f==="S")return "Add -es after ch, sh, s, x, o. After a consonant, change y to ies: "+q.ans+".";
+    return "Drop the silent e (make, making) or double the last letter after a short vowel (swim, swimming): "+q.ans+".";
+  }
+
+  var mode="fill",S={};
+  function resetPractice(){
+    var F=FILL.filter(function(x){return x.c<=cls}),P=PICK.filter(function(x){return x.c<=cls}),M=FORMQ.filter(function(x){return x.c<=cls});
+    S.fill={i:0,score:0,ans:null,q:shuffle(F).slice(0,8).map(function(x){return {pre:x.pre,v:x.v,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
+    S.pick={i:0,score:0,ans:null,q:shuffle(P).slice(0,8).map(function(x){return {ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
+    S.form={i:0,score:0,ans:null,q:shuffle(M).slice(0,8).map(function(x){return {v:x.v,f:x.f,ans:x.ans,o:shuffle(x.o)}})};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+s.score+' out of '+n+'</p><p>'+
+        (s.score===n?"Perfect round. Your verbs are in great shape.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the form helper again, then play once more.")+
+        '</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    if(mode==="fill"){
+      html+='<p class="qs">'+esc(q.pre)+' <span class="gap" id="gap">&nbsp;</span> <span style="color:var(--muted)">('+esc(q.v)+')</span> '+esc(q.post)+'</p><div class="opts row3">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    }else if(mode==="pick"){
+      html+='<p class="qs">Which sentence is correct?</p><div class="opts">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    }else{
+      html+='<p class="qs">Give the '+FLAB[q.f]+' of “'+esc(q.v)+'”.</p><div class="opts row3">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    }
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var q=s.q[s.i],chosen=q.o[+b.dataset.o],ok=chosen===q.ans;
+    s.ans=1;if(ok)s.score++;
+    var why=mode==="form"?formWhy(q):q.w,fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+why;
+    if(mode==="fill")$("#gap").textContent=q.ans;
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(q.o[+x.dataset.o]===q.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    finRes=null;drawHelper();drawFinder();resetPractice();
+  });
+
+  drawHelper();drawFinder();resetPractice();
+})();
+</script>
+</body>
+</html>

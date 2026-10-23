@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clauses | TLM by Madimi Arundhathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --display:"Baloo 2","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Verdana,system-ui,sans-serif;
+  --bg:#F6F8FC; --surface:#FFFFFF; --ink:#17203A; --muted:#55607A; --line:#D5DCEB;
+  --accent:#3347C7; --accent-ink:#FFFFFF;
+  --M-bg:#D5F3EE; --M-c:#13927F; --M-t:#0B5E55;
+  --S-bg:#FFE3E6; --S-c:#D6334A; --S-t:#8F1226;
+  --J-bg:#FFF0C2; --J-c:#D99A00; --J-t:#6B4A00;
+  --good:#0E6B45; --good-bg:#DDF5E8; --bad:#B3261E; --bad-bg:#FDE4E1;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+    --accent:#9AA8FF; --accent-ink:#10152A;
+    --M-bg:#0F3F3B; --M-c:#3CC4AE; --M-t:#9BEBDE;
+    --S-bg:#4A1B26; --S-c:#FF7A8C; --S-t:#FFC2CA;
+    --J-bg:#4A3A0A; --J-c:#F2B91D; --J-t:#FFDE8A;
+    --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+  --accent:#9AA8FF; --accent-ink:#10152A;
+  --M-bg:#0F3F3B; --M-c:#3CC4AE; --M-t:#9BEBDE;
+  --S-bg:#4A1B26; --S-c:#FF7A8C; --S-t:#FFC2CA;
+  --J-bg:#4A3A0A; --J-c:#F2B91D; --J-t:#FFDE8A;
+  --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4rem);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.55 var(--body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.1rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0}
+h2{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}
+p{margin:.4rem 0}
+section{padding:2.4rem 0 .6rem}
+.lead{color:var(--muted);max-width:36rem}
+
+.hero{padding-top:1.6rem}
+.hero h1{font-size:clamp(3rem,15vw,5rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.by{margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.by strong{color:var(--ink)}
+.demo{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem}
+.stage{display:flex;flex-wrap:wrap;gap:.6rem;align-items:flex-start;min-height:5.6rem;margin:.2rem 0 .9rem}
+.chip{appearance:none;cursor:pointer;display:inline-flex;flex-direction:column;align-items:flex-start;gap:.15rem;padding:.5rem .85rem .4rem;border-radius:16px;border:3px solid;font:800 clamp(1.1rem,5.2vw,1.55rem)/1.15 var(--display);text-align:left;transition:opacity .2s}
+.chip b{font-weight:800}
+.chip i{font:700 .75rem/1 var(--body);font-style:normal;opacity:.85}
+.chip.M{background:var(--M-bg);border-color:var(--M-c);color:var(--M-t)}
+.chip.S{background:var(--S-bg);border:3px dashed var(--S-c);color:var(--S-t)}
+.chip.J{background:var(--J-bg);border-color:var(--J-c);color:var(--J-t);border-radius:30px}
+.has-sel .chip:not(.sel){opacity:.38}
+.chip.sel{box-shadow:0 0 0 3px var(--bg),0 0 0 6px var(--ink)}
+.panel{border-radius:16px;border:2px solid var(--line);padding:.8rem 1rem;min-height:8.2rem;margin-bottom:.8rem}
+.panel.M{background:var(--M-bg);border-color:var(--M-c);color:var(--M-t)}
+.panel.S{background:var(--S-bg);border-color:var(--S-c);color:var(--S-t)}
+.panel.J{background:var(--J-bg);border-color:var(--J-c);color:var(--J-t)}
+.panel .alone{font:800 clamp(1.3rem,6vw,1.75rem)/1.25 var(--display);margin:0 0 .3rem}
+.panel .verdict{font-weight:700;margin:0}
+.panel .hint{color:var(--muted);margin:0}
+.tense{font:800 1.1rem/1.2 var(--display);margin:0 0 .2rem}
+.note{color:var(--muted);min-height:3.2rem;margin:0 0 .8rem}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.btn{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--bg);font:700 1rem/1 var(--body);padding:.8rem 1.1rem;border-radius:14px;cursor:pointer;min-height:2.9rem}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.alt:hover{border-color:var(--ink)}
+.btn[hidden]{display:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink);font:700 1rem/1 var(--body);padding:.75rem 1.05rem;min-height:2.9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.key{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:.4rem}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:3px solid;display:inline-block}
+.key .M{background:var(--M-bg);border-color:var(--M-c)}
+.key .S{background:var(--S-bg);border:3px dashed var(--S-c)}
+.key .J{background:var(--J-bg);border-color:var(--J-c);border-radius:20px}
+
+.classbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:2px solid var(--line);margin-top:2rem}
+.classbar .wrap{display:flex;align-items:center;gap:.8rem;padding-top:.6rem;padding-bottom:.6rem}
+.classbar b{font:800 1.1rem var(--display)}
+
+.card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem;margin-top:1rem}
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--accent);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use.M{border-left-color:var(--M-c)} .use.S{border-left-color:var(--S-c)}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.2rem 0}
+.eq{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font:800 1.2rem var(--display);margin:.6rem 0}
+.eq span.t{padding:.3rem .7rem;border-radius:12px;border:2px solid}
+.eq .a{background:var(--S-bg);border-color:var(--S-c);color:var(--S-t)}
+.eq .b{background:var(--J-bg);border-color:var(--J-c);color:var(--J-t)}
+.eq .c{background:var(--M-bg);border-color:var(--M-c);color:var(--M-t)}
+
+.hl{border-radius:6px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid}
+.hl.M{background:var(--M-bg);border-color:var(--M-c);color:var(--M-t)}
+.hl.S{background:var(--S-bg);border-color:var(--S-c);color:var(--S-t)}
+.hl.J{background:var(--J-bg);border-color:var(--J-c);color:var(--J-t);font-weight:800}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--J-c);background:var(--J-bg);color:var(--J-t);font-weight:700}
+.tcard p{margin:.25rem 0}
+.tcard .ex{font:800 1.15rem/1.8 var(--display);margin-top:.5rem}
+
+.pbox{min-height:19rem}
+.count{color:var(--muted);font-size:.9rem;margin:0}
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.4 var(--display);margin:.6rem 0 1rem}
+.gap{display:inline-block;min-width:4.5rem;border-bottom:4px solid var(--ink);text-align:center;padding:0 .3em}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.fb.good{color:var(--good)} .fb.bad{color:var(--bad)}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+.result .big{font:800 2.6rem/1 var(--display);margin:.4rem 0}
+.res{border-radius:16px;border:2px solid;padding:.9rem 1rem;margin:.8rem 0}
+.res.M{background:var(--M-bg);border-color:var(--M-c);color:var(--M-t)}
+.res.S{background:var(--S-bg);border-color:var(--S-c);color:var(--S-t)}
+.res h3{font-size:1.5rem;font-weight:800}
+
+details{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.2rem 1rem;margin-top:1rem}
+summary{cursor:pointer;font:800 1.2rem var(--display);padding:.8rem 0}
+details ul,details ol{padding-left:1.2rem;margin:.3rem 0 .9rem}
+details li{margin:.35rem 0}
+footer{margin:3rem 0 2rem;padding-top:1.2rem;border-top:2px solid var(--line);color:var(--muted);font-size:.95rem}
+footer strong{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chip{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <h1>Clauses</h1>
+  <p class="sub">Some groups of words can stand alone. Others lean on a friend. Tap a clause to test it.</p>
+
+  <div class="demo">
+    <div class="stage" id="heroStage"></div>
+    <div class="panel" id="heroPanel" aria-live="polite"></div>
+    <p class="tense" id="heroType"></p>
+    <p class="note" id="heroNote"></p>
+    <div class="row">
+      <button type="button" class="btn" id="whole">Show whole sentence</button>
+      <button type="button" class="btn alt" id="nextEx">Next sentence</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="M"></em>main clause</span>
+      <span><em class="J"></em>joiner</span>
+      <span><em class="S"></em>subordinate clause</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="what">
+    <h2>What is a clause?</h2>
+    <p class="lead">A clause is a group of words with a subject and a verb. Without both, it is only a phrase.</p>
+    <div class="card">
+      <div class="eq" aria-label="Clause formula"><span class="t a">subject</span> + <span class="t b">verb</span> = <span class="t c">clause</span></div>
+    </div>
+    <div class="uses">
+      <div class="use"><b>Phrase: no subject and verb pair</b><p>in the garden</p><p>a bunch of red roses</p></div>
+      <div class="use"><b>Clause: has a subject and a verb</b><p>the dog barked</p><p>because it was late</p></div>
+      <div class="use M"><b>Main clause: makes complete sense alone</b><p>The dog barked.</p></div>
+      <div class="use S"><b>Subordinate clause: leaves us waiting</b><p>Because it was late…</p></div>
+    </div>
+  </section>
+
+  <section id="helper">
+    <h2>Clause helper</h2>
+    <p class="lead" id="helpLead"></p>
+    <div class="tlist" id="tlist"></div>
+    <div class="card" id="kinds" hidden></div>
+  </section>
+
+  <section id="detective">
+    <h2>Clause detective</h2>
+    <p class="lead">Not sure what kind of clause you are looking at? Answer the questions and the detective will name it.</p>
+    <div class="card" id="detBox"></div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="test" aria-pressed="true">Test it</button>
+        <button type="button" data-m="join" aria-pressed="false">Join it</button>
+        <button type="button" data-m="type" aria-pressed="false" hidden>Type it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>tell a clause from a phrase, and a main clause from a subordinate clause (Class 6);</li>
+        <li>use coordinate and adverb clauses, and spot adjective clauses (Class 7);</li>
+        <li>identify noun, adjective and adverb clauses, and name simple, compound and complex sentences (Class 8).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, teal, yellow and pink chalk (main clause, joiner, subordinate clause).</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Say “because it was raining” and stop. Ask: what happened? Students feel the missing half.</li>
+        <li><b>Tap test (8 min).</b> Project the hero. Students tap each clause and decide: does it stand alone?</li>
+        <li><b>Clause helper (12 min).</b> Pick your class on the bar. Read each card, then colour the clauses on the board.</li>
+        <li><b>Clause detective (5 min).</b> Take one textbook sentence and answer the detective’s questions together.</li>
+        <li><b>Practice (8 min).</b> Teams play Test it, Join it and Type it on the count of three.</li>
+        <li><b>Exit ticket.</b> Each student writes three sentences, each with a main clause and a subordinate clause, and circles the joiner.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Calling a phrase a clause. Check for a subject and a verb together.</li>
+        <li>Ending a sentence with only the subordinate clause (“Because it was raining.”). This is a fragment.</li>
+        <li>Thinking the subordinate clause is less important. It only means the clause cannot stand alone.</li>
+        <li>Forgetting the comma when the subordinate clause comes first.</li>
+        <li>Mixing up “and, but, or” (they join equal clauses) with “because, when, if” (they start a subordinate clause).</li>
+        <li>Missing noun clauses. Ask: can I replace the clause with “it” or “something”?</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer>
+    Teaching learning material (TLM) on Clauses for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+  var CAP={M:"main clause",S:"subordinate clause",J:"joiner"};
+  function tokHTML(tokens){
+    return tokens.map(function(t){return '<span class="hl '+t[1]+'">'+esc(t[0])+'</span>'+(t[2]||"")}).join(" ");
+  }
+
+  /* ---------- hero: tap a clause to test it alone ---------- */
+  var HEX=[
+    {t:[["We stayed at home","M"],["because","J"],["it was raining","S","."]],ty:"Adverb clause of reason",n:"The subordinate clause tells why. The joiner is “because”."},
+    {t:[["When","J"],["the bell rang","S",","],["the students ran out","M","."]],ty:"Adverb clause of time",n:"The subordinate clause tells when. When it comes first, a comma follows it."},
+    {t:[["I like the book","M"],["that","J"],["you gave me","S","."]],ty:"Adjective clause",n:"The subordinate clause describes the noun “book”."},
+    {t:[["She knows","M"],["that","J"],["he is honest","S","."]],ty:"Noun clause",n:"The subordinate clause tells what she knows. It does the work of a noun."},
+    {t:[["Ravi went to the market","M"],["and","J"],["Meena stayed at home","M","."]],ty:"Coordinate clauses",n:"Both clauses can stand alone. “And” joins two equal clauses, so neither is subordinate."},
+    {t:[["If","J"],["you study hard","S",","],["you will pass","M","."]],ty:"Adverb clause of condition",n:"The subordinate clause sets a condition: you pass only if you study hard."}
+  ];
+  var exI=0,sel=null;
+  function drawHero(){
+    var e=HEX[exI],stage=$("#heroStage");
+    stage.className="stage"+(sel!==null?" has-sel":"");
+    stage.innerHTML=e.t.map(function(t,i){
+      return '<button type="button" class="chip '+t[1]+(sel===i?" sel":"")+'" data-i="'+i+'" aria-pressed="'+(sel===i)+'"><b>'+esc(t[0])+(t[2]||"")+'</b><i>'+CAP[t[1]]+'</i></button>';
+    }).join("");
+    var p=$("#heroPanel");
+    if(sel===null){
+      p.className="panel";
+      p.innerHTML='<p class="alone">Tap a clause to test it on its own.</p><p class="hint">Say it aloud. Does it make complete sense?</p>';
+    }else{
+      var t=e.t[sel],r=t[1];
+      p.className="panel "+r;
+      if(r==="J"){
+        p.innerHTML='<p class="alone">“'+esc(t[0])+'”</p><p class="verdict">A joiner means little by itself. It links one clause to another.</p>';
+      }else{
+        p.innerHTML='<p class="alone">“'+esc(cap(t[0]))+(r==="M"?".":"…")+'”</p>'+
+          '<p class="verdict">'+(r==="M"
+            ?"✓ Complete thought. It stands alone, so it is a main clause."
+            :"? Something is missing. It cannot stand alone, so it is a subordinate clause.")+'</p>';
+      }
+    }
+    $("#heroType").textContent=e.ty;
+    $("#heroNote").textContent=e.n;
+    $("#whole").disabled=sel===null;
+  }
+  $("#heroStage").addEventListener("click",function(ev){
+    var b=ev.target.closest("button");if(!b)return;
+    var i=+b.dataset.i;sel=sel===i?null:i;drawHero();
+  });
+  $("#whole").addEventListener("click",function(){sel=null;drawHero()});
+  $("#nextEx").addEventListener("click",function(){exI=(exI+1)%HEX.length;sel=null;drawHero()});
+  $("#listen").addEventListener("click",function(){
+    try{
+      speechSynthesis.cancel();
+      var txt=HEX[exI].t.map(function(t){return t[0]+(t[2]||"")}).join(" ");
+      var u=new SpeechSynthesisUtterance(txt);u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u);
+    }catch(err){}
+  });
+  drawHero();
+
+  /* ---------- clause helper cards ---------- */
+  var RULES=[
+    {c:6,n:"Main clause",f:"subject + verb + complete thought",d:"A main clause makes complete sense on its own.",ex:[["The sun rose","M","."]]},
+    {c:6,n:"Subordinate clause",f:"joiner + subject + verb",d:"A subordinate clause cannot stand alone. It needs a main clause.",ex:[["We stayed in","M"],["because","J"],["it rained","S","."]]},
+    {c:6,n:"Joining equal clauses",f:"and, but, or, so",d:"Two main clauses can be joined into one longer sentence. They are called coordinate clauses.",ex:[["I called him","M",","],["but","J"],["he did not answer","M","."]]},
+    {c:7,n:"Adverb clause of time",f:"when, while, after, before, until",d:"Tells when something happens.",ex:[["She smiled","M"],["when","J"],["she saw us","S","."]]},
+    {c:7,n:"Adverb clause of place",f:"where, wherever",d:"Tells where something happens.",ex:[["Stay","M"],["where","J"],["you are","S","."]]},
+    {c:7,n:"Adverb clause of reason",f:"because, since, as",d:"Tells why something happens.",ex:[["He was late","M"],["because","J"],["the bus broke down","S","."]]},
+    {c:7,n:"Adjective clause",f:"who, whom, whose, which, that",d:"Describes a noun. It comes right after the noun it describes.",ex:[["The boy","M"],["who","J"],["sat beside me","S"],["is my cousin","M","."]]},
+    {c:8,n:"Noun clause",f:"that, what, whether, who, where",d:"Does the work of a noun. It can be what someone knows, says or asks.",ex:[["She knows","M"],["that","J"],["he is honest","S","."]]},
+    {c:8,n:"Adverb clause of condition",f:"if, unless",d:"Tells on what condition something happens.",ex:[["If","J"],["you work hard","S",","],["you will succeed","M","."]]},
+    {c:8,n:"Adverb clause of purpose",f:"so that, in order that",d:"Tells why someone does something.",ex:[["She studied hard","M"],["so that","J"],["she could pass","S","."]]},
+    {c:8,n:"Adverb clause of contrast",f:"although, though, even though",d:"Shows something unexpected.",ex:[["Although","J"],["it was cold","S",","],["we played outside","M","."]]}
+  ];
+  function drawHelper(){
+    $("#helpLead").textContent=cls===6
+      ?"Class 6 learns three ideas: the main clause, the subordinate clause and joining equal clauses."
+      :"Class "+cls+" revises the earlier clauses and adds new ones. The new ones are marked.";
+    $("#tlist").innerHTML=RULES.filter(function(r){return r.c<=cls}).map(function(r){
+      return '<article class="tcard"><h3>'+r.n+(r.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<span class="formula">'+r.f+'</span><p>'+r.d+'</p><p class="ex">'+tokHTML(r.ex)+'</p></article>';
+    }).join("");
+    var k=$("#kinds");
+    if(cls===8){
+      k.hidden=false;
+      k.innerHTML='<h3>Three kinds of sentences</h3><p class="lead">Count the clauses to name the sentence.</p><div class="uses">'+
+        '<div class="use"><b>Simple: one clause</b><p>'+tokHTML([["The bell rang","M","."]])+'</p></div>'+
+        '<div class="use"><b>Compound: two or more main clauses</b><p>'+tokHTML([["The bell rang","M"],["and","J"],["the students left","M","."]])+'</p></div>'+
+        '<div class="use"><b>Complex: a main clause and a subordinate clause</b><p>'+tokHTML([["The students left","M"],["when","J"],["the bell rang","S","."]])+'</p></div></div>';
+    }else{k.hidden=true;k.innerHTML=""}
+  }
+
+  /* ---------- clause detective ---------- */
+  var TREE={
+    start:{q:"Can this group of words stand alone as a sentence?",o:[["Yes, it makes complete sense","a1"],["No, it leaves me waiting","b1"]]},
+    a1:{q:"Is it joined by and, but, or, so to another clause that can also stand alone?",o:[["Yes","=coordinate"],["No, it is the main part of the sentence","=main"]]},
+    b1:{q:"What job does this clause do?",o:[["It tells when, where, why or how","=adverb"],["It describes a noun or pronoun","=adjective"],["It does the work of a noun, like what someone knows or says","=noun"]]}
+  };
+  var DETR={
+    main:{n:"Main clause",c:6,r:"M",d:"A clause that makes complete sense on its own.",ex:[["The dog barked","M","."]]},
+    coordinate:{n:"Coordinate clauses",c:6,r:"M",d:"Two main clauses of equal weight joined by and, but, or, so.",ex:[["I called him","M",","],["but","J"],["he did not answer","M","."]]},
+    adverb:{n:"Adverb clause",c:7,r:"S",d:"A subordinate clause that tells when, where, why or how.",ex:[["We stayed in","M"],["because","J"],["it was raining","S","."]]},
+    adjective:{n:"Adjective clause",c:7,r:"S",d:"A subordinate clause that describes a noun or pronoun.",ex:[["I like the book","M"],["that","J"],["you gave me","S","."]]},
+    noun:{n:"Noun clause",c:8,r:"S",d:"A subordinate clause that does the work of a noun.",ex:[["She knows","M"],["that","J"],["he is honest","S","."]]}
+  };
+  var path=["start"],resultKey=null;
+  function drawDet(){
+    var box=$("#detBox");
+    if(resultKey){
+      var d=DETR[resultKey];
+      box.innerHTML='<div class="res '+d.r+'"><p class="count" style="color:inherit">The detective says</p><h3>'+d.n+'</h3><p>'+d.d+'</p>'+
+        (d.c>cls?'<p><b>You will meet this one in Class '+d.c+'.</b></p>':'')+
+        '<p style="font:800 1.1rem/1.8 var(--display)">'+tokHTML(d.ex)+'</p></div>'+
+        '<div class="row"><button type="button" class="btn alt" data-act="back">Back</button><button type="button" class="btn" data-act="restart">Start again</button></div>';
+      return;
+    }
+    var node=TREE[path[path.length-1]];
+    box.innerHTML='<p class="count">Question '+path.length+'</p><p class="qs">'+node.q+'</p>'+
+      '<div class="opts">'+node.o.map(function(o,i){return '<button type="button" class="opt" data-o="'+i+'">'+o[0]+'</button>'}).join("")+'</div>'+
+      '<div class="row" style="margin-top:.9rem"><button type="button" class="btn alt" data-act="back"'+(path.length===1?' disabled':'')+'>Back</button></div>';
+  }
+  $("#detBox").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="restart"){path=["start"];resultKey=null;drawDet();return}
+    if(b.dataset.act==="back"){if(resultKey)resultKey=null;else if(path.length>1)path.pop();drawDet();return}
+    if(b.dataset.o!==undefined){
+      var nx=TREE[path[path.length-1]].o[+b.dataset.o][1];
+      if(nx.charAt(0)==="=")resultKey=nx.slice(1);else path.push(nx);
+      drawDet();
+    }
+  });
+  drawDet();
+
+  /* ---------- practice data ---------- */
+  var TEST=[
+    ["in the garden","P",6],["the dog barked loudly","M",6],["because it was late","S",6],["a bunch of red roses","P",6],
+    ["Meena sings sweetly","M",6],["when the rain stopped","S",6],["under the old bridge","P",6],["if you call me","S",6],
+    ["the birds flew away","M",6],["who lives next door","S",6],
+    ["although she was tired","S",7],["while we were eating","S",7],["where the river bends","S",7],["running down the road","P",7],
+    ["He opened the door","M",7],["which was very old","S",7],
+    ["that he would come","S",8],["unless you hurry","S",8],["so that she could pass","S",8],["what you said","S",8],
+    ["Birds fly south in winter","M",8],["after a long day","P",8]
+  ];
+  var TWHY={
+    P:"It has no subject and verb pair, so it is a phrase.",
+    M:"It has a subject and a verb and makes complete sense alone, so it is a main clause.",
+    S:"It has a subject and a verb but leaves us waiting for more, so it is a subordinate clause."
+  };
+  var JOIN=[
+    {pre:"Ravi plays cricket",post:"Meena plays kabaddi.",ans:"and",o:["and","because","if"],w:"“And” adds one equal idea to another.",c:6},
+    {pre:"I called him,",post:"he did not answer.",ans:"but",o:["but","or","because"],w:"“But” shows a contrast between the clauses.",c:6},
+    {pre:"We stayed at home",post:"it was raining.",ans:"because",o:["because","but","until"],w:"“Because” gives the reason.",c:6},
+    {pre:"Do you want tea",post:"coffee?",ans:"or",o:["or","but","because"],w:"“Or” offers a choice.",c:6},
+    {pre:"It was getting dark,",post:"we went home.",ans:"so",o:["so","but","or"],w:"“So” shows the result.",c:6},
+    {pre:"Take your umbrella",post:"it rains.",ans:"if",o:["if","but","or"],w:"“If” sets a condition.",c:6},
+    {pre:"Wait here",post:"I come back.",ans:"until",o:["until","because","and"],w:"“Until” tells how long to wait.",c:6},
+    {pre:"She smiled",post:"she saw us.",ans:"when",o:["when","because","but"],w:"“When” tells the time.",c:7},
+    {pre:"He was late",post:"the bus broke down.",ans:"because",o:["because","where","who"],w:"“Because” tells why he was late.",c:7},
+    {pre:"Stay",post:"you are.",ans:"where",o:["where","when","who"],w:"“Where” tells the place.",c:7},
+    {pre:"The boy",post:"sat beside me is my cousin.",ans:"who",o:["who","which","where"],w:"“Who” is used for a person.",c:7},
+    {pre:"I like the book",post:"you gave me.",ans:"that",o:["that","who","where"],w:"“That” joins the describing clause to the noun “book”.",c:7},
+    {pre:"The dog",post:"barked all night is sleeping now.",ans:"which",o:["which","who","where"],w:"“Which” is used for animals and things.",c:7},
+    {pre:"This is the house",post:"I was born.",ans:"where",o:["where","who","because"],w:"“Where” tells the place.",c:7},
+    {pre:"I know",post:"she is honest.",ans:"that",o:["that","unless","although"],w:"“That” introduces what I know: a noun clause.",c:8},
+    {pre:"",post:"you work hard, you will succeed.",ans:"If",o:["If","Although","Because"],w:"“If” sets the condition.",c:8},
+    {pre:"She studied hard",post:"she could pass.",ans:"so that",o:["so that","although","unless"],w:"“So that” gives the purpose.",c:8},
+    {pre:"",post:"it was cold, we played outside.",ans:"Although",o:["Although","Because","If"],w:"“Although” shows a contrast: cold, yet they played.",c:8},
+    {pre:"I will not go",post:"you invite me.",ans:"unless",o:["unless","although","so that"],w:"“Unless” means “if not”.",c:8},
+    {pre:"He asked me",post:"I would help.",ans:"whether",o:["whether","because","although"],w:"“Whether” introduces the asked question as a noun clause.",c:8},
+    {pre:"",post:"he said surprised us.",ans:"What",o:["What","Where","Which"],w:"“What he said” is the subject: a noun clause.",c:8},
+    {pre:"Hurry up,",post:"you will miss the bus.",ans:"or",o:["or","because","although"],w:"“Or” joins two main clauses and warns of a result.",c:8}
+  ];
+  var TYPE=[
+    {p:[["We stayed in ",0],["because it was raining",1],[".",0]],a:"adverb",c:7},
+    {p:[["The boy ",0],["who sat beside me",1],[" is my cousin.",0]],a:"adjective",c:7},
+    {p:[["I like the book ",0],["that you gave me",1],[".",0]],a:"adjective",c:7},
+    {p:[["",0],["When the bell rang",1],[", the students ran out.",0]],a:"adverb",c:7},
+    {p:[["Ravi went home, ",0],["and Meena stayed behind",1],[".",0]],a:"coordinate",c:7},
+    {p:[["Stay ",0],["where you are",1],[".",0]],a:"adverb",c:7},
+    {p:[["She smiled ",0],["when she saw us",1],[".",0]],a:"adverb",c:7},
+    {p:[["I was tired, ",0],["but I kept working",1],[".",0]],a:"coordinate",c:7},
+    {p:[["She knows ",0],["that he is honest",1],[".",0]],a:"noun",c:8},
+    {p:[["",0],["What he said",1],[" surprised us.",0]],a:"noun",c:8},
+    {p:[["I do not know ",0],["where she lives",1],[".",0]],a:"noun",c:8},
+    {p:[["",0],["Although it was cold",1],[", we played outside.",0]],a:"adverb",c:8},
+    {p:[["The house ",0],["which stands on the hill",1],[" is old.",0]],a:"adjective",c:8},
+    {p:[["",0],["If you work hard",1],[", you will succeed.",0]],a:"adverb",c:8},
+    {p:[["He asked ",0],["whether I would help",1],[".",0]],a:"noun",c:8},
+    {p:[["She studied hard ",0],["so that she could pass",1],[".",0]],a:"adverb",c:8}
+  ];
+  var TYPEWHY={
+    adverb:"It tells when, where, why or how, so it is an adverb clause.",
+    adjective:"It describes a noun, so it is an adjective clause.",
+    noun:"It does the work of a noun, so it is a noun clause.",
+    coordinate:"It could stand alone and is joined by and or but, so it is a coordinate clause."
+  };
+  var TLABEL={adverb:"Adverb clause",adjective:"Adjective clause",noun:"Noun clause",coordinate:"Coordinate clause"};
+  function typeCodes(){return cls>=8?["coordinate","adverb","adjective","noun"]:["coordinate","adverb","adjective"]}
+
+  var mode="test",S={};
+  function resetPractice(){
+    var T=TEST.filter(function(x){return x[2]<=cls}),J=JOIN.filter(function(x){return x.c<=cls}),Y=TYPE.filter(function(x){return x.c<=cls});
+    S.test={i:0,score:0,ans:null,q:shuffle(T).slice(0,8)};
+    S.join={i:0,score:0,ans:null,q:shuffle(J).slice(0,8).map(function(x){return {pre:x.pre,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
+    S.type={i:0,score:0,ans:null,q:shuffle(Y).slice(0,8)};
+    if(cls===6&&mode==="type")mode="test";
+    $('#modeSeg [data-m="type"]').hidden=cls===6;
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+s.score+' out of '+n+'</p><p>'+
+        (s.score===n?"Perfect round. You think in clauses.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the clause helper again, then play once more.")+
+        '</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    if(mode==="test"){
+      html+='<p class="qs">“'+esc(q[0])+'”<br>What is this group of words?</p><div class="opts">'+
+        [["P","Phrase"],["M","Main clause"],["S","Subordinate clause"]].map(function(x){return '<button type="button" class="opt" data-k="'+x[0]+'">'+x[1]+'</button>'}).join("")+'</div>';
+    }else if(mode==="join"){
+      html+='<p class="qs">'+esc(q.pre)+' <span class="gap" id="gap">&nbsp;</span> '+esc(q.post)+'</p><div class="opts row3">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    }else{
+      html+='<p class="qs">'+q.p.map(function(x){return x[1]?'<span class="hl S">'+esc(x[0])+'</span>':esc(x[0])}).join("")+'</p>'+
+        '<p class="count" style="margin-bottom:.6rem">What kind of clause is highlighted?</p><div class="opts">'+
+        typeCodes().map(function(c){return '<button type="button" class="opt" data-k="'+c+'">'+TLABEL[c]+'</button>'}).join("")+'</div>';
+    }
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(s.ans!==null||(b.dataset.k===undefined&&b.dataset.o===undefined))return;
+    var q=s.q[s.i],ok,why,btns=document.querySelectorAll("#pbody .opt"),correct;
+    if(mode==="test"){
+      ok=b.dataset.k===q[1];why=TWHY[q[1]];
+      btns.forEach(function(x){if(x.dataset.k===q[1])correct=x});
+    }else if(mode==="type"){
+      ok=b.dataset.k===q.a;why=TYPEWHY[q.a];
+      btns.forEach(function(x){if(x.dataset.k===q.a)correct=x});
+    }else{
+      var chosen=q.o[+b.dataset.o];ok=chosen===q.ans;why=q.w;
+      btns.forEach(function(x){if(q.o[+x.dataset.o]===q.ans)correct=x});
+      $("#gap").textContent=q.ans;
+    }
+    s.ans=1;if(ok)s.score++;
+    var fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+why;
+    btns.forEach(function(x){x.disabled=true});
+    correct.classList.add("good");
+    if(!ok)b.classList.add("bad");
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawHelper();drawDet();resetPractice();
+  });
+
+  drawHelper();resetPractice();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Direct and Indirect Speech | TLM by Madimi Arundhathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --display:"Baloo 2","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Verdana,system-ui,sans-serif;
+  --bg:#F6F8FC; --surface:#FFFFFF; --ink:#17203A; --muted:#55607A; --line:#D5DCEB;
+  --accent:#3347C7; --accent-ink:#FFFFFF;
+  --j-bg:#FFE3E6; --j-c:#D6334A; --j-t:#8F1226;
+  --r-bg:#FFF0C2; --r-c:#D99A00; --r-t:#6B4A00;
+  --c-bg:#D5F3EE; --c-c:#13927F; --c-t:#0B5E55;
+  --good:#0E6B45; --good-bg:#DDF5E8; --bad:#B3261E; --bad-bg:#FDE4E1;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+    --accent:#9AA8FF; --accent-ink:#10152A;
+    --j-bg:#4A1B26; --j-c:#FF7A8C; --j-t:#FFC2CA;
+    --r-bg:#4A3A0A; --r-c:#F2B91D; --r-t:#FFDE8A;
+    --c-bg:#0F3F3B; --c-c:#3CC4AE; --c-t:#9BEBDE;
+    --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+  --accent:#9AA8FF; --accent-ink:#10152A;
+  --j-bg:#4A1B26; --j-c:#FF7A8C; --j-t:#FFC2CA;
+  --r-bg:#4A3A0A; --r-c:#F2B91D; --r-t:#FFDE8A;
+  --c-bg:#0F3F3B; --c-c:#3CC4AE; --c-t:#9BEBDE;
+  --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4rem);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.55 var(--body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.1rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0}
+h2{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}
+p{margin:.4rem 0}
+section{padding:2.4rem 0 .6rem}
+.lead{color:var(--muted);max-width:36rem}
+
+.hero{padding-top:1.6rem}
+.hero h1{font-size:clamp(2.3rem,10.5vw,3.8rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.by{margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.by strong{color:var(--ink)}
+.demo{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem}
+.stage{display:flex;flex-wrap:wrap;gap:.6rem;align-items:flex-start;min-height:6.2rem;margin:.2rem 0 .9rem}
+.chip{display:inline-flex;flex-direction:column;gap:.15rem;padding:.5rem .85rem .4rem;border-radius:16px;border:2px solid;font:800 clamp(1.1rem,5.2vw,1.6rem)/1.15 var(--display)}
+.chip i{font:700 .75rem/1 var(--body);font-style:normal;opacity:.85}
+.chip.J{background:var(--j-bg);border-color:var(--j-c);color:var(--j-t)}
+.chip.R{background:var(--r-bg);border-color:var(--r-c);color:var(--r-t)}
+.chip.C{background:var(--c-bg);border-color:var(--c-c);color:var(--c-t)}
+.vlabel{font:800 1.2rem/1.25 var(--display);min-height:3rem;margin:0 0 .2rem}
+.tense{color:var(--muted);font-size:.95rem;margin:0 0 .2rem}
+.change{min-height:3rem;margin:0 0 .8rem;font-weight:700}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.btn{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--bg);font:700 1rem/1 var(--body);padding:.8rem 1.1rem;border-radius:14px;cursor:pointer;min-height:2.9rem}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.alt:hover{border-color:var(--ink)}
+.btn[hidden]{display:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink);font:700 1rem/1 var(--body);padding:.75rem 1.05rem;min-height:2.9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.key{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:.4rem}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+.key .R{background:var(--r-bg);border-color:var(--r-c)}
+.key .J{background:var(--j-bg);border-color:var(--j-c)}
+.key .C{background:var(--c-bg);border-color:var(--c-c)}
+
+.classbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:2px solid var(--line);margin-top:2rem}
+.classbar .wrap{display:flex;align-items:center;gap:.8rem;padding-top:.6rem;padding-bottom:.6rem}
+.classbar b{font:800 1.1rem var(--display)}
+
+.card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem;margin-top:1rem}
+.stepmsg{min-height:5.2rem;margin:.2rem 0 .8rem}
+.stepmsg b{font-family:var(--display);font-size:1.15rem}
+.progress{display:flex;gap:.35rem;margin:0 0 .8rem}
+.progress span{flex:1;height:.4rem;border-radius:9px;background:var(--line)}
+.progress span.on{background:var(--accent)}
+.pron{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr));gap:.5rem;margin-top:.8rem}
+.pron div{border:2px solid var(--line);border-radius:12px;padding:.45rem .6rem;text-align:center;font-weight:700}
+.pron span{color:var(--muted);font-weight:400}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--r-c);background:var(--r-bg);color:var(--r-t);font-weight:700}
+.tcard p{margin:.25rem 0}
+.tcard .lab{color:var(--muted);font-size:.9rem;display:inline-block;min-width:4.6rem}
+
+.pbox{min-height:19rem}
+.count{color:var(--muted);font-size:.9rem;margin:0}
+.qs{font:800 clamp(1.25rem,5.8vw,1.75rem)/1.25 var(--display);margin:.6rem 0 1rem}
+.fb{min-height:3.2rem;margin:.9rem 0 .6rem;font-weight:700}
+.fb.good{color:var(--good)} .fb.bad{color:var(--bad)}
+.seg.big{display:flex}
+.seg.big button{flex:1}
+.opts{display:grid;gap:.55rem}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.02rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.tray{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;min-height:3.6rem;padding:.6rem;border:2px dashed var(--line);border-radius:16px;margin:.6rem 0}
+.tray.good{border-color:var(--good);background:var(--good-bg)} .tray.bad{border-color:var(--bad);background:var(--bad-bg)}
+.pick{appearance:none;border:2px solid var(--accent);background:var(--surface);color:var(--ink);font:700 1.05rem var(--body);padding:.55rem .85rem;border-radius:12px;cursor:pointer;min-height:2.7rem}
+.tray .pick{background:var(--accent);color:var(--accent-ink)}
+.pick:disabled{opacity:.5;cursor:default}
+.punct{font:800 1.3rem var(--display)}
+.bank{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0}
+.result{padding:1rem 0}
+.result .big{font:800 2.6rem/1 var(--display);margin:.4rem 0}
+
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--accent);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.2rem 0}
+details{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.2rem 1rem;margin-top:1rem}
+summary{cursor:pointer;font:800 1.2rem var(--display);padding:.8rem 0}
+details ul,details ol{padding-left:1.2rem;margin:.3rem 0 .9rem}
+details li{margin:.35rem 0}
+footer{margin:3rem 0 2rem;padding-top:1.2rem;border-top:2px solid var(--line);color:var(--muted);font-size:.95rem}
+footer strong{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <h1>Direct and Indirect Speech</h1>
+  <p class="sub">Say the exact words, or report them. Tap the switch and watch the sentence change.</p>
+
+  <div class="demo">
+    <div class="stage" id="heroStage" aria-live="polite"></div>
+    <p class="vlabel" id="vlabel"></p>
+    <p class="tense" id="vtense"></p>
+    <p class="change" id="vchange"></p>
+    <div class="row">
+      <div class="seg" id="voiceSeg" role="group" aria-label="Type of speech">
+        <button type="button" data-v="direct" aria-pressed="true">Direct</button>
+        <button type="button" data-v="indirect" aria-pressed="false">Indirect</button>
+      </div>
+      <button type="button" class="btn alt" id="nextEx">Next sentence</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="R"></em>reporting words</span>
+      <span><em class="J"></em>joiner</span>
+      <span><em class="C"></em>spoken words</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="steps">
+    <h2>Change the speech in three steps</h2>
+    <p class="lead">Every indirect sentence is built from a direct one. Tap through the steps with Meena and her mangoes.</p>
+    <div class="card">
+      <div class="progress" id="prog" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="stage" id="stepStage"></div>
+      <div class="stepmsg" id="stepMsg" aria-live="polite"></div>
+      <div class="row">
+        <button type="button" class="btn alt" id="stepPrev">Back</button>
+        <button type="button" class="btn" id="stepNext">Next step</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="person">
+    <h2>Who does “I” become?</h2>
+    <p class="lead">Pronouns follow a simple rule. Ask: who is speaking, and who is listening?</p>
+    <div class="uses">
+      <div class="use"><b>I, we, my, our follow the speaker</b>
+        <p>Ravi said, “I am late.”</p><p>→ Ravi said that <b>he</b> was late.</p></div>
+      <div class="use"><b>You, your follow the listener</b>
+        <p>Ravi said to me, “You are late.”</p><p>→ Ravi told me that <b>I</b> was late.</p></div>
+      <div class="use"><b>He, she, they stay the same</b>
+        <p>Ravi said, “She is late.”</p><p>→ Ravi said that <b>she</b> was late.</p></div>
+    </div>
+  </section>
+
+  <section id="tenses">
+    <h2>Change helper</h2>
+    <p class="lead" id="tenseLead"></p>
+    <div class="tlist" id="tlist"></div>
+    <div class="card" id="timeCard"></div>
+  </section>
+
+  <section id="verbs">
+    <h2>Pick the reporting verb</h2>
+    <p class="lead">The kind of sentence decides the verb and the joiner.</p>
+    <div class="uses" id="vlist"></div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="spot" aria-pressed="true">Spot it</button>
+        <button type="button" data-m="pick" aria-pressed="false">Pick it</button>
+        <button type="button" data-m="build" aria-pressed="false">Build it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>tell direct speech from indirect speech;</li>
+        <li>change statements, commands and requests (Class 6), questions and more tenses (Class 7), and exclamations, modals and time words (Class 8) into indirect speech;</li>
+        <li>choose a suitable reporting verb and joiner.</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, yellow, pink and green chalk (reporting words, joiner, spoken words).</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Two students whisper a message. A third reports it to the class. Ask: did you repeat the exact words?</li>
+        <li><b>Teach (10 min).</b> Project the three steps. Colour each part on the board with the same chalk colours.</li>
+        <li><b>Change helper (10 min).</b> Pick your class on the bar. Students copy the rules and read each pair aloud.</li>
+        <li><b>Spot it and Pick it (8 min).</b> Teams answer on the count of three. Discuss every wrong option.</li>
+        <li><b>Build it (7 min).</b> Pairs decide the order before anyone taps.</li>
+        <li><b>Exit ticket.</b> Each student reports three things a classmate said today.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Keeping the quotation marks or the comma in indirect speech.</li>
+        <li>Keeping question order: “asked where did I live” should be “asked where I lived”.</li>
+        <li>Leaving the question mark after a reported question.</li>
+        <li>Forgetting to change the pronoun (“said that I was late” when Ravi spoke).</li>
+        <li>Using “that” with a command. Use “to” instead.</li>
+        <li>Shifting the tense of a universal truth, or when the reporting verb is in the present (“says”).</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer>
+    Teaching learning material (TLM) on Direct and Indirect Speech for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var CAP={R:"reporting",J:"joiner",C:"spoken words"};
+  var cls=6;
+
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+
+  /* ---------- animated sentence stage ---------- */
+  function makeStage(box){
+    var els={};
+    return function(tokens,animate){
+      var first={},k;
+      if(animate){for(k in els){if(els[k].isConnected)first[k]=els[k].getBoundingClientRect()}}
+      var list=tokens.map(function(t){
+        var role=t[0],el=els[role];
+        if(!el){el=document.createElement("span");el.className="chip "+role;el.dataset.role=role;el.innerHTML="<b></b><i></i>";els[role]=el}
+        el.firstChild.textContent=t[1];
+        el.lastChild.textContent=CAP[role];
+        return el;
+      });
+      box.replaceChildren.apply(box,list);
+      if(animate&&!reduce){
+        list.forEach(function(el){
+          if(!el.animate)return;
+          var f=first[el.dataset.role];
+          if(!f){el.animate([{opacity:0,transform:"translateY(8px)"},{opacity:1,transform:"none"}],{duration:420,easing:"ease-out"});return}
+          var l=el.getBoundingClientRect();
+          var dx=f.left-l.left,dy=f.top-l.top;
+          if(Math.abs(dx)<1&&Math.abs(dy)<1)return;
+          el.animate([{transform:"translate("+dx+"px,"+dy+"px)"},{transform:"none"}],{duration:520,easing:"cubic-bezier(.3,.7,.2,1)"});
+        });
+      }
+    };
+  }
+
+  /* ---------- hero demo ---------- */
+  var EX=[
+    {rD:"Ravi said,",rI:"Ravi said",j:"that",cD:"“I am happy.”",cI:"he was happy.",t:"Statement",ch:"I → he, am → was"},
+    {rD:"Meena said,",rI:"Meena said",j:"that",cD:"“I like mangoes.”",cI:"she liked mangoes.",t:"Statement",ch:"I → she, like → liked"},
+    {rD:"The teacher said,",rI:"The teacher said",j:"that",cD:"“We will start the lesson.”",cI:"they would start the lesson.",t:"Statement",ch:"we → they, will → would"},
+    {rD:"The teacher said to us,",rI:"The teacher told us",j:"to",cD:"“Sit down.”",cI:"sit down.",t:"Command",ch:"said to → told, command → to + verb"},
+    {rD:"Anu asked me,",rI:"Anu asked me",j:"where",cD:"“Where do you live?”",cI:"I lived.",t:"Question with a wh-word",ch:"you → I, do live → lived, no question mark"},
+    {rD:"Raju asked me,",rI:"Raju asked me",j:"if",cD:"“Do you like cricket?”",cI:"I liked cricket.",t:"Yes or no question",ch:"you → I, do like → liked, joiner “if”"},
+    {rD:"Rani said,",rI:"Rani exclaimed with joy",j:"that",cD:"“Hurrah! I have won the prize!”",cI:"she had won the prize.",t:"Exclamation",ch:"said → exclaimed with joy, I → she, have won → had won"}
+  ];
+  var exI=0,kind="direct",heroSet=makeStage($("#heroStage")),lastText="";
+  function heroTokens(){
+    var e=EX[exI];
+    return kind==="direct"?[["R",e.rD],["C",e.cD]]:[["R",e.rI],["J",e.j],["C",e.cI]];
+  }
+  function drawHero(animate){
+    var t=heroTokens(),e=EX[exI];
+    heroSet(t,animate);
+    lastText=t.map(function(x){return x[1]}).join(" ").replace(/[“”]/g,"");
+    $("#vlabel").textContent=kind==="direct"?"Direct speech: the exact words, inside quotation marks.":"Indirect speech: the same message in the reporter’s words.";
+    $("#vtense").textContent=e.t;
+    $("#vchange").textContent=kind==="indirect"?"What changed: "+e.ch:"";
+    document.querySelectorAll("#voiceSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v===kind)});
+  }
+  $("#voiceSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.v===kind)return;
+    kind=b.dataset.v;drawHero(true);
+  });
+  $("#nextEx").addEventListener("click",function(){exI=(exI+1)%EX.length;drawHero(false)});
+  $("#listen").addEventListener("click",function(){
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(lastText);u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+  drawHero(false);
+
+  /* ---------- three steps ---------- */
+  var STEPS=[
+    {t:[["R","Meena said,"],["C","“I like mangoes.”"]],m:"<b>Start with the direct speech.</b> “Meena said” is the reporting part. The spoken words sit inside the quotation marks."},
+    {t:[["R","Meena said"],["J","that"],["C","I like mangoes."]],m:"<b>Step 1: remove the comma and the quotation marks.</b> Join the two parts with the joiner “that”."},
+    {t:[["R","Meena said"],["J","that"],["C","she like mangoes."]],m:"<b>Step 2: change the person.</b> Meena was the speaker, so “I” becomes “she”."},
+    {t:[["R","Meena said"],["J","that"],["C","she liked mangoes."]],m:"<b>Step 3: move the tense one step back.</b> “Like” becomes “liked”. The indirect sentence is complete."}
+  ];
+  var st=0,stepSet=makeStage($("#stepStage"));
+  function drawStep(animate){
+    stepSet(STEPS[st].t,animate);
+    $("#stepMsg").innerHTML=STEPS[st].m;
+    document.querySelectorAll("#prog span").forEach(function(p,i){p.className=i<st?"on":""});
+    $("#stepPrev").disabled=st===0;
+    $("#stepNext").textContent=st===STEPS.length-1?"Start again":"Next step";
+  }
+  $("#stepNext").addEventListener("click",function(){st=st===STEPS.length-1?0:st+1;drawStep(true)});
+  $("#stepPrev").addEventListener("click",function(){if(st>0){st--;drawStep(true)}});
+  drawStep(false);
+
+  /* ---------- change helper ---------- */
+  var RULES=[
+    {c:6,n:"Simple present moves back to simple past",f:"like → liked, is → was",d:"Meena said, “I like mangoes.”",i:"Meena said that she liked mangoes."},
+    {c:6,n:"Present continuous moves back to past continuous",f:"am / is / are + ing → was / were + ing",d:"Ravi said, “I am reading.”",i:"Ravi said that he was reading."},
+    {c:6,n:"will and can move back",f:"will → would, can → could",d:"Tom said, “I can swim.”",i:"Tom said that he could swim."},
+    {c:6,n:"Commands and requests",f:"told / requested + person + to + verb",d:"The teacher said to us, “Sit down.”",i:"The teacher told us to sit down."},
+    {c:6,n:"Negative commands",f:"told + person + not to + verb",d:"Mother said to me, “Do not run.”",i:"Mother told me not to run."},
+    {c:7,n:"Simple past moves back to past perfect",f:"lost → had lost",d:"Sita said, “I lost my pen.”",i:"Sita said that she had lost her pen."},
+    {c:7,n:"Present perfect moves back to past perfect",f:"has / have + V3 → had + V3",d:"Hari said, “I have finished my work.”",i:"Hari said that he had finished his work."},
+    {c:7,n:"Questions with a wh-word",f:"asked + wh-word + statement order",d:"Anu asked me, “Where do you live?”",i:"Anu asked me where I lived."},
+    {c:7,n:"Yes or no questions",f:"asked + if / whether + statement order",d:"Raju asked me, “Do you like cricket?”",i:"Raju asked me if I liked cricket."},
+    {c:7,n:"Reporting verb in the present: no change",f:"says → no tense change",d:"Mother says, “I am busy.”",i:"Mother says that she is busy."},
+    {c:8,n:"Time and place words change",f:"here → there, tomorrow → the next day",d:"He said, “I will meet you here tomorrow.”",i:"He said that he would meet me there the next day."},
+    {c:8,n:"must becomes had to",f:"must → had to",d:"The doctor said to me, “You must rest.”",i:"The doctor told me that I had to rest."},
+    {c:8,n:"Universal truths do not change",f:"keep the present tense",d:"The teacher said, “The earth moves round the sun.”",i:"The teacher said that the earth moves round the sun."},
+    {c:8,n:"Exclamations",f:"exclaimed with joy / sorrow + that",d:"Rani said, “Hurrah! I have won the prize!”",i:"Rani exclaimed with joy that she had won the prize."}
+  ];
+  var WORDS=[
+    {c:7,a:"now",b:"then"},{c:7,a:"here",b:"there"},{c:7,a:"this",b:"that"},
+    {c:8,a:"today",b:"that day"},{c:8,a:"tomorrow",b:"the next day"},{c:8,a:"yesterday",b:"the day before"},{c:8,a:"ago",b:"before"}
+  ];
+  var VERBS=[
+    {c:6,n:"Statement",p:"said / told + that",e:"She said that she was tired."},
+    {c:6,n:"Command",p:"told / ordered + to",e:"The teacher ordered us to be quiet."},
+    {c:6,n:"Request",p:"requested / begged + to",e:"Anu requested me to lend my pen."},
+    {c:7,n:"Question",p:"asked + wh-word or if",e:"He asked me what my name was."},
+    {c:7,n:"Advice",p:"advised + to",e:"My father advised me to work hard."},
+    {c:8,n:"Exclamation",p:"exclaimed with joy or sorrow + that",e:"They exclaimed with joy that they had won."}
+  ];
+  function drawRules(){
+    $("#tenseLead").textContent=cls===6
+      ?"Class 6 learns statements, commands and requests. Each rule moves the sentence one step back."
+      :"Class "+cls+" revises the earlier rules and adds new ones. The new ones are marked.";
+    $("#tlist").innerHTML=RULES.filter(function(r){return r.c<=cls}).map(function(r){
+      return '<article class="tcard"><h3>'+r.n+(r.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<span class="formula">'+r.f+'</span>'+
+        '<p><span class="lab">Direct</span>'+r.d+'</p>'+
+        '<p><span class="lab">Indirect</span><b>'+r.i+'</b></p></article>';
+    }).join("");
+    var tc=$("#timeCard"),w=WORDS.filter(function(x){return x.c<=cls});
+    if(w.length){
+      tc.hidden=false;
+      tc.innerHTML='<h3>Time and place words</h3><p class="lead">These words change because the reporter is speaking at a different time or place.</p><div class="pron">'+
+        w.map(function(x){return '<div>'+x.a+' <span>→ '+x.b+'</span></div>'}).join("")+'</div>';
+    }else{tc.hidden=true;tc.innerHTML=""}
+    $("#vlist").innerHTML=VERBS.filter(function(v){return v.c<=cls}).map(function(v){
+      return '<div class="use"><b>'+v.n+': '+v.p+'</b><p>'+v.e+'</p></div>';
+    }).join("");
+  }
+
+  /* ---------- practice data ---------- */
+  var SPOT={
+    6:[["Ravi said, “I am happy.”","D"],["Ravi said that he was happy.","I"],["Mother said, “Wash your hands.”","D"],["Mother told me to wash my hands.","I"],["The boy said that he could swim.","I"],["Tom said, “I can swim.”","D"],["Anu said that she liked sweets.","I"],["The teacher said, “Sit down.”","D"]],
+    7:[["Anu asked me where I lived.","I"],["Raju asked, “Do you like cricket?”","D"],["Hari said that he had finished his work.","I"],["Mother says that she is busy.","I"],["The teacher asked, “Who broke the window?”","D"],["Sita said that she had lost her pen.","I"],["Rani said, “I have seen the film.”","D"],["He asked me if I was ready.","I"]],
+    8:[["The doctor said that I had to rest.","I"],["The captain said, “We must win this match.”","D"],["Rani exclaimed with joy that she had won the prize.","I"],["She said, “Hurrah! I have won the prize!”","D"],["He said that he would meet me there the next day.","I"],["He said, “I will meet you here tomorrow.”","D"],["The teacher said that the earth moves round the sun.","I"],["My father advised me to work hard.","I"]]
+  };
+  var PICK={
+    6:[
+      {d:"Meena said, “I like mangoes.”",o:["Meena said that she likes mangoes.","Meena said that she liked mangoes.","Meena said that I liked mangoes."],a:1,w:"The tense moves back (like → liked) and “I” becomes “she”."},
+      {d:"Tom said, “I can swim.”",o:["Tom said that he can swim.","Tom said that he could swim.","Tom said that I could swim."],a:1,w:"“Can” becomes “could”, and “I” becomes “he”."},
+      {d:"The teacher said to us, “Sit down.”",o:["The teacher told us to sit down.","The teacher told us that sit down.","The teacher told us we sat down."],a:0,w:"A command becomes told + person + to + verb."},
+      {d:"Ravi said, “We will play.”",o:["Ravi said that we would play.","Ravi said that they would play.","Ravi said that they will play."],a:1,w:"“We” becomes “they” and “will” becomes “would”."}
+    ],
+    7:[
+      {d:"Sita said, “I lost my pen.”",o:["Sita said that she lost her pen.","Sita said that she had lost her pen.","Sita said that I had lost my pen."],a:1,w:"Simple past moves back to past perfect: had lost."},
+      {d:"Anu asked me, “Where do you live?”",o:["Anu asked me where did I live.","Anu asked me where I lived.","Anu asked me where you lived."],a:1,w:"A reported question uses statement order, with no “did”."},
+      {d:"Raju asked me, “Do you like cricket?”",o:["Raju asked me that I liked cricket.","Raju asked me if I liked cricket.","Raju asked me if did I like cricket."],a:1,w:"A yes or no question uses “if”, with statement order."},
+      {d:"Hari said, “I have finished.”",o:["Hari said that he had finished.","Hari said that he has finished.","Hari said that I had finished."],a:0,w:"Present perfect moves back to past perfect: had finished."}
+    ],
+    8:[
+      {d:"He said, “I will meet you here tomorrow.”",o:["He said that he would meet me here tomorrow.","He said that he would meet me there the next day.","He said that he will meet you there the next day."],a:1,w:"“Here” becomes “there”, “tomorrow” becomes “the next day”, and “you” becomes “me”."},
+      {d:"Rani said, “Hurrah! I have won!”",o:["Rani exclaimed with joy that she had won.","Rani asked with joy that she had won.","Rani said Hurrah that she won."],a:0,w:"An exclamation is reported with “exclaimed with joy that”."},
+      {d:"The teacher said, “The earth moves round the sun.”",o:["The teacher said that the earth moved round the sun.","The teacher said that the earth moves round the sun.","The teacher said that the earth had moved round the sun."],a:1,w:"A universal truth keeps its tense."},
+      {d:"Father said to me, “Work hard.”",o:["Father advised me to work hard.","Father advised me that work hard.","Father said me to work hard."],a:0,w:"Advice is reported with advised + person + to + verb."}
+    ]
+  };
+  var BUILD={
+    6:[
+      {d:"Meena said, “I like mangoes.”",ans:["Meena said","that","she liked mangoes"],x:["she likes mangoes","I liked mangoes"]},
+      {d:"Tom said, “I can swim.”",ans:["Tom said","that","he could swim"],x:["he can swim","if"]},
+      {d:"The teacher said to us, “Sit down.”",ans:["The teacher told us","to","sit down"],x:["that","sat down"]},
+      {d:"Ravi said, “I am reading.”",ans:["Ravi said","that","he was reading"],x:["he is reading","I was reading"]}
+    ],
+    7:[
+      {d:"Anu asked me, “Where do you live?”",ans:["Anu asked me","where","I lived"],x:["where do I live","that"]},
+      {d:"Raju asked me, “Do you like cricket?”",ans:["Raju asked me","if","I liked cricket"],x:["that","did I like cricket"]},
+      {d:"Sita said, “I lost my pen.”",ans:["Sita said","that","she had lost her pen"],x:["she lost her pen","I had lost my pen"]},
+      {d:"Hari said, “I have finished my work.”",ans:["Hari said","that","he had finished his work"],x:["he has finished his work","if"]}
+    ],
+    8:[
+      {d:"He said, “I will meet you here tomorrow.”",ans:["He said","that","he would meet me","there","the next day"],x:["here","tomorrow"]},
+      {d:"The doctor said to me, “You must rest.”",ans:["The doctor told me","that","I had to rest"],x:["you must rest","if"]},
+      {d:"Rani said, “Hurrah! I have won the prize!”",ans:["Rani exclaimed with joy","that","she had won the prize"],x:["Rani asked with joy","she has won the prize"]},
+      {d:"My father said to me, “Work hard.”",ans:["My father advised me","to","work hard"],x:["that","worked hard"]}
+    ]
+  };
+
+  var mode="spot",sp,pk,bd;
+  function resetPractice(){
+    sp={i:0,score:0,ans:null,q:shuffle(SPOT[cls])};
+    pk={i:0,score:0,ans:null,q:shuffle(PICK[cls]).map(function(x){var c=x.o[x.a];return {d:x.d,w:x.w,c:c,o:shuffle(x.o)}})};
+    bd={i:0,score:0,picked:[],checked:false,ok:false,q:BUILD[cls].map(function(x){return {d:x.d,ans:x.ans,bank:shuffle(x.ans.concat(x.x))}})};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    if(mode==="spot")drawSpot();else if(mode==="pick")drawPick();else drawBuild();
+  }
+  function ending(score,n){
+    return score===n?"Perfect round. You can report like a pro."
+      :score>=n*0.7?"Great work. Review the ones you missed and try again."
+      :"Good start. Look at the three steps again, then play once more.";
+  }
+  function resultHTML(score,n){
+    return '<div class="result"><p class="count">Round complete</p><p class="big">'+score+' out of '+n+'</p><p>'+ending(score,n)+'</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+  }
+
+  function drawSpot(){
+    var box=$("#pbody"),n=sp.q.length;
+    if(sp.i>=n){box.innerHTML=resultHTML(sp.score,n);return}
+    var q=sp.q[sp.i];
+    box.innerHTML='<p class="count">Sentence '+(sp.i+1)+' of '+n+'</p>'+
+      '<p class="qs">'+q[0]+'</p>'+
+      '<div class="seg big" role="group" aria-label="Your answer"><button type="button" data-a="D">Direct</button><button type="button" data-a="I">Indirect</button></div>'+
+      '<p class="fb" aria-live="polite"></p>'+
+      '<button type="button" class="btn" data-act="next" hidden>'+(sp.i===n-1?"See my score":"Next sentence")+'</button>';
+  }
+  function drawPick(){
+    var box=$("#pbody"),n=pk.q.length;
+    if(pk.i>=n){box.innerHTML=resultHTML(pk.score,n);return}
+    var q=pk.q[pk.i];
+    box.innerHTML='<p class="count">Sentence '+(pk.i+1)+' of '+n+'</p>'+
+      '<p class="qs">Report this: '+q.d+'</p>'+
+      '<div class="opts">'+q.o.map(function(t,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(t)+'</button>'}).join("")+'</div>'+
+      '<p class="fb" aria-live="polite"></p>'+
+      '<button type="button" class="btn" data-act="next" hidden>'+(pk.i===n-1?"See my score":"Next sentence")+'</button>';
+  }
+  function drawBuild(){
+    var box=$("#pbody"),n=bd.q.length;
+    if(bd.i>=n){box.innerHTML=resultHTML(bd.score,n);return}
+    var q=bd.q[bd.i];
+    var tray=bd.picked.map(function(w,i){return '<button type="button" class="pick" data-rm="'+i+'"'+(bd.checked?' disabled':'')+'>'+esc(w)+'</button>'}).join("");
+    var bank=q.bank.filter(function(w){return bd.picked.indexOf(w)<0}).map(function(w){return '<button type="button" class="pick" data-add="'+esc(w)+'">'+esc(w)+'</button>'}).join("");
+    var fbText="",fbCls="fb";
+    if(bd.checked){
+      fbCls+=bd.ok?" good":" bad";
+      fbText=bd.ok?"Correct. Well built.":"Not quite. The indirect speech is: “"+q.ans.join(" ")+".”";
+    }
+    box.innerHTML='<p class="count">Sentence '+(bd.i+1)+' of '+n+'</p>'+
+      '<p class="qs">Make this indirect:<br>'+q.d+'</p>'+
+      '<div class="tray'+(bd.checked?(bd.ok?" good":" bad"):"")+'" aria-label="Your sentence">'+tray+(bd.picked.length?'<span class="punct">.</span>':'<span class="count">Tap the pieces in order</span>')+'</div>'+
+      '<div class="bank">'+bank+'</div>'+
+      '<p class="'+fbCls+'" aria-live="polite">'+fbText+'</p>'+
+      '<div class="row">'+
+        (bd.checked
+          ?'<button type="button" class="btn" data-act="next">'+(bd.i===bd.q.length-1?"See my score":"Next sentence")+'</button>'
+          :'<button type="button" class="btn" data-act="check"'+(bd.picked.length===q.ans.length?'':' disabled')+'>Check</button><button type="button" class="btn alt" data-act="clear"'+(bd.picked.length?'':' disabled')+'>Clear</button>')+
+      '</div>';
+  }
+
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    if(mode==="spot"){
+      if(b.dataset.act==="next"){sp.i++;sp.ans=null;drawSpot();return}
+      if(b.dataset.a&&!sp.ans){
+        var q=sp.q[sp.i],ok=b.dataset.a===q[1];
+        sp.ans=b.dataset.a;if(ok)sp.score++;
+        var fb=$("#pbody .fb");
+        fb.className="fb "+(ok?"good":"bad");
+        fb.textContent=(ok?"Correct. ":"Not quite. ")+(q[1]==="D"?"The exact words are inside quotation marks, so this is direct speech.":"There are no quotation marks, and the parts are joined by that, if, to or a wh-word, so this is indirect speech.");
+        document.querySelectorAll("#pbody .seg button").forEach(function(x){
+          x.disabled=true;
+          if(x.dataset.a===q[1])x.style.cssText="background:var(--good-bg);color:var(--good)";
+          else if(x===b)x.style.cssText="background:var(--bad-bg);color:var(--bad)";
+        });
+        $("#pbody [data-act=next]").hidden=false;
+      }
+    }else if(mode==="pick"){
+      if(b.dataset.act==="next"){pk.i++;pk.ans=null;drawPick();return}
+      if(b.dataset.o!==undefined&&pk.ans===null){
+        var p=pk.q[pk.i],idx=+b.dataset.o,ok2=p.o[idx]===p.c;
+        pk.ans=idx;if(ok2)pk.score++;
+        var f2=$("#pbody .fb");
+        f2.className="fb "+(ok2?"good":"bad");
+        f2.textContent=(ok2?"Correct. ":"Not quite. ")+p.w;
+        document.querySelectorAll("#pbody .opt").forEach(function(x,i){
+          x.disabled=true;
+          if(p.o[i]===p.c)x.classList.add("good");
+          else if(i===idx)x.classList.add("bad");
+        });
+        $("#pbody [data-act=next]").hidden=false;
+      }
+    }else{
+      if(b.dataset.act==="next"){bd.i++;bd.picked=[];bd.checked=false;drawBuild();return}
+      if(b.dataset.act==="check"){
+        var q2=bd.q[bd.i];
+        bd.checked=true;bd.ok=bd.picked.join("|")===q2.ans.join("|");
+        if(bd.ok)bd.score++;
+        drawBuild();return;
+      }
+      if(b.dataset.act==="clear"){bd.picked=[];drawBuild();return}
+      if(bd.checked)return;
+      if(b.dataset.add!==undefined){bd.picked.push(b.dataset.add);drawBuild();return}
+      if(b.dataset.rm!==undefined){bd.picked.splice(+b.dataset.rm,1);drawBuild();return}
+    }
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawRules();resetPractice();
+  });
+
+  drawRules();resetPractice();
+})();
+</script>
+</body>
+</html>

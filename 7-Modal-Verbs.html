@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Modal Verbs | TLM by Madimi Arundhathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --display:"Baloo 2","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Verdana,system-ui,sans-serif;
+  --bg:#F6F8FC; --surface:#FFFFFF; --ink:#17203A; --muted:#55607A; --line:#D5DCEB;
+  --accent:#3347C7; --accent-ink:#FFFFFF;
+  --S-bg:#FFE3E6; --S-c:#D6334A; --S-t:#8F1226;
+  --M-bg:#FFF0C2; --M-c:#D99A00; --M-t:#6B4A00;
+  --V-bg:#D5F3EE; --V-c:#13927F; --V-t:#0B5E55;
+  --good:#0E6B45; --good-bg:#DDF5E8; --bad:#B3261E; --bad-bg:#FDE4E1;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+    --accent:#9AA8FF; --accent-ink:#10152A;
+    --S-bg:#4A1B26; --S-c:#FF7A8C; --S-t:#FFC2CA;
+    --M-bg:#4A3A0A; --M-c:#F2B91D; --M-t:#FFDE8A;
+    --V-bg:#0F3F3B; --V-c:#3CC4AE; --V-t:#9BEBDE;
+    --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#10152A; --surface:#1A2140; --ink:#EEF1FA; --muted:#A7B0CC; --line:#2E3760;
+  --accent:#9AA8FF; --accent-ink:#10152A;
+  --S-bg:#4A1B26; --S-c:#FF7A8C; --S-t:#FFC2CA;
+  --M-bg:#4A3A0A; --M-c:#F2B91D; --M-t:#FFDE8A;
+  --V-bg:#0F3F3B; --V-c:#3CC4AE; --V-t:#9BEBDE;
+  --good:#7FE0B0; --good-bg:#12392A; --bad:#FF9B93; --bad-bg:#47201D;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4rem);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.55 var(--body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.1rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0}
+h2{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}
+p{margin:.4rem 0}
+section{padding:2.4rem 0 .6rem}
+.lead{color:var(--muted);max-width:36rem}
+
+.hero{padding-top:1.6rem}
+.hero h1{font-size:clamp(2.6rem,12.5vw,4.4rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.by{margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.by strong{color:var(--ink)}
+.demo{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem}
+.stage{display:flex;flex-wrap:wrap;gap:.6rem;align-items:flex-start;min-height:5.6rem;margin:.2rem 0 .8rem}
+.chip{display:inline-flex;flex-direction:column;gap:.15rem;padding:.5rem .85rem .4rem;border-radius:16px;border:2px solid;font:800 clamp(1.1rem,5.3vw,1.6rem)/1.15 var(--display)}
+.chip i{font:700 .75rem/1 var(--body);font-style:normal;opacity:.85}
+.chip i:empty{display:none}
+.chip.S{background:var(--S-bg);border-color:var(--S-c);color:var(--S-t)}
+.chip.M{background:var(--M-bg);border-color:var(--M-c);color:var(--M-t);border-width:3px}
+.chip.V{background:var(--V-bg);border-color:var(--V-c);color:var(--V-t)}
+.chip.O{background:transparent;border-color:var(--line);color:var(--ink)}
+.tense{font:800 1.15rem/1.2 var(--display);margin:0 0 .2rem}
+.note{color:var(--muted);min-height:3.2rem;margin:0 0 .4rem}
+.never{border:2px dashed var(--bad);background:var(--bad-bg);border-radius:14px;padding:.6rem .9rem;margin:.6rem 0 .2rem;min-height:5.6rem}
+.never b{color:var(--bad);font-size:.9rem}
+.never p{margin:.15rem 0;text-decoration:line-through;text-decoration-color:var(--bad);color:var(--bad);font-weight:700}
+.lab{font-weight:700;margin:.9rem 0 .4rem;font-size:.95rem}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pills button{appearance:none;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:800 1.05rem/1 var(--display);padding:.65rem 1rem;min-height:2.9rem;border-radius:30px;cursor:pointer}
+.pills button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.btn{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--bg);font:700 1rem/1 var(--body);padding:.8rem 1.1rem;border-radius:14px;cursor:pointer;min-height:2.9rem}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.alt:hover{border-color:var(--ink)}
+.btn[hidden]{display:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink);font:700 1rem/1 var(--body);padding:.75rem 1.05rem;min-height:2.9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.key{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem;font-size:.95rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:.4rem}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+.key .S{background:var(--S-bg);border-color:var(--S-c)}
+.key .M{background:var(--M-bg);border-color:var(--M-c)}
+.key .V{background:var(--V-bg);border-color:var(--V-c)}
+
+.classbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:2px solid var(--line);margin-top:2rem}
+.classbar .wrap{display:flex;align-items:center;gap:.8rem;padding-top:.6rem;padding-bottom:.6rem}
+.classbar b{font:800 1.1rem var(--display)}
+
+.card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:1.1rem;margin-top:1rem}
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--accent);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use.S{border-left-color:var(--S-c)} .use.M{border-left-color:var(--M-c)} .use.V{border-left-color:var(--V-c)}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.2rem 0}
+.x{color:var(--bad);text-decoration:line-through;text-decoration-color:var(--bad)}
+.hl{border-radius:6px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid;background:var(--M-bg);border-color:var(--M-c);color:var(--M-t);font-weight:800}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--M-c);background:var(--M-bg);color:var(--M-t);font-weight:700}
+.tcard p{margin:.25rem 0}
+.tcard .ex{font:800 1.12rem/1.8 var(--display);margin-top:.5rem}
+
+.pbox{min-height:19rem}
+.count{color:var(--muted);font-size:.9rem;margin:0}
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.5 var(--display);margin:.6rem 0 1rem}
+.gap{display:inline-block;min-width:4.5rem;border-bottom:4px solid var(--ink);text-align:center;padding:0 .3em}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.fb.good{color:var(--good)} .fb.bad{color:var(--bad)}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+.result .big{font:800 2.6rem/1 var(--display);margin:.4rem 0}
+.res{border-radius:16px;border:2px solid var(--M-c);background:var(--M-bg);color:var(--M-t);padding:.9rem 1rem;margin:.8rem 0}
+.res h3{font-size:1.5rem;font-weight:800}
+.res .ex{font:800 1.15rem/1.8 var(--display);margin:.5rem 0 0}
+
+details{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.2rem 1rem;margin-top:1rem}
+summary{cursor:pointer;font:800 1.2rem var(--display);padding:.8rem 0}
+details ul,details ol{padding-left:1.2rem;margin:.3rem 0 .9rem}
+details li{margin:.35rem 0}
+footer{margin:3rem 0 2rem;padding-top:1.2rem;border-top:2px solid var(--line);color:var(--muted);font-size:.95rem}
+footer strong{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <h1>Modal Verbs</h1>
+  <p class="sub">Small words with big jobs. Pick a modal, then turn the sentence into a negative or a question.</p>
+
+  <div class="demo">
+    <div class="stage" id="heroStage" aria-live="polite"></div>
+    <p class="tense" id="hForm"></p>
+    <p class="note" id="hNote"></p>
+
+    <p class="lab">Choose a modal</p>
+    <div class="pills" id="modals" role="group" aria-label="Modal verb"></div>
+
+    <p class="lab">Choose the sentence type</p>
+    <div class="seg" id="formSeg" role="group" aria-label="Sentence type">
+      <button type="button" data-f="st" aria-pressed="true">Statement</button>
+      <button type="button" data-f="ng" aria-pressed="false">Negative</button>
+      <button type="button" data-f="qs" aria-pressed="false">Question</button>
+    </div>
+
+    <p class="lab">Who is doing it?</p>
+    <div class="seg" id="subjSeg" role="group" aria-label="Subject">
+      <button type="button" data-s="I" aria-pressed="false">I</button>
+      <button type="button" data-s="She" aria-pressed="true">She</button>
+      <button type="button" data-s="They" aria-pressed="false">They</button>
+    </div>
+
+    <div class="never" id="never" aria-label="Wrong forms"></div>
+
+    <div class="row" style="margin-top:.8rem">
+      <button type="button" class="btn alt" id="nextVerb">Next verb</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="S"></em>subject</span>
+      <span><em class="M"></em>modal</span>
+      <span><em class="V"></em>base verb (V1)</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="rules">
+    <h2>Three rules for every modal</h2>
+    <p class="lead">Modals are helping verbs: can, could, may, might, must, should, will, would, shall. They all follow the same rules.</p>
+    <div class="uses">
+      <div class="use M"><b>A modal is followed by the base verb (V1)</b>
+        <p>She {{can}} swim.</p>
+        <p class="x">She cans swim.</p><p class="x">She can swims.</p><p class="x">She can to swim.</p></div>
+      <div class="use S"><b>For a negative, put “not” after the modal</b>
+        <p>She {{cannot}} swim. You {{should not}} run.</p></div>
+      <div class="use V"><b>For a question, the modal comes before the subject</b>
+        <p>{{Can}} she swim? {{May}} I come in?</p></div>
+    </div>
+  </section>
+
+  <section id="jobs">
+    <h2>What do modals do?</h2>
+    <p class="lead" id="jobsLead"></p>
+    <div class="tlist" id="tlist"></div>
+  </section>
+
+  <section id="chooser">
+    <h2>Modal chooser</h2>
+    <p class="lead">Decide what you want to say. The chooser suggests the best modal.</p>
+    <div class="card" id="choBox"></div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="fill" aria-pressed="true">Fill it</button>
+        <button type="button" data-m="fix" aria-pressed="false">Fix it</button>
+        <button type="button" data-m="name" aria-pressed="false">Name it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>use modal + V1 correctly in statements, negatives and questions;</li>
+        <li>choose the right modal for ability, permission, possibility, advice, duty, requests and offers;</li>
+        <li>use perfect modals (should have, could have, must have) and “need not” (Class 8).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, pink, yellow and green chalk (subject, modal, base verb).</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Ask: “May I leave early?” and “Can I leave early?” Which sounds more polite? Why?</li>
+        <li><b>Teach (10 min).</b> Project the hero. Change the modal, then the sentence type. Ask students to predict the word order before you tap.</li>
+        <li><b>Three rules (5 min).</b> Read the three rules and the wrong forms aloud. Students say why each wrong form is wrong.</li>
+        <li><b>What do modals do (10 min).</b> Pick your class on the bar. Act out each job: one student asks permission, another gives advice.</li>
+        <li><b>Practice (8 min).</b> Teams play Fill it, Fix it and Name it on the count of three.</li>
+        <li><b>Exit ticket.</b> Each student writes one sentence each for ability, permission, advice and duty.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Adding -s to the modal: “She cans swim.”</li>
+        <li>Adding “to” after the modal: “He must to go.” (Only “ought to” and “have to” take “to”.)</li>
+        <li>Using V2 or V-ing after a modal: “You should studied.”</li>
+        <li>Using two modals together: “She will can come.”</li>
+        <li>Using “do” in a negative or question: “Do you can swim?” should be “Can you swim?”</li>
+        <li>Mixing up “must not” (forbidden) and “need not” (not necessary).</li>
+        <li>Forgetting V3 in perfect modals: “should have told”, not “should have tell”.</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer>
+    Teaching learning material (TLM) on Modal Verbs for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function hlSent(s){return esc(s).replace(/\{\{(.+?)\}\}/g,'<span class="hl">$1</span>')}
+  function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
+  /* static rule card */
+  document.querySelectorAll(".uses .use p").forEach(function(p){if(p.textContent.indexOf("{{")>-1)p.innerHTML=hlSent(p.textContent)});
+
+  /* ---------- hero: modal machine with animated word order ---------- */
+  var MODALS=[
+    {m:"can",neg:"cannot",sh:"can’t",u:"ability or permission"},
+    {m:"could",neg:"could not",sh:"couldn’t",u:"past ability, a polite request, or a weaker possibility"},
+    {m:"may",neg:"may not",sh:"",u:"permission or possibility"},
+    {m:"might",neg:"might not",sh:"",u:"a smaller possibility than “may”"},
+    {m:"must",neg:"must not",sh:"mustn’t",u:"a strong duty or need"},
+    {m:"should",neg:"should not",sh:"shouldn’t",u:"advice"},
+    {m:"will",neg:"will not",sh:"won’t",u:"the future, or a promise"},
+    {m:"would",neg:"would not",sh:"wouldn’t",u:"a polite request, or an imagined situation"},
+    {m:"shall",neg:"shall not",sh:"shan’t",u:"offers and suggestions with I or we"}
+  ];
+  var VERBS=[
+    {v:"swim",s:"swims",o:"in the river"},{v:"help",s:"helps",o:"you"},{v:"come",s:"comes",o:"in"},
+    {v:"play",s:"plays",o:"cricket"},{v:"wait",s:"waits",o:"here"}
+  ];
+  var hm=0,hv=0,hs="She",hf="st",els={};
+  var FNAME={st:"Statement",ng:"Negative",qs:"Question"};
+  function tokens(){
+    var M=MODALS[hm],V=VERBS[hv],subjQ=hs==="I"?"I":hs.toLowerCase();
+    if(hf==="st")return{t:[["S",hs,"subject"],["M",M.m,"modal"],["V",V.v,"base verb"],["O",V.o+".",""]],say:hs+" "+M.m+" "+V.v+" "+V.o+"."};
+    if(hf==="ng")return{t:[["S",hs,"subject"],["M",M.neg,"modal + not"],["V",V.v,"base verb"],["O",V.o+".",""]],say:hs+" "+M.neg+" "+V.v+" "+V.o+"."};
+    return{t:[["M",cap(M.m),"modal first"],["S",subjQ,"subject"],["V",V.v,"base verb"],["O",V.o+"?",""]],say:cap(M.m)+" "+subjQ+" "+V.v+" "+V.o+"?"};
+  }
+  function drawHero(animate){
+    var first={},k;
+    if(animate){for(k in els){if(els[k].isConnected)first[k]=els[k].getBoundingClientRect()}}
+    var T=tokens(),M=MODALS[hm],V=VERBS[hv];
+    var list=T.t.map(function(t){
+      var el=els[t[0]];
+      if(!el){el=document.createElement("span");el.className="chip "+t[0];el.dataset.role=t[0];el.innerHTML="<b></b><i></i>";els[t[0]]=el}
+      el.firstChild.textContent=t[1];el.lastChild.textContent=t[2];return el;
+    });
+    $("#heroStage").replaceChildren.apply($("#heroStage"),list);
+    if(animate&&!reduce){
+      list.forEach(function(el){
+        var f=first[el.dataset.role];if(!f||!el.animate)return;
+        var l=el.getBoundingClientRect(),dx=f.left-l.left,dy=f.top-l.top;
+        if(Math.abs(dx)<1&&Math.abs(dy)<1)return;
+        el.animate([{transform:"translate("+dx+"px,"+dy+"px)"},{transform:"none"}],{duration:520,easing:"cubic-bezier(.3,.7,.2,1)"});
+      });
+    }
+    $("#hForm").textContent=FNAME[hf]+" with “"+M.m+"”";
+    $("#hNote").textContent="“"+cap(M.m)+"” shows "+M.u+". The verb after it stays in V1."+(hf==="ng"&&M.sh?" Short form: "+M.sh+".":"");
+    var sub=hs;
+    $("#never").innerHTML="<b>Never say</b><p>"+sub+" "+M.m+"s "+V.v+" "+V.o+"</p><p>"+sub+" "+M.m+" "+V.s+" "+V.o+"</p><p>"+sub+" "+M.m+" to "+V.v+" "+V.o+"</p>";
+    document.querySelectorAll("#modals button").forEach(function(b,i){b.setAttribute("aria-pressed",i===hm)});
+    document.querySelectorAll("#formSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.f===hf)});
+    document.querySelectorAll("#subjSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.s===hs)});
+    return T.say;
+  }
+  $("#modals").innerHTML=MODALS.map(function(m,i){return '<button type="button" data-i="'+i+'" aria-pressed="false">'+m.m+'</button>'}).join("");
+  $("#modals").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;hm=+b.dataset.i;drawHero(true)});
+  $("#formSeg").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;hf=b.dataset.f;drawHero(true)});
+  $("#subjSeg").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;hs=b.dataset.s;drawHero(true)});
+  $("#nextVerb").addEventListener("click",function(){hv=(hv+1)%VERBS.length;drawHero(true)});
+  $("#listen").addEventListener("click",function(){
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(tokens().say);u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+  drawHero(false);
+
+  /* ---------- jobs of modals ---------- */
+  var JOBS=[
+    {c:6,n:"Ability",m:"can",d:"Shows what someone is able to do.",ex:"Birds {{can}} fly."},
+    {c:6,n:"Permission",m:"can, may",d:"Asks for or gives permission. “May” is more polite.",ex:"{{May}} I come in?"},
+    {c:6,n:"Possibility",m:"may",d:"Something that is possible, but not certain.",ex:"It {{may}} rain today."},
+    {c:6,n:"Advice",m:"should",d:"Says what is a good thing to do.",ex:"You {{should}} drink more water."},
+    {c:6,n:"Duty or rule",m:"must",d:"Says what is necessary or required.",ex:"We {{must}} obey the rules."},
+    {c:6,n:"Future",m:"will",d:"Says what is going to happen.",ex:"I {{will}} call you tomorrow."},
+    {c:7,n:"Polite request",m:"could, would, can",d:"Asks someone to do something. “Could” and “would” are the most polite.",ex:"{{Could}} you help me, please?"},
+    {c:7,n:"Offer or suggestion",m:"shall, can",d:"Offers help or suggests an idea. Use “shall” with I and we.",ex:"{{Shall}} I carry your bag? {{Shall}} we play?"},
+    {c:7,n:"Weaker possibility",m:"might, could",d:"Less sure than “may”.",ex:"He {{might}} be late."},
+    {c:7,n:"Past ability",m:"could",d:"What someone was able to do in the past.",ex:"I {{could}} run fast when I was young."},
+    {c:7,n:"Not allowed",m:"must not, cannot",d:"Says something is forbidden.",ex:"You {{must not}} touch the wire."},
+    {c:7,n:"Promise",m:"will",d:"Says you will definitely do something.",ex:"I {{will}} help you. I promise."},
+    {c:8,n:"Not necessary",m:"need not, do not have to",d:"There is no duty. It is not forbidden, only not needed.",ex:"You {{need not}} wait. We have plenty of time."},
+    {c:8,n:"Must not or need not?",m:"must not / need not",d:"“Must not” forbids. “Need not” only says it is not required.",ex:"You {{must not}} enter. (Forbidden.) You {{need not}} enter. (Your choice.)"},
+    {c:8,n:"Regret about the past",m:"should have + V3",d:"Something that was a good idea but did not happen.",ex:"You {{should have}} told me earlier."},
+    {c:8,n:"Missed chance",m:"could have + V3",d:"Something that was possible in the past but did not happen.",ex:"I {{could have}} won, but I fell."},
+    {c:8,n:"Guess about the past",m:"must have + V3",d:"A strong guess about what happened.",ex:"The lights are off. They {{must have}} gone to bed."},
+    {c:8,n:"Past possibility",m:"might have + V3",d:"A weak guess about what happened.",ex:"She {{might have}} forgotten."},
+    {c:8,n:"Strong advice",m:"ought to, had better",d:"“Ought to” is like “should”. “Had better” is stronger and warns of a result.",ex:"Students {{ought to}} respect elders. You {{had better}} hurry."},
+    {c:8,n:"Past habit",m:"would",d:"Something we did again and again in the past.",ex:"We {{would}} swim in the river every summer."}
+  ];
+  function drawJobs(){
+    $("#jobsLead").textContent=cls===6
+      ?"Class 6 learns six jobs. Each modal has a main job."
+      :"Class "+cls+" revises the earlier jobs and adds new ones. The new ones are marked.";
+    $("#tlist").innerHTML=JOBS.filter(function(j){return j.c<=cls}).map(function(j){
+      return '<article class="tcard"><h3>'+j.n+(j.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<span class="formula">'+j.m+'</span><p>'+j.d+'</p><p class="ex">'+hlSent(j.ex)+'</p></article>';
+    }).join("");
+  }
+
+  /* ---------- modal chooser ---------- */
+  var CHOOSE=[
+    {c:6,o:"I am able to do it",n:"can",tip:"Use can for what you are able to do.",ex:"She {{can}} swim."},
+    {c:6,o:"I want to ask for permission",n:"may or can",tip:"“May” is more polite and used in school.",ex:"{{May}} I drink some water?"},
+    {c:6,o:"I want to give advice",n:"should",tip:"Use should for good advice.",ex:"You {{should}} rest."},
+    {c:6,o:"It is a duty or a rule",n:"must",tip:"Use must for what is necessary.",ex:"We {{must}} wear a uniform."},
+    {c:6,o:"It is possible, but I am not sure",n:"may",tip:"Use may when something could happen.",ex:"It {{may}} rain."},
+    {c:6,o:"It will happen in the future",n:"will",tip:"Use will for the future.",ex:"I {{will}} visit you."},
+    {c:7,o:"I want to make a polite request",n:"could or would",tip:"“Could you…?” and “Would you…?” sound polite.",ex:"{{Could}} you open the door, please?"},
+    {c:7,o:"I want to offer help",n:"shall I or can I",tip:"Use shall with I and we for offers.",ex:"{{Shall}} I help you?"},
+    {c:7,o:"It is less likely than may",n:"might",tip:"Use might for a weaker chance.",ex:"He {{might}} come."},
+    {c:7,o:"It is not allowed",n:"must not or cannot",tip:"Must not forbids something.",ex:"You {{must not}} run in the corridor."},
+    {c:7,o:"I was able to do it in the past",n:"could",tip:"Could is the past of can for ability.",ex:"I {{could}} swim at five."},
+    {c:8,o:"It is not necessary",n:"need not or do not have to",tip:"It is not forbidden. It is only not needed.",ex:"You {{need not}} come today."},
+    {c:8,o:"I regret something in the past",n:"should have + V3",tip:"It was a good idea, but it did not happen.",ex:"I {{should have}} studied."},
+    {c:8,o:"I am guessing what happened",n:"must have + V3",tip:"A strong guess about the past.",ex:"He {{must have}} missed the bus."},
+    {c:8,o:"There was a chance, but it was missed",n:"could have + V3",tip:"It was possible, but it did not happen.",ex:"We {{could have}} won."},
+    {c:8,o:"I want to give strong advice",n:"had better + V1",tip:"Had better warns of a bad result.",ex:"You {{had better}} hurry."},
+    {c:8,o:"It was a habit in the past",n:"would or used to",tip:"Both show something repeated in the past.",ex:"We {{would}} play every evening."}
+  ];
+  var choRes=null;
+  function drawChooser(){
+    var box=$("#choBox");
+    if(choRes!==null){
+      var r=choRes;
+      box.innerHTML='<div class="res"><p class="count" style="color:inherit">Use</p><h3>'+r.n+'</h3><p>'+r.tip+'</p><p class="ex">'+hlSent(r.ex)+'</p></div>'+
+        '<div class="row"><button type="button" class="btn" data-act="restart">Try another</button></div>';
+      return;
+    }
+    box.innerHTML='<p class="qs">What do you want to say?</p><div class="opts">'+
+      CHOOSE.map(function(x,i){return x.c<=cls?'<button type="button" class="opt" data-i="'+i+'">'+x.o+'</button>':""}).join("")+'</div>';
+  }
+  $("#choBox").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="restart"){choRes=null;drawChooser();return}
+    if(b.dataset.i!==undefined){choRes=CHOOSE[+b.dataset.i];drawChooser()}
+  });
+
+  /* ---------- practice data ---------- */
+  var FILL=[
+    {pre:"Birds",post:"fly, but fish cannot.",ans:"can",o:["can","must","should"],w:"It shows ability: what birds are able to do.",c:6},
+    {pre:"",post:"I come in, sir?",ans:"May",o:["May","Should","Would"],w:"“May” asks for permission politely.",c:6},
+    {pre:"You",post:"stop at a red light. It is the law.",ans:"must",o:["must","may","can"],w:"A law is a duty, so use must.",c:6},
+    {pre:"You have a bad cough. You",post:"see a doctor.",ans:"should",o:["should","can","might"],w:"It is advice, so use should.",c:6},
+    {pre:"The sky is cloudy. It",post:"rain today.",ans:"may",o:["may","must","can"],w:"It is possible but not certain, so use may.",c:6},
+    {pre:"She",post:"speak three languages.",ans:"can",o:["can","should","must"],w:"It shows ability.",c:6},
+    {pre:"Students",post:"not run in the corridor.",ans:"must",o:["must","may","can"],w:"It is a school rule, so use must (not).",c:6},
+    {pre:"He",post:"not swim. He is afraid of water.",ans:"can",o:["can","may","should"],w:"The reason is about ability: he is not able to swim.",c:6},
+    {pre:"",post:"you please pass the salt?",ans:"Could",o:["Could","Must","Should"],w:"“Could” makes a polite request.",c:7},
+    {pre:"",post:"I carry your bag?",ans:"Shall",o:["Shall","Must","Would"],w:"“Shall I” offers help.",c:7},
+    {pre:"Ravi",post:"be at home, but I am not sure.",ans:"might",o:["might","must","can"],w:"“Not sure” shows a weak possibility: might.",c:7},
+    {pre:"She",post:"run fast when she was young.",ans:"could",o:["could","can","must"],w:"“When she was young” is the past, so use could.",c:7},
+    {pre:"You",post:"not touch the wire. It is dangerous.",ans:"must",o:["must","might","would"],w:"It is forbidden, so use must not.",c:7},
+    {pre:"",post:"you open the window, please?",ans:"Would",o:["Would","Must","Might"],w:"“Would you…?” makes a polite request.",c:7},
+    {pre:"The sky is dark. It",post:"snow tonight.",ans:"may",o:["may","shall","would"],w:"It is possible, so use may.",c:7},
+    {pre:"",post:"we go for a walk?",ans:"Shall",o:["Shall","Must","Might"],w:"“Shall we…?” makes a suggestion.",c:7},
+    {pre:"You",post:"have told me earlier.",ans:"should",o:["should","can","will"],w:"It is a regret about the past: should have + V3.",c:8},
+    {pre:"You",post:"not wait. We have plenty of time.",ans:"need",o:["need","must","can"],w:"There is no need to wait. “Must not” would forbid it.",c:8},
+    {pre:"The lights are off. They",post:"have gone to bed.",ans:"must",o:["must","should","need"],w:"It is a strong guess about the past: must have + V3.",c:8},
+    {pre:"I",post:"have won the race, but I fell.",ans:"could",o:["could","must","should"],w:"It was a missed chance: could have + V3.",c:8},
+    {pre:"You had",post:"hurry, or you will miss the train.",ans:"better",o:["better","best","good"],w:"“Had better” is strong advice with a warning.",c:8},
+    {pre:"When I was a child, I",post:"play in the river every summer.",ans:"would",o:["would","must","shall"],w:"It was a repeated habit in the past: would.",c:8},
+    {pre:"Students",post:"to respect their teachers.",ans:"ought",o:["ought","should","must"],w:"Only “ought” is followed by “to”.",c:8}
+  ];
+  var FIX=[
+    {o:["She can swim.","She cans swim.","She can swims."],w:"A modal never changes form, and the next verb stays V1.",c:6},
+    {o:["He can sing well.","He can to sing well.","He can sings well."],w:"No “to” and no -s after a modal.",c:6},
+    {o:["May I come in?","May I to come in?","I may come in?"],w:"In a question the modal comes first, and there is no “to”.",c:6},
+    {o:["You should study daily.","You should studying daily.","You should studied daily."],w:"After a modal use V1.",c:6},
+    {o:["We must obey the rules.","We must obeys the rules.","We musts obey the rules."],w:"The modal and the verb after it do not take -s.",c:6},
+    {o:["They cannot swim.","They cannot swims.","They not can swim."],w:"“Not” goes after the modal, and the verb stays V1.",c:6},
+    {o:["Could you help me?","Could you helped me?","You could help me?"],w:"A question puts the modal before the subject, and the verb stays V1.",c:7},
+    {o:["Shall I open the door?","Shall I opening the door?","Shall I opened the door?"],w:"After shall use V1.",c:7},
+    {o:["You mustn’t talk in class.","You don’t must talk in class.","You mustn’t to talk in class."],w:"Add not to the modal. Do not use “do”, and do not add “to”.",c:7},
+    {o:["She might come tomorrow.","She might comes tomorrow.","She might came tomorrow."],w:"After might use V1.",c:7},
+    {o:["I could swim when I was five.","I could swam when I was five.","I could to swim when I was five."],w:"After could use V1, with no “to”.",c:7},
+    {o:["Would you pass the salt?","Would you passed the salt?","Would you to pass the salt?"],w:"After would use V1, with no “to”.",c:7},
+    {o:["You should have told me.","You should have tell me.","You should has told me."],w:"Perfect modals use modal + have + V3.",c:8},
+    {o:["He must have forgotten.","He must have forget.","He must has forgotten."],w:"Use must have + V3. “Have” never changes to “has” after a modal.",c:8},
+    {o:["You needn’t come.","You needn’t to come.","You needn’t comes."],w:"After needn’t use V1, with no “to”.",c:8},
+    {o:["I could have won.","I could have win.","I could has won."],w:"Use could have + V3.",c:8},
+    {o:["Students ought to respect elders.","Students ought respect elders.","Students ought to respects elders."],w:"“Ought” is followed by “to” and then V1.",c:8},
+    {o:["You had better hurry.","You had better to hurry.","You had better hurried."],w:"After had better use V1, with no “to”.",c:8}
+  ];
+  var JL={ability:"Ability",permission:"Permission",possibility:"Possibility",advice:"Advice",duty:"Duty or rule",request:"Polite request",offer:"Offer or suggestion",forbid:"Not allowed",noneed:"Not necessary",regret:"Regret about the past",guess:"Guess about the past",missed:"Missed chance",habit:"Past habit"};
+  var NAME=[
+    {t:"She {{can}} swim.",a:"ability",w:"It shows what she is able to do.",c:6},
+    {t:"Birds {{can}} fly.",a:"ability",w:"It shows what birds are able to do.",c:6},
+    {t:"{{May}} I drink some water?",a:"permission",w:"The speaker is asking for permission.",c:6},
+    {t:"{{Can}} I go out to play?",a:"permission",w:"The speaker is asking for permission.",c:6},
+    {t:"It {{may}} rain today.",a:"possibility",w:"It is possible, but not certain.",c:6},
+    {t:"You {{should}} wake up early.",a:"advice",w:"The speaker says what is a good thing to do.",c:6},
+    {t:"We {{must}} follow the rules.",a:"duty",w:"It is necessary, so it is a duty.",c:6},
+    {t:"{{Could}} you help me?",a:"request",w:"The speaker is making a polite request.",c:7},
+    {t:"{{Would}} you close the door?",a:"request",w:"The speaker is making a polite request.",c:7},
+    {t:"{{Shall}} I open the window?",a:"offer",w:"The speaker is offering to do something.",c:7},
+    {t:"You {{must not}} touch it.",a:"forbid",w:"It is forbidden.",c:7},
+    {t:"He {{might}} be late.",a:"possibility",w:"It is a weak possibility.",c:7},
+    {t:"I {{could}} run fast as a child.",a:"ability",w:"It is ability in the past.",c:7},
+    {t:"You {{should have}} listened.",a:"regret",w:"It was a good idea that did not happen.",c:8},
+    {t:"He {{must have}} left.",a:"guess",w:"It is a strong guess about the past.",c:8},
+    {t:"You {{need not}} wait.",a:"noneed",w:"There is no need. It is not forbidden.",c:8},
+    {t:"I {{could have}} won.",a:"missed",w:"It was possible, but it did not happen.",c:8},
+    {t:"You {{had better}} hurry.",a:"advice",w:"It is strong advice with a warning.",c:8},
+    {t:"When young, we {{would}} swim every day.",a:"habit",w:"It is something repeated in the past.",c:8}
+  ];
+
+  var mode="fill",S={};
+  function resetPractice(){
+    var F=FILL.filter(function(x){return x.c<=cls}),X=FIX.filter(function(x){return x.c<=cls}),N=NAME.filter(function(x){return x.c<=cls});
+    var jobs=[];N.forEach(function(x){if(jobs.indexOf(x.a)<0)jobs.push(x.a)});
+    S.fill={i:0,score:0,ans:null,q:shuffle(F).slice(0,8).map(function(x){return {pre:x.pre,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
+    S.fix={i:0,score:0,ans:null,q:shuffle(X).slice(0,8).map(function(x){return {ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
+    S.name={i:0,score:0,ans:null,q:shuffle(N).slice(0,8).map(function(x){
+      var others=shuffle(jobs.filter(function(j){return j!==x.a})).slice(0,2);
+      return {t:x.t,ans:JL[x.a],w:x.w,o:shuffle([JL[x.a]].concat(others.map(function(j){return JL[j]})))};
+    })};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML='<div class="result"><p class="count">Round complete</p><p class="big">'+s.score+' out of '+n+'</p><p>'+
+        (s.score===n?"Perfect round. You are a modal master.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the modal jobs again, then play once more.")+
+        '</p><button type="button" class="btn" data-act="again">Play again</button></div>';
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    if(mode==="fill"){
+      html+='<p class="qs">'+esc(q.pre)+' <span class="gap" id="gap">&nbsp;</span> '+esc(q.post)+'</p><div class="opts row3">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    }else if(mode==="fix"){
+      html+='<p class="qs">Which sentence is correct?</p><div class="opts">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    }else{
+      html+='<p class="qs">'+hlSent(q.t)+'</p><p class="count" style="margin-bottom:.6rem">What does the highlighted modal show?</p><div class="opts">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    }
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var q=s.q[s.i],ok=q.o[+b.dataset.o]===q.ans;
+    s.ans=1;if(ok)s.score++;
+    var fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+(mode==="name"?q.ans+": ":"")+q.w;
+    if(mode==="fill")$("#gap").textContent=q.ans;
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(q.o[+x.dataset.o]===q.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    choRes=null;drawJobs();drawChooser();resetPractice();
+  });
+
+  drawJobs();drawChooser();resetPractice();
+})();
+</script>
+</body>
+</html>
