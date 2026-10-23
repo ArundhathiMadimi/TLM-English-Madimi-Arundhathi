@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Modal Verbs | TLM by Madimi Arundhathi</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="theme.css">
-<style>
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Modal Verbs | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
 :root{
   --S-bg:#FFE3E6; --S-c:#D6334A; --S-t:#8F1226;
   --M-bg:#FFF0C2; --M-c:#D99A00; --M-t:#6B4A00;
@@ -72,8 +67,6 @@
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
-</head>
-<body>
 
 <header class="hero wrap">
   <h1>Modal Verbs</h1>
@@ -134,12 +127,12 @@
     <p class="lead">Modals are helping verbs: can, could, may, might, must, should, will, would, shall. They all follow the same rules.</p>
     <div class="uses">
       <div class="use M"><b>A modal is followed by the base verb (V1)</b>
-        <p>She {{can}} swim.</p>
+        <p>She &#123;&#123;can&#125;&#125; swim.</p>
         <p class="x">She cans swim.</p><p class="x">She can swims.</p><p class="x">She can to swim.</p></div>
       <div class="use S"><b>For a negative, put “not” after the modal</b>
-        <p>She {{cannot}} swim. You {{should not}} run.</p></div>
+        <p>She &#123;&#123;cannot&#125;&#125; swim. You &#123;&#123;should not&#125;&#125; run.</p></div>
       <div class="use V"><b>For a question, the modal comes before the subject</b>
-        <p>{{Can}} she swim? {{May}} I come in?</p></div>
+        <p>&#123;&#123;Can&#125;&#125; she swim? &#123;&#123;May&#125;&#125; I come in?</p></div>
     </div>
   </section>
 
@@ -202,13 +195,16 @@
     </details>
   </section>
 
+  <LessonNav slug="7-Modal-Verbs" />
+
   <footer>
     Teaching learning material (TLM) on Modal Verbs for Classes 6 to 8.<br>
     Prepared by <strong>Madimi Arundhathi</strong>.
   </footer>
 </main>
 
-<script>
+
+<script is:inline>
 (function(){
   "use strict";
   var $=function(s){return document.querySelector(s)};
@@ -494,5 +490,4 @@
   drawJobs();drawChooser();resetPractice();
 })();
 </script>
-</body>
-</html>
+</Base>

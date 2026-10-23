@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Clauses | TLM by Madimi Arundhathi</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="theme.css">
-<style>
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Clauses | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
 :root{
   --M-bg:#D5F3EE; --M-c:#13927F; --M-t:#0B5E55;
   --S-bg:#FFE3E6; --S-c:#D6334A; --S-t:#8F1226;
@@ -82,8 +77,6 @@
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chip{transition:none}}
 </style>
-</head>
-<body>
 
 <header class="hero wrap">
   <h1>Clauses</h1>
@@ -194,13 +187,16 @@
     </details>
   </section>
 
+  <LessonNav slug="4-Clauses" />
+
   <footer>
     Teaching learning material (TLM) on Clauses for Classes 6 to 8.<br>
     Prepared by <strong>Madimi Arundhathi</strong>.
   </footer>
 </main>
 
-<script>
+
+<script is:inline>
 (function(){
   "use strict";
   var $=function(s){return document.querySelector(s)};
@@ -481,5 +477,4 @@
   drawHelper();resetPractice();
 })();
 </script>
-</body>
-</html>
+</Base>

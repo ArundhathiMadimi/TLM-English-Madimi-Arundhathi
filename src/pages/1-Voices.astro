@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Voices: Active and Passive | TLM by Madimi Arundhathi</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="theme.css">
-<style>
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Voices: Active and Passive | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
 :root{
   --s-bg:#FFE3E6; --s-c:#D6334A; --s-t:#8F1226;
   --v-bg:#FFF0C2; --v-c:#D99A00; --v-t:#6B4A00;
@@ -75,8 +70,6 @@
 .use p{margin:.2rem 0}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
-</head>
-<body>
 
 <header class="hero wrap">
   <h1>Voices</h1>
@@ -205,13 +198,16 @@
     </details>
   </section>
 
+  <LessonNav slug="1-Voices" />
+
   <footer>
     Teaching learning material (TLM) on Active and Passive Voice for Classes 6 to 8.<br>
     Prepared by <strong>Madimi Arundhathi</strong>.
   </footer>
 </main>
 
-<script>
+
+<script is:inline>
 (function(){
   "use strict";
   var $=function(s){return document.querySelector(s)};
@@ -462,5 +458,4 @@
   drawTenses();resetPractice();
 })();
 </script>
-</body>
-</html>
+</Base>

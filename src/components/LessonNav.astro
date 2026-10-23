@@ -1,0 +1,16 @@
+---
+import { lessons } from '../lessons.js';
+const { slug } = Astro.props;
+const i = lessons.findIndex((l) => l.slug === slug);
+if (i < 0) throw new Error(`LessonNav: "${slug}" is not in src/lessons.js`);
+const prev = lessons[i - 1];
+const next = lessons[i + 1];
+---
+<nav class="lessonnav" aria-label="More lessons">
+  {prev
+    ? <a class="btn alt" href={`${prev.slug}.html`}><span aria-hidden="true">←</span> {prev.title}</a>
+    : <a class="btn alt" href="index.html"><span aria-hidden="true">🏠</span> All topics</a>}
+  {next
+    ? <a class="btn" href={`${next.slug}.html`}>Next: {next.title} <span aria-hidden="true">→</span></a>
+    : <a class="btn" href="index.html">All topics <span aria-hidden="true">🏠</span></a>}
+</nav>

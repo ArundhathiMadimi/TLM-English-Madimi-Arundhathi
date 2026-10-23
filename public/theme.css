@@ -63,3 +63,7 @@ details ul,details ol{padding-left:1.2rem;margin:.3rem 0 .9rem}
 details li{margin:.35rem 0}
 footer{margin:3rem 0 2rem;padding-top:1.2rem;border-top:4px solid;border-image:var(--rainbow) 1;color:var(--muted);font-size:.95rem}
 footer strong{color:var(--ink)}
+a.btn{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none}
+.topnav{padding-top:1rem}
+.lessonnav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem;margin-top:3rem}
+.lessonnav .btn:last-child{margin-left:auto}

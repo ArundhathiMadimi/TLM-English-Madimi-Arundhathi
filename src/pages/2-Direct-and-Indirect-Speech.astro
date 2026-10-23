@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Direct and Indirect Speech | TLM by Madimi Arundhathi</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="theme.css">
-<style>
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Direct and Indirect Speech | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
 :root{
   --j-bg:#FFE3E6; --j-c:#D6334A; --j-t:#8F1226;
   --r-bg:#FFF0C2; --r-c:#D99A00; --r-t:#6B4A00;
@@ -73,8 +68,6 @@
 .use p{margin:.2rem 0}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
-</head>
-<body>
 
 <header class="hero wrap">
   <h1>Direct and Indirect Speech</h1>
@@ -201,13 +194,16 @@
     </details>
   </section>
 
+  <LessonNav slug="2-Direct-and-Indirect-Speech" />
+
   <footer>
     Teaching learning material (TLM) on Direct and Indirect Speech for Classes 6 to 8.<br>
     Prepared by <strong>Madimi Arundhathi</strong>.
   </footer>
 </main>
 
-<script>
+
+<script is:inline>
 (function(){
   "use strict";
   var $=function(s){return document.querySelector(s)};
@@ -523,5 +519,4 @@
   drawRules();resetPractice();
 })();
 </script>
-</body>
-</html>
+</Base>
