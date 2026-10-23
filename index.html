@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>English Grammar TLMs | Madimi Arundhathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
 <style>
-:root{--bg:#F6F8FC;--surface:#fff;--ink:#17203A;--muted:#55607A;--line:#D5DCEB;--accent:#3347C7}
-@media (prefers-color-scheme:dark){:root{--bg:#10152A;--surface:#1A2140;--ink:#EEF1FA;--muted:#A7B0CC;--line:#2E3760;--accent:#9AA8FF}}
-body{margin:0;background:var(--bg);color:var(--ink);font:1.05rem/1.55 "Segoe UI",Verdana,system-ui,sans-serif}
-main{max-width:40rem;margin:0 auto;padding:2rem 1.1rem}
-h1{font:800 2.4rem/1.1 "Trebuchet MS","Segoe UI",sans-serif;margin:0 0 .4rem}
-p{color:var(--muted)}
-a{display:block;background:var(--surface);border:2px solid var(--line);border-left:6px solid var(--accent);border-radius:14px;padding:.9rem 1rem;margin:.7rem 0;color:var(--ink);text-decoration:none;font-weight:700;font-size:1.15rem}
-a:hover{border-color:var(--accent)}
-footer{margin-top:2rem;color:var(--muted);font-size:.95rem}
-</style></head><body><main>
+.hero h1{font-size:clamp(2.4rem,11vw,3.8rem);font-weight:800}
+.hero .sub{font-size:1.15rem;color:var(--muted)}
+.topics{display:grid;gap:1rem;margin:1.6rem 0 0;padding:0;list-style:none}
+.topics li:nth-child(6n+1){--t:var(--c1)} .topics li:nth-child(6n+2){--t:var(--c2)} .topics li:nth-child(6n+3){--t:var(--c3)}
+.topics li:nth-child(6n+4){--t:var(--c4)} .topics li:nth-child(6n+5){--t:var(--c5)} .topics li:nth-child(6n+6){--t:var(--c6)}
+.topics a{display:flex;align-items:center;gap:1rem;background:var(--surface);border:3px solid var(--t);border-radius:22px;padding:.85rem 1rem;color:var(--ink);text-decoration:none;box-shadow:0 6px 0 var(--t);transition:transform .15s,box-shadow .15s}
+.topics a:hover{transform:translateY(-3px);box-shadow:0 9px 0 var(--t)}
+.topics a:active{transform:translateY(4px);box-shadow:0 2px 0 var(--t)}
+.ico{flex:none;width:3.4rem;height:3.4rem;display:grid;place-items:center;border-radius:18px;background:var(--t);font-size:1.8rem}
+.topics b{display:block;font:800 1.3rem/1.15 var(--display)}
+.topics small{display:block;color:var(--muted);font-size:.95rem}
+@media (prefers-reduced-motion:reduce){.topics a{transition:none}}
+</style></head><body>
+<main class="wrap hero">
 <h1>English Grammar TLMs</h1>
-<p>Interactive teaching learning material for Classes 6 to 8. Tap a topic to open it. Works without internet.</p>
-<a href="1-Voices.html">1. Voices (Active and Passive)</a>
-<a href="2-Direct-and-Indirect-Speech.html">2. Direct and Indirect Speech</a>
-<a href="3-Poetic-Devices.html">3. Poetic Devices</a>
-<a href="4-Clauses.html">4. Clauses</a>
-<a href="5-Correct-Form-of-Verbs.html">5. Correct Form of Verbs</a>
-<a href="6-Synonyms.html">6. Synonyms</a>
-<a href="7-Modal-Verbs.html">7. Modal Verbs</a>
+<p class="sub">Fun, interactive lessons for Classes 6 to 8. Pick a topic and start playing! Works without internet.</p>
+<ul class="topics">
+<li><a href="1-Voices.html"><span class="ico" aria-hidden="true">🔄</span><span><b>Voices</b><small>Active and Passive: flip the sentence around</small></span></a></li>
+<li><a href="2-Direct-and-Indirect-Speech.html"><span class="ico" aria-hidden="true">💬</span><span><b>Direct and Indirect Speech</b><small>Say the exact words, or report them</small></span></a></li>
+<li><a href="3-Poetic-Devices.html"><span class="ico" aria-hidden="true">🎵</span><span><b>Poetic Devices</b><small>Sounds, comparisons and word pictures</small></span></a></li>
+<li><a href="4-Clauses.html"><span class="ico" aria-hidden="true">🧩</span><span><b>Clauses</b><small>Build big sentences from small parts</small></span></a></li>
+<li><a href="5-Correct-Form-of-Verbs.html"><span class="ico" aria-hidden="true">⏰</span><span><b>Correct Form of Verbs</b><small>Pick the right verb for the right time</small></span></a></li>
+<li><a href="6-Synonyms.html"><span class="ico" aria-hidden="true">🔤</span><span><b>Synonyms</b><small>Same meaning, different strength</small></span></a></li>
+<li><a href="7-Modal-Verbs.html"><span class="ico" aria-hidden="true">🙋</span><span><b>Modal Verbs</b><small>can, may, must, should and more</small></span></a></li>
+</ul>
 <footer>Prepared by <strong>Madimi Arundhathi</strong></footer>
 </main></body></html>
