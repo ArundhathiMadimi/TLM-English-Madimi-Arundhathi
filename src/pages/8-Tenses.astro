@@ -455,7 +455,7 @@ import LessonNav from '../components/LessonNav.astro';
       return;
     }
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
-    function opts(row){return '<div class="opts'+(row?' row3':'')+'">'+q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'}
+    function opts(row){return '<div class="opts'+(row?' row3':'')+'">'+q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.ans?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>'}
     if(mode==="fill"){
       html+='<p class="qs">'+esc(q.pre)+' <span class="gap" id="gap">&nbsp;</span> <span style="color:var(--muted)">('+esc(q.v)+')</span> '+esc(q.post)+'</p>'+opts(true);
     }else if(mode==="name"){

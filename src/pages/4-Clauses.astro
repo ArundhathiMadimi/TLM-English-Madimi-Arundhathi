@@ -440,14 +440,14 @@ import LessonNav from '../components/LessonNav.astro';
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
     if(mode==="test"){
       html+='<p class="qs">“'+esc(q[0])+'”<br>What is this group of words?</p><div class="opts">'+
-        [["P","Phrase"],["M","Main clause"],["S","Subordinate clause"]].map(function(x){return '<button type="button" class="opt" data-k="'+x[0]+'">'+x[1]+'</button>'}).join("")+'</div>';
+        [["P","Phrase"],["M","Main clause"],["S","Subordinate clause"]].map(function(x){return '<button type="button" class="opt" data-k="'+x[0]+'"'+(x[0]===q[1]?' data-right':'')+'>'+x[1]+'</button>'}).join("")+'</div>';
     }else if(mode==="join"){
       html+='<p class="qs">'+esc(q.pre)+' <span class="gap" id="gap">&nbsp;</span> '+esc(q.post)+'</p><div class="opts row3">'+
-        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.ans?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>';
     }else{
       html+='<p class="qs">'+q.p.map(function(x){return x[1]?'<span class="hl S">'+esc(x[0])+'</span>':esc(x[0])}).join("")+'</p>'+
         '<p class="count" style="margin-bottom:.6rem">What kind of clause is highlighted?</p><div class="opts">'+
-        typeCodes().map(function(c){return '<button type="button" class="opt" data-k="'+c+'">'+TLABEL[c]+'</button>'}).join("")+'</div>';
+        typeCodes().map(function(c){return '<button type="button" class="opt" data-k="'+c+'"'+(c===q.a?' data-right':'')+'>'+TLABEL[c]+'</button>'}).join("")+'</div>';
     }
     html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
     box.innerHTML=html;

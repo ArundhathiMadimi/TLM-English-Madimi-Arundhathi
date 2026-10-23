@@ -13,7 +13,8 @@ src/components/LessonNav.astro   Previous / Next buttons at the bottom of each l
 src/pages/index.astro     start page
 src/pages/N-Topic.astro   one lesson per topic (1-Voices.astro ... 7-Modal-Verbs.astro)
 public/theme.css          shared colours, fonts and common components, copied to the site as-is
-public/feedback.js        right/wrong sounds (Web Audio, no files), confetti and the Sound on/off button
+public/feedback.js        right/wrong sounds (Web Audio, no files), confetti and the Sound on/off button; emits tlm:answer / tlm:round events
+public/play.js            Team game scoreboard, streak pop-ups and the Hint button above every practice game
 public/practice.js        TLM helpers for lesson scripts: deal (random, no repeats), result screen, retry round; also remembers the student's class (localStorage "tlm-class", set on the start page or any #classSeg) and opens every lesson at it
 tests/check.mjs           npm test: checks practice.js and the Voices/Verbs sentence generators
 astro.config.mjs          build.format "file" -> pages build to 1-Voices.html, not 1-Voices/
@@ -67,6 +68,8 @@ Every lesson uses `<Base title="..." lesson>` and keeps the same layout and IDs:
 **Practice games follow one pattern** (see any lesson's `resetPractice`):
 - Pick questions with `TLM.deal("<lesson>-<mode>-"+cls, list, n)`. It returns a random set and shows questions this device hasn't seen before repeats. Never use a fixed order.
 - Each game state has `miss:[]`. Push the question on a wrong answer, end the round with `TLM.result(score, n, message, miss.length)`, and handle `data-act="retry"` with `TLM.retry(miss)`.
+- Mark the correct answer button with `data-right` when you render it, using the same check the click handler uses for `ok`; exactly one per question. The Hint button greys out one wrong option and needs it (build/order games skip this and get no hint). Hints never show when only two options exist.
+- `TLM.result` also awards 1–3 stars (90% or more for 3, 60% or more for 2) and keeps the best per lesson for the start page cards. Retry rounds earn no stars.
 - Every class should be able to draw at least 16 questions per game. Each question must have exactly one defensible answer, with distractors that are clearly wrong.
 - Voices and Correct Form of Verbs also **generate** questions from word tables (the `sentence generator` block) and mix them with the hand-written ones. To add variety there, add verbs or subjects to those tables. Leave out verbs whose V1 and V2 look the same (read, put, cut), then run `npm test`.
 

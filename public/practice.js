@@ -18,20 +18,36 @@ window.TLM=(function(){
     return out;
   }
 
-  /* End-of-round screen. Offers a retry round when there were mistakes (button data-act="retry"). */
+  /* Stars for a round: 1 for finishing, 2 for 60% or more, 3 for 90% or more.
+     The best per lesson is kept on this device ("tlm-stars") and shown on the start page cards. */
+  var STARS="tlm-stars",inRetry=false;
+  function lesson(){return decodeURIComponent(location.pathname.split("/").pop()).replace(/\.html$/,"")}
+  function bestStars(){try{return JSON.parse(localStorage.getItem(STARS))||{}}catch(e){return {}}}
+  function starsHTML(k,label){var s="";for(var i=1;i<=3;i++)s+=i<=k?"⭐":'<span class="off">⭐</span>';return '<span class="stars" role="img" aria-label="'+label+'">'+s+'</span>'}
+
+  /* End-of-round screen. Offers a retry round when there were mistakes (button data-act="retry").
+     A retry round's score earns no stars: replaying only your mistakes would make 3 stars too easy. */
   function result(score,n,msg,misses){
-    return '<div class="result"><p class="count">Round complete</p><p class="big">'+score+' out of '+n+'</p><p>'+msg+'</p><div class="row">'+
+    var stars="";
+    if(!inRetry&&n){
+      var k=score>=n*.9?3:score>=n*.6?2:1,all=bestStars(),was=all[lesson()]||0;
+      if(k>was){all[lesson()]=k;try{localStorage.setItem(STARS,JSON.stringify(all))}catch(e){}}
+      stars='<p class="starline">'+starsHTML(k,k+" out of 3 stars")+(k>was&&was?' <b>New best!</b>':'')+'</p>';
+    }
+    inRetry=false;
+    return '<div class="result"><p class="count">Round complete</p>'+stars+'<p class="big">'+score+' out of '+n+'</p><p>'+msg+'</p><div class="row">'+
       (misses?'<button type="button" class="btn" data-act="retry">Try my mistakes again ('+misses+')</button>':'')+
       '<button type="button" class="btn'+(misses?' alt':'')+'" data-act="again">'+(misses?'New round':'Play again')+'</button></div></div>';
   }
 
   /* Fresh game state for a retry round: the missed questions, and their options, in a new order. */
   function retry(missed){
+    inRetry=true;
     var q=shuffle(missed).map(function(x){if(!x||!x.o)return x;var c={},k;for(k in x)c[k]=x[k];c.o=shuffle(x.o);return c});
     return {i:0,score:0,ans:null,picked:[],checked:false,ok:false,miss:[],q:q};
   }
 
-  return {shuffle:shuffle,pickOne:pickOne,deal:deal,result:result,retry:retry};
+  return {shuffle:shuffle,pickOne:pickOne,deal:deal,result:result,retry:retry,bestStars:bestStars,starsHTML:starsHTML};
 })();
 
 /* Remember the student's class across lessons (also set on the start page). After the lesson script has run,

@@ -504,11 +504,11 @@ import LessonNav from '../components/LessonNav.astro';
     var nextBtn='<button type="button" class="btn" data-act="next"'+(mode==="order"?'':' hidden')+'>'+(last?"See my score":"Next question")+'</button>';
     if(mode==="spot"){
       html+='<p class="qs">“'+esc(q.s)+'”</p><p>Which word is the adjective?</p><div class="opts row3">'+
-        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.ans?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>'+
         '<p class="fb" aria-live="polite"></p>'+nextBtn;
     }else if(mode==="fill"){
       html+='<p class="qs">'+(q.pre?esc(q.pre)+' ':'')+'<span class="gap" id="gap">&nbsp;</span> <span style="color:var(--muted)">('+esc(q.w)+')</span>'+(q.post.charAt(0)==="."?"":" ")+esc(q.post)+'</p><div class="opts row3">'+
-        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.ans?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>'+
         '<p class="fb" aria-live="polite"></p>'+nextBtn;
     }else{
       var tray=s.picked.map(function(w,i){return '<button type="button" class="pick" data-rm="'+i+'"'+(s.checked?' disabled':'')+'>'+esc(w)+'</button>'}).join("");

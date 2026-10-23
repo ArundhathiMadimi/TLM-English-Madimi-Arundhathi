@@ -438,7 +438,7 @@ import LessonNav from '../components/LessonNav.astro';
     var q=sp.q[sp.i];
     box.innerHTML='<p class="count">Sentence '+(sp.i+1)+' of '+n+'</p>'+
       '<p class="qs">“'+q[0]+'”</p>'+
-      '<div class="seg big" role="group" aria-label="Your answer"><button type="button" data-a="A">Active</button><button type="button" data-a="P">Passive</button></div>'+
+      '<div class="seg big" role="group" aria-label="Your answer"><button type="button" data-a="A"'+(q[1]==="A"?' data-right':'')+'>Active</button><button type="button" data-a="P"'+(q[1]==="P"?' data-right':'')+'>Passive</button></div>'+
       '<p class="fb" aria-live="polite"></p>'+
       '<button type="button" class="btn" data-act="next" hidden>'+(sp.i===n-1?"See my score":"Next sentence")+'</button>';
   }

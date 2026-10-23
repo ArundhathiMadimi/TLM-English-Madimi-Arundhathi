@@ -410,7 +410,7 @@ import LessonNav from '../components/LessonNav.astro';
       return;
     }
     var q=s.q[s.i],L=optList(q),html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
-    var btns=L.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("");
+    var btns=L.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(i===L.indexOf(q.ans)?' data-right':'')+'>'+esc(x)+'</button>'}).join("");
     if(mode==="find"){
       html+='<p class="qs">'+esc(q.ask)+'</p><div class="opts words" role="group" aria-label="Words of the sentence">'+btns+'</div>';
     }else{

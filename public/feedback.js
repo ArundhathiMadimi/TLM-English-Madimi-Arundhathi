@@ -1,4 +1,4 @@
-/* Sounds and confetti for practice answers, shared by every lesson page.
+/* Sounds and confetti for practice answers, shared by every lesson page. Also announces answers as events.
    Lesson scripts mark an answer by adding "good" or "bad" to a .fb element inside #pbody,
    so we compare those elements before and after each click there. No lesson code needs to call this. */
 (function(){
@@ -47,17 +47,20 @@
     }
   }
 
+  /* other scripts (play.js) listen for these: "tlm:answer" {ok} after each answer, "tlm:round" when a round ends */
+  function emit(name,detail){try{document.dispatchEvent(new CustomEvent(name,{detail:detail||{}}))}catch(e){}}
   function marks(){return [].map.call(box.querySelectorAll(".fb.good,.fb.bad"),function(f){return {el:f,key:f.className+"|"+f.textContent}})}
   var before=[],hadResult=false,target=null;
   /* capture phase: snapshot before the lesson's own click handler on #pbody runs */
   box.addEventListener("click",function(e){before=marks().map(function(m){return m.key});hadResult=!!box.querySelector(".result");target=e.target.closest("button")},true);
   /* bubble phase: registered after the lesson's handler, so the page is already updated */
   box.addEventListener("click",function(){
-    if(!hadResult&&box.querySelector(".result")){play("done");confetti(innerWidth/2,innerHeight/3,60);return}
+    if(!hadResult&&box.querySelector(".result")){play("done");confetti(innerWidth/2,innerHeight/3,60);emit("tlm:round");return}
     var fresh=marks().filter(function(m){return before.indexOf(m.key)<0});
     if(!fresh.length)return;
-    var last=fresh[fresh.length-1];
-    if(last.el.classList.contains("bad")){play("bad");return}
+    var last=fresh[fresh.length-1],ok=!last.el.classList.contains("bad");
+    emit("tlm:answer",{ok:ok});
+    if(!ok){play("bad");return}
     var r=target&&target.isConnected?target.getBoundingClientRect():last.el.getBoundingClientRect();
     play("good");confetti(r.left+r.width/2,r.top+r.height/2,26);
   });

@@ -21,6 +21,8 @@ const colors = ['var(--c1)', 'var(--c2)', 'var(--c4)', 'var(--c6)'];
 .ico{flex:none;width:3.4rem;height:3.4rem;display:grid;place-items:center;border-radius:18px;background:var(--t);font-size:1.8rem}
 .topics b{display:block;font:800 1.3rem/1.15 var(--display)}
 .topics small{display:block;color:var(--muted);font-size:.95rem}
+.topics .stars{display:block;margin-top:.2rem;font-size:1rem;letter-spacing:.05em}
+.stars .off{filter:grayscale(1);opacity:.3}
 @media (prefers-reduced-motion:reduce){.topics a{transition:none}}
 </style>
 <main class="wrap hero">
@@ -43,7 +45,7 @@ const colors = ['var(--c1)', 'var(--c2)', 'var(--c4)', 'var(--c6)'];
     <p class="lead">{g.blurb}</p>
     <ul class="topics">
       {g.lessons.map((l) => (
-        <li><a href={`${l.slug}.html`}><span class="ico" aria-hidden="true">{l.icon}</span><span><b>{l.title}</b><small>{l.blurb}</small></span></a></li>
+        <li><a href={`${l.slug}.html`} data-slug={l.slug}><span class="ico" aria-hidden="true">{l.icon}</span><span><b>{l.title}</b><small>{l.blurb}</small></span></a></li>
       ))}
     </ul>
   </section>
@@ -61,6 +63,15 @@ const colors = ['var(--c1)', 'var(--c2)', 'var(--c4)', 'var(--c6)'];
     if(c)document.getElementById("classNote").textContent="Great! Every lesson will open at Class "+c+". You can change it inside a lesson too."}
   seg.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;c=b.dataset.c;try{localStorage.setItem(KEY,c)}catch(err){}draw()});
   draw();
+
+  /* best stars per lesson, saved by practice.js on this device */
+  var best={};try{best=JSON.parse(localStorage.getItem("tlm-stars"))||{}}catch(e){}
+  document.querySelectorAll(".topics a[data-slug]").forEach(function(a){
+    var k=best[a.dataset.slug];if(!k)return;
+    var s="";for(var i=1;i<=3;i++)s+=i<=k?"⭐":'<span class="off">⭐</span>';
+    var el=document.createElement("span");el.className="stars";el.setAttribute("role","img");el.setAttribute("aria-label","Best: "+k+" out of 3 stars");el.innerHTML=s;
+    a.querySelector("small").after(el);
+  });
 })();
 </script>
 </Base>

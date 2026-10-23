@@ -378,13 +378,13 @@ import LessonNav from '../components/LessonNav.astro';
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
     if(mode==="name"){
       html+='<p class="qs">“'+esc(q.l.t)+'”<br>Which device is this?</p><div class="opts">'+
-        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+cap(x)+'</button>'}).join("")+'</div>';
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.l.d?' data-right':'')+'>'+cap(x)+'</button>'}).join("")+'</div>';
     }else if(mode==="pick"){
       html+='<p class="qs">Which line uses '+cap(q.l.d)+'?</p><div class="opts">'+
-        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x.t)+'</button>'}).join("")+'</div>';
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.l?' data-right':'')+'>'+esc(x.t)+'</button>'}).join("")+'</div>';
     }else{
       html+='<p class="qs">Find the '+cap(q.l.d)+'.<br>Tap the part of the line that uses it.</p><div class="opts inline">'+
-        q.ch.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x.s)+'</button>'}).join("")+'</div>';
+        q.ch.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(i===q.ch.findIndex(function(y){return y.k===1})?' data-right':'')+'>'+esc(x.s)+'</button>'}).join("")+'</div>';
     }
     html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
     box.innerHTML=html;

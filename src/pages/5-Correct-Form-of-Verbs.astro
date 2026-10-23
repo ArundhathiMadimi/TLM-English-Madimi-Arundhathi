@@ -517,13 +517,13 @@ import LessonNav from '../components/LessonNav.astro';
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
     if(mode==="fill"){
       html+='<p class="qs">'+esc(q.pre)+' <span class="gap" id="gap">&nbsp;</span> <span style="color:var(--muted)">('+esc(q.v)+')</span> '+esc(q.post)+'</p><div class="opts row3">'+
-        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.ans?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>';
     }else if(mode==="pick"){
       html+='<p class="qs">Which sentence is correct?</p><div class="opts">'+
-        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.ans?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>';
     }else{
       html+='<p class="qs">Give the '+FLAB[q.f]+' of “'+esc(q.v)+'”.</p><div class="opts row3">'+
-        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.ans?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>';
     }
     html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
     box.innerHTML=html;

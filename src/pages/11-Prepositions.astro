@@ -351,7 +351,7 @@ import LessonNav from '../components/LessonNav.astro';
     }else{
       html+='<p class="qs">Which sentence is correct?</p><div class="opts">';
     }
-    html+=q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    html+=q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(i===q.o.indexOf(q.ans)?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>';
     html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
     box.innerHTML=html;
   }

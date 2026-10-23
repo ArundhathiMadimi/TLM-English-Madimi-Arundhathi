@@ -495,13 +495,13 @@ import LessonNav from '../components/LessonNav.astro';
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
     if(mode==="name"){
       html+='<p class="qs">'+hlS(q.s)+'</p><p class="count" style="margin-bottom:.6rem">What part of speech is the highlighted word?</p><div class="opts row2">'+
-        q.o.map(function(k,i){return '<button type="button" class="opt" data-o="'+i+'">'+NAME[k].charAt(0).toUpperCase()+NAME[k].slice(1)+'</button>'}).join("")+'</div>';
+        q.o.map(function(k,i){return '<button type="button" class="opt" data-o="'+i+'"'+(i===q.o.indexOf(q.a)?' data-right':'')+'>'+NAME[k].charAt(0).toUpperCase()+NAME[k].slice(1)+'</button>'}).join("")+'</div>';
     }else if(mode==="find"){
       html+='<p class="qs" style="margin-bottom:.6rem">Tap the '+esc(q.ask)+'.</p><div class="opts wordrow">'+
-        tokens(q.s).map(function(t,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(t.w)+'</button>'+(t.p?'<span class="pn" aria-hidden="true">'+esc(t.p)+'</span>':'')}).join("")+'</div>';
+        tokens(q.s).map(function(t,i,a){return '<button type="button" class="opt" data-o="'+i+'"'+(i===a.map(function(x){return x.w}).indexOf(q.a)?' data-right':'')+'>'+esc(t.w)+'</button>'+(t.p?'<span class="pn" aria-hidden="true">'+esc(t.p)+'</span>':'')}).join("")+'</div>';
     }else{
       html+='<p class="qs">'+hlS(q.s)+'</p><p class="count" style="margin-bottom:.6rem">What kind of word is highlighted?</p><div class="opts">'+
-        q.o.map(function(k,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(k)+'</button>'}).join("")+'</div>';
+        q.o.map(function(k,i){return '<button type="button" class="opt" data-o="'+i+'"'+(i===q.o.indexOf(q.a)?' data-right':'')+'>'+esc(k)+'</button>'}).join("")+'</div>';
     }
     html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
     box.innerHTML=html;

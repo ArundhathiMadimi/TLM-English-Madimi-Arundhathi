@@ -491,7 +491,7 @@ import LessonNav from '../components/LessonNav.astro';
     var q=sp.q[sp.i];
     box.innerHTML='<p class="count">Sentence '+(sp.i+1)+' of '+n+'</p>'+
       '<p class="qs">'+q[0]+'</p>'+
-      '<div class="seg big" role="group" aria-label="Your answer"><button type="button" data-a="D">Direct</button><button type="button" data-a="I">Indirect</button></div>'+
+      '<div class="seg big" role="group" aria-label="Your answer"><button type="button" data-a="D"'+(q[1]==="D"?' data-right':'')+'>Direct</button><button type="button" data-a="I"'+(q[1]==="I"?' data-right':'')+'>Indirect</button></div>'+
       '<p class="fb" aria-live="polite"></p>'+
       '<button type="button" class="btn" data-act="next" hidden>'+(sp.i===n-1?"See my score":"Next sentence")+'</button>';
   }
@@ -501,7 +501,7 @@ import LessonNav from '../components/LessonNav.astro';
     var q=pk.q[pk.i];
     box.innerHTML='<p class="count">Sentence '+(pk.i+1)+' of '+n+'</p>'+
       '<p class="qs">Report this: '+q.d+'</p>'+
-      '<div class="opts">'+q.o.map(function(t,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(t)+'</button>'}).join("")+'</div>'+
+      '<div class="opts">'+q.o.map(function(t,i){return '<button type="button" class="opt" data-o="'+i+'"'+(t===q.c?' data-right':'')+'>'+esc(t)+'</button>'}).join("")+'</div>'+
       '<p class="fb" aria-live="polite"></p>'+
       '<button type="button" class="btn" data-act="next" hidden>'+(pk.i===n-1?"See my score":"Next sentence")+'</button>';
   }

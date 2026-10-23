@@ -495,7 +495,7 @@ import LessonNav from '../components/LessonNav.astro';
     else if(mode==="fill")html+='<p class="qs" id="gap">'+gapHTML(p.s)+'</p><p>Choose the opposite of “'+esc(p.w)+'” to fill the gap.</p>';
     else html+='<p class="qs">Three pairs are opposites. Which pair is <u>not</u>?</p>';
     html+='<div class="opts'+(mode==="odd"?"":" row3")+'">'+
-      q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'+
+      q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.ans?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>'+
       '<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(last?"See my score":"Next question")+'</button>';
     box.innerHTML=html;
   }

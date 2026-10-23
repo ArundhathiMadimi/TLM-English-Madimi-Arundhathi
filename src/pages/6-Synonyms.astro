@@ -307,11 +307,11 @@ import LessonNav from '../components/LessonNav.astro';
     var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>',last=s.i===n-1;
     if(mode==="match"){
       html+='<p class="qs">Which word means almost the same as “'+esc(q.w0)+'”?</p><div class="opts row3">'+
-        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.ans?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>'+
         '<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(last?"See my score":"Next question")+'</button>';
     }else if(mode==="odd"){
       html+='<p class="qs">Which word does not belong with the others?</p><div class="opts row3">'+
-        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(x===q.ans?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>'+
         '<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(last?"See my score":"Next question")+'</button>';
     }else{
       var tray=s.picked.map(function(w,i){return '<button type="button" class="pick" data-rm="'+i+'"'+(s.checked?' disabled':'')+'>'+esc(w)+'</button>'}).join("");
