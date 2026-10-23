@@ -15,7 +15,8 @@ const { title, lesson = false } = Astro.props;
 <slot name="head" />
 </head>
 <body>
-{lesson && <nav class="topnav wrap" aria-label="Site"><a class="btn alt" href="index.html"><span aria-hidden="true">🏠</span> All topics</a></nav>}
+{lesson && <nav class="topnav wrap" aria-label="Site"><a class="btn alt" href="index.html"><span aria-hidden="true">🏠</span> All topics</a><button type="button" class="btn alt" id="soundBtn" hidden>Sound</button></nav>}
 <slot />
+{lesson && <script is:inline src="feedback.js"></script>}
 </body>
 </html>

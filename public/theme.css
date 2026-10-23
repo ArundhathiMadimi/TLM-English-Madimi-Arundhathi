@@ -64,6 +64,16 @@ details li{margin:.35rem 0}
 footer{margin:3rem 0 2rem;padding-top:1.2rem;border-top:4px solid;border-image:var(--rainbow) 1;color:var(--muted);font-size:.95rem}
 footer strong{color:var(--ink)}
 a.btn{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none}
-.topnav{padding-top:1rem}
+.topnav{padding-top:1rem;display:flex;justify-content:space-between;gap:.8rem}
 .lessonnav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem;margin-top:3rem}
 .lessonnav .btn:last-child{margin-left:auto}
+/* answer feedback (sounds and confetti come from feedback.js) */
+@keyframes tlm-pop{0%{transform:scale(1)}40%{transform:scale(1.12)}70%{transform:scale(.96)}100%{transform:scale(1)}}
+@keyframes tlm-shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+#pbody .good{animation:tlm-pop .45s ease-out}
+#pbody .bad{animation:tlm-shake .4s ease-in-out}
+#pbody .fb.good::before{content:"🎉 "}
+#pbody .fb.bad::before{content:"🤔 "}
+#pbody .result .big{animation:tlm-pop .6s ease-out}
+.confetti{position:fixed;z-index:50;width:.6rem;height:.9rem;border-radius:3px;pointer-events:none}
+@media (prefers-reduced-motion:reduce){#pbody .good,#pbody .bad,#pbody .result .big{animation:none}}

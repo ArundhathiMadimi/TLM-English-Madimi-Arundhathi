@@ -13,6 +13,7 @@ src/components/LessonNav.astro   Previous / Next buttons at the bottom of each l
 src/pages/index.astro     start page
 src/pages/N-Topic.astro   one lesson per topic (1-Voices.astro ... 7-Modal-Verbs.astro)
 public/theme.css          shared colours, fonts and common components, copied to the site as-is
+public/feedback.js        right/wrong sounds (Web Audio, no files), confetti and the Sound on/off button
 astro.config.mjs          build.format "file" -> pages build to 1-Voices.html, not 1-Voices/
 vercel.json               tells Vercel to build with Astro and serve dist/
 ```
@@ -59,6 +60,8 @@ Every lesson uses `<Base title="..." lesson>` and keeps the same layout and IDs:
 2. `nav.classbar`: the "I am in class" 6/7/8 selector (`#classSeg`). The class chosen filters the content on the page.
 3. `main.wrap` with `section`s: topic-specific sections, then `#practice` (`#modeSeg`, `#pbody`), then `#teacher` (teacher notes in `<details>`).
 4. `<LessonNav slug="..." />`, then `footer` with "Prepared by Madimi Arundhathi".
+
+**Answer feedback is automatic.** `feedback.js` watches clicks inside `#pbody`. When a click gives a `.fb` element the class `good` or `bad`, it plays the matching sound (plus confetti for a correct answer). When a `.result` box appears, it plays the end-of-round fanfare. A new practice game gets all of this for free as long as it keeps that markup. Never call `feedback.js` directly from a lesson.
 
 ## Adding a new topic
 
