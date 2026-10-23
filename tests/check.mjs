@@ -7,7 +7,7 @@ const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 const store = {};
 const window = {};
 const localStorage = { getItem: (k) => store[k] ?? null, setItem: (k, v) => { store[k] = v; } };
-new Function('window', 'localStorage', read('public/practice.js'))(window, localStorage);
+new Function('window', 'localStorage', 'document', read('public/practice.js'))(window, localStorage, { addEventListener() {} });
 const TLM = window.TLM;
 
 // deal: no repeats until every item has been seen, then a new cycle starts

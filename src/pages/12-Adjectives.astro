@@ -1,0 +1,578 @@
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Adjectives | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
+:root{
+  --A-bg:#FFF0C2; --A-c:#D99A00; --A-t:#6B4A00;
+  --N-bg:#D5F3EE; --N-c:#13927F; --N-t:#0B5E55;
+  --D-bg:#FFE3E6; --D-c:#D6334A; --D-t:#8F1226;
+}
+
+.hero h1{font-size:clamp(2.8rem,13.5vw,4.6rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.stage{display:flex;flex-wrap:wrap;gap:.5rem;align-items:flex-start;min-height:5.6rem;margin:.2rem 0 .8rem}
+.chip{display:inline-flex;flex-direction:column;gap:.15rem;padding:.5rem .85rem .4rem;border-radius:16px;border:2px solid;font:800 clamp(1.1rem,5.2vw,1.6rem)/1.15 var(--display)}
+.chip i{font:700 .75rem/1 var(--body);font-style:normal;opacity:.85}
+.chip.A{background:var(--A-bg);border-color:var(--A-c);color:var(--A-t)}
+.chip.N{background:var(--N-bg);border-color:var(--N-c);color:var(--N-t);border-width:3px}
+.chip.O{background:transparent;border-color:var(--line);color:var(--ink)}
+.note{color:var(--muted);min-height:3.2rem;margin:0 0 .6rem}
+.lab{font-weight:700;margin:.8rem 0 .4rem;font-size:.95rem}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pills button{appearance:none;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1 var(--body);padding:.7rem 1rem;min-height:2.9rem;border-radius:30px;cursor:pointer}
+.pills button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+.key .A{background:var(--A-bg);border-color:var(--A-c)}
+.key .N{background:var(--N-bg);border-color:var(--N-c)}
+
+.hl{border-radius:6px;padding:0 .2em;background:var(--A-bg);border-bottom:3px solid var(--A-c);color:var(--A-t);font-weight:800;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--accent);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use.A{border-left-color:var(--A-c)} .use.N{border-left-color:var(--N-c)} .use.D{border-left-color:var(--D-c)}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.2rem 0}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--A-c);background:var(--A-bg);color:var(--A-t);font-weight:700}
+.tcard p{margin:.25rem 0}
+.ex{font:800 1.12rem/1.8 var(--display);margin-top:.4rem}
+
+.grow{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;align-items:end;min-height:9.5rem;margin:.6rem 0 .4rem;text-align:center}
+.shape{margin:0 auto;border-radius:50%;background:var(--sec,var(--accent));transition:width .35s,height .35s}
+.grow b{display:block;font:800 clamp(1rem,4.6vw,1.3rem)/1.2 var(--display);margin-top:.4rem}
+.grow small{display:block;color:var(--muted);font-size:.8rem;font-weight:700}
+.degex{margin:.6rem 0 0;padding-left:1.2rem}
+.degex li{margin:.2rem 0}
+
+.olist{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0;padding:0;list-style:none;counter-reset:o}
+.olist li{counter-increment:o;border:2px solid var(--A-c);background:var(--A-bg);color:var(--A-t);border-radius:12px;padding:.35rem .7rem;font-weight:700}
+.olist li::before{content:counter(o) ". "}
+.irr{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-top:.8rem;text-align:center}
+.irr div{border:2px solid var(--line);border-radius:10px;padding:.35rem .2rem;font-weight:700}
+.irr .h{background:var(--A-bg);border-color:var(--A-c);color:var(--A-t);font-family:var(--display);font-weight:800}
+.irr.two{grid-template-columns:repeat(2,1fr)}
+
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.45 var(--display);margin:.6rem 0 1rem}
+.gap{display:inline-block;min-width:4.5rem;border-bottom:4px solid var(--ink);text-align:center;padding:0 .3em}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:800 1.15rem/1.3 var(--display);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.tray{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;min-height:3.6rem;padding:.6rem;border:2px dashed var(--line);border-radius:16px;margin:.6rem 0}
+.tray.good{border-color:var(--good);background:var(--good-bg)} .tray.bad{border-color:var(--bad);background:var(--bad-bg)}
+.tray .w{font:800 1.15rem var(--display)}
+.pick{appearance:none;border:2px solid var(--accent);background:var(--surface);color:var(--ink);font:800 1.1rem var(--display);padding:.55rem .9rem;border-radius:12px;cursor:pointer;min-height:2.9rem}
+.tray .pick{background:var(--accent);color:var(--accent-ink)}
+.pick:disabled{opacity:.5;cursor:default}
+.bank{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0}
+.result{padding:1rem 0}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.shape{transition:none}}
+</style>
+
+<header class="hero wrap">
+  <h1>Adjectives</h1>
+  <p class="sub">Adjectives are describing words. Tap the words and dress up the noun. Watch the sentence grow.</p>
+
+  <div class="demo">
+    <div class="stage" id="heroStage" aria-live="polite"></div>
+    <p class="note" id="heroNote"></p>
+    <p class="lab">Tap to add or remove a describing word</p>
+    <div class="pills" id="heroPills" role="group" aria-label="Describing words"></div>
+    <div class="row" style="margin-top:1rem">
+      <button type="button" class="btn alt" id="nextEx">Next noun</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="A"></em>adjective</span>
+      <span><em class="N"></em>noun it describes</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="what">
+    <h2>What is an adjective?</h2>
+    <p class="lead">An adjective is a word that describes a noun. It tells us more about a person, animal, place or thing.</p>
+    <div class="uses">
+      <div class="use A"><b>Before the noun</b><p>Ravi has a <span class="hl">red</span> bicycle.</p></div>
+      <div class="use N"><b>After is, am, are, was, were</b><p>The soup is <span class="hl">hot</span>.</p></div>
+      <div class="use D"><b>Find it with a question</b><p>Ask “What kind?”, “How much?”, “How many?” or “Which one?” about the noun. The answer is the adjective.</p></div>
+    </div>
+  </section>
+
+  <section id="kinds">
+    <h2>Kinds of adjectives</h2>
+    <p class="lead" id="kindLead"></p>
+    <div class="tlist" id="klist"></div>
+  </section>
+
+  <section id="degrees">
+    <h2>Degrees of comparison</h2>
+    <p class="lead">An adjective has three degrees. We use them to compare one, two, or three and more things. Tap a word.</p>
+    <div class="card">
+      <div class="pills" id="degPills" role="group" aria-label="Choose an adjective"></div>
+      <div class="grow" id="grow" aria-live="polite"></div>
+      <p class="note" id="degRule"></p>
+      <ol class="degex" id="degEx"></ol>
+    </div>
+    <div class="tlist" id="dlist"></div>
+  </section>
+
+  <section id="order" data-min="8" hidden>
+    <h2>Order of adjectives</h2>
+    <p class="lead">When we use many adjectives before a noun, they usually come in this order.</p>
+    <div class="card">
+      <ol class="olist">
+        <li>opinion</li><li>size</li><li>age</li><li>shape</li><li>colour</li><li>origin</li><li>material</li><li>purpose</li>
+      </ol>
+      <p class="ex">a <span class="hl">lovely</span> <span class="hl">small</span> <span class="hl">old</span> <span class="hl">round</span> <span class="hl">red</span> <span class="hl">Indian</span> <span class="hl">wooden</span> box</p>
+      <p>In real life we rarely use more than three. “A big old brown dog”, not “an old brown big dog”.</p>
+      <p>The describing game at the top of the page always puts the words in this order. Try it.</p>
+    </div>
+  </section>
+
+  <section id="forms" data-min="8" hidden>
+    <h2>Adjective or adverb?</h2>
+    <p class="lead">An adjective describes a noun. An adverb describes a verb: how something is done. Many adverbs end in -ly.</p>
+    <div class="uses">
+      <div class="use A"><b>good and well</b><p>Meena is a <span class="hl">good</span> singer. (adjective, describes singer)</p><p>Meena sings <b>well</b>. (adverb, describes sings)</p></div>
+      <div class="use N"><b>quick and quickly</b><p>Arun is a <span class="hl">quick</span> runner.</p><p>Arun runs <b>quickly</b>.</p></div>
+      <div class="use D"><b>After look, seem, feel, taste</b><p>Use an adjective: The milk tastes <span class="hl">sour</span>. The sea looks <span class="hl">calm</span>.</p></div>
+    </div>
+    <div class="card">
+      <h3>Adjectives made from nouns</h3>
+      <p class="lead">Add an ending to a noun to make an adjective.</p>
+      <div class="irr two">
+        <div class="h">noun</div><div class="h">adjective</div>
+        <div>beauty</div><div>beautiful</div>
+        <div>danger</div><div>dangerous</div>
+        <div>courage</div><div>courageous</div>
+        <div>rain</div><div>rainy</div>
+        <div>child</div><div>childish</div>
+        <div>gold</div><div>golden</div>
+        <div>India</div><div>Indian</div>
+        <div>comfort</div><div>comfortable</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead" id="pracLead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="spot" aria-pressed="true">Spot it</button>
+        <button type="button" data-m="fill" aria-pressed="false">Fill it</button>
+        <button type="button" data-m="order" aria-pressed="false" hidden>Order it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>find adjectives in a sentence and name the noun each one describes;</li>
+        <li>name the kinds of adjectives: quality, quantity and number (Class 6), demonstrative, interrogative and possessive (Class 7);</li>
+        <li>form the three degrees of comparison, including more/most and irregular forms (Class 7);</li>
+        <li>put adjectives in the right order, choose between an adjective and an adverb, use as … as and than, and make adjectives from nouns (Class 8).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, a ball or any classroom object, word cards.</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Hold up a ball. Students call out words that describe it. Write them around the word “ball” on the board.</li>
+        <li><b>Teach (10 min).</b> Project the hero. Tap the words and read the sentence aloud. Ask: which word is the noun, and which words describe it?</li>
+        <li><b>Kinds (7 min).</b> Pick your class on the bar. For each kind, students give one more example from the classroom.</li>
+        <li><b>Degrees (8 min).</b> Call three students of different heights. The class makes sentences with tall, taller and tallest.</li>
+        <li><b>Practice (8 min).</b> Teams play Spot it and Fill it. Class 8 also plays Order it.</li>
+        <li><b>Exit ticket.</b> Each student describes their school bag in one sentence with two adjectives, and compares two things at home.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Double comparatives: “more taller”, “most tallest”. Use one or the other.</li>
+        <li>Wrong forms: “gooder”, “badder”, “beautifuller”. Good and bad are irregular; long words take more and most.</li>
+        <li>Spelling: big → bigger (double g), happy → happier (y to i), large → larger (just add -r).</li>
+        <li>Using the superlative for two things: “the tallest of the two” should be “the taller of the two”.</li>
+        <li>“This books” and “these book”. This and that go with one; these and those with many.</li>
+        <li>Mixing “its” (possessive) with “it’s” (it is).</li>
+        <li>Using an adjective for an adverb: “She sings good” should be “She sings well”.</li>
+        <li>Note that “this”, “which” and “my” are adjectives only when a noun follows. In “This is my bag”, “this” is a pronoun.</li>
+      </ul>
+    </details>
+  </section>
+
+  <LessonNav slug="12-Adjectives" />
+
+  <footer>
+    Teaching learning material (TLM) on Adjectives for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+
+<script is:inline>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function say(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}}
+
+  /* ---------- hero: decorate a noun ---------- */
+  var ORDER=["opinion","size","age","shape","colour","origin","material","purpose"];
+  var HN=[
+    {pre:"Meena has",n:"ball",a:[["lovely","opinion"],["small","size"],["new","age"],["round","shape"],["red","colour"],["rubber","material"]],on:["red"]},
+    {pre:"Grandpa keeps",n:"box",a:[["beautiful","opinion"],["big","size"],["old","age"],["square","shape"],["brown","colour"],["wooden","material"]],on:["big"]},
+    {pre:"Amma bought",n:"saree",a:[["pretty","opinion"],["long","size"],["new","age"],["green","colour"],["Kanchipuram","origin"],["silk","material"]],on:["silk"]},
+    {pre:"Ravi has",n:"bat",a:[["nice","opinion"],["small","size"],["old","age"],["brown","colour"],["wooden","material"],["cricket","purpose"]],on:["cricket"]}
+  ];
+  var hi=0,hon=HN[0].on.slice(),pillsBox=$("#heroPills");
+  function heroWords(){
+    var h=HN[hi];
+    return h.a.filter(function(x){return hon.indexOf(x[0])>=0}).sort(function(x,y){return ORDER.indexOf(x[1])-ORDER.indexOf(y[1])});
+  }
+  function article(w){return /^[aeiou]/i.test(w)?"an":"a"}
+  function heroText(){var h=HN[hi],ws=heroWords().map(function(x){return x[0]});return h.pre+" "+article(ws.length?ws[0]:h.n)+" "+ws.concat([h.n]).join(" ")+"."}
+  function drawHero(pop,rebuild){
+    var h=HN[hi],ws=heroWords();
+    var html='<span class="chip O">'+esc(h.pre)+'<i>&nbsp;</i></span><span class="chip O">'+article(ws.length?ws[0][0]:h.n)+'<i>&nbsp;</i></span>';
+    html+=ws.map(function(x){return '<span class="chip A" data-w="'+esc(x[0])+'">'+esc(x[0])+'<i>'+esc(x[1])+'</i></span>'}).join("");
+    html+='<span class="chip N">'+esc(h.n)+'.<i>noun</i></span>';
+    $("#heroStage").innerHTML=html;
+    $("#heroNote").textContent=ws.length===0?"No adjectives yet. Tap a word to describe the "+h.n+".":
+      ws.length+(ws.length===1?" adjective tells":" adjectives tell")+" us more about the "+h.n+"."+(ws.length>1?" See how they always line up in the same order.":"");
+    if(rebuild){pillsBox.innerHTML=h.a.map(function(x){return '<button type="button" data-w="'+esc(x[0])+'" aria-pressed="false">'+esc(x[0])+'</button>'}).join("")}
+    pillsBox.querySelectorAll("button").forEach(function(b){b.setAttribute("aria-pressed",hon.indexOf(b.dataset.w)>=0)});
+    if(pop&&!reduce){var el=$('#heroStage [data-w="'+pop+'"]');if(el&&el.animate)el.animate([{transform:"scale(.6)",opacity:.2},{transform:"none",opacity:1}],{duration:320,easing:"cubic-bezier(.3,.7,.2,1)"})}
+  }
+  pillsBox.addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var w=b.dataset.w,k=hon.indexOf(w);
+    if(k>=0){hon.splice(k,1);drawHero(null,false)}else{hon.push(w);drawHero(w,false)}
+  });
+  $("#nextEx").addEventListener("click",function(){hi=(hi+1)%HN.length;hon=HN[hi].on.slice();drawHero(null,true)});
+  $("#listen").addEventListener("click",function(){say(heroText())});
+  drawHero(null,true);
+
+  /* ---------- kinds ---------- */
+  var KINDS=[
+    {c:6,n:"Adjective of quality",f:"tall, red, kind, sweet, clever",d:"Tells what kind of person or thing. It answers “What kind?”",ex:"Mother made <span class=\"hl\">sweet</span> laddoos."},
+    {c:6,n:"Adjective of quantity",f:"some, much, little, enough, all",d:"Tells how much of a thing. It goes with things we cannot count, like milk or rice.",ex:"There is <span class=\"hl\">some</span> milk in the jug."},
+    {c:6,n:"Adjective of number",f:"one, three, first, few, many",d:"Tells how many, or in what order. It goes with things we can count.",ex:"Lata plucked <span class=\"hl\">five</span> roses."},
+    {c:7,n:"Demonstrative adjective",f:"this, that, these, those",d:"Points out which one. This and that go with one thing; these and those with many.",ex:"<span class=\"hl\">These</span> mangoes came from Ratnagiri."},
+    {c:7,n:"Interrogative adjective",f:"which, what, whose",d:"Asks a question about a noun. A noun comes right after it.",ex:"<span class=\"hl\">Whose</span> bag is on the desk?"},
+    {c:7,n:"Possessive adjective",f:"my, your, his, her, its, our, their",d:"Tells whose thing it is. A noun comes right after it.",ex:"The cat licked <span class=\"hl\">its</span> paw."}
+  ];
+  /* ---------- degrees ---------- */
+  var DEG=[
+    {c:6,w:["tall","taller","tallest"],r:"A short word: add -er and -est.",ex:["Ravi is tall.","Anil is taller than Ravi.","Sunil is the tallest of the three."]},
+    {c:6,w:["large","larger","largest"],r:"The word ends in e: just add -r and -st.",ex:["Our classroom is large.","The hall is larger than our classroom.","The playground is the largest of all."]},
+    {c:6,w:["big","bigger","biggest"],r:"One vowel and one consonant at the end: double the last letter, then add -er and -est.",ex:["A dog is big.","A horse is bigger than a dog.","An elephant is the biggest of the three."]},
+    {c:6,w:["happy","happier","happiest"],r:"A consonant and y at the end: change y to i, then add -er and -est.",ex:["Asha is happy.","Meena is happier than Asha.","Priya is the happiest girl in the class today."]},
+    {c:7,w:["beautiful","more beautiful","most beautiful"],r:"A long word: put more and most before it.",ex:["Our school garden is beautiful.","The park is more beautiful than our garden.","Lalbagh is the most beautiful garden in Bengaluru."]},
+    {c:7,w:["good","better","best"],r:"Irregular: the word changes completely. Learn it by heart.",ex:["Ravi’s drawing is good.","Asha’s drawing is better than Ravi’s.","Kiran’s drawing is the best of all."]},
+    {c:7,w:["bad","worse","worst"],r:"Irregular: the word changes completely. Learn it by heart.",ex:["The traffic was bad on Monday.","It was worse on Tuesday.","Friday’s traffic was the worst of the week."]},
+    {c:7,w:["many","more","most"],r:"Irregular. Much also becomes more and most.",ex:["Ravi has many marbles.","Anil has more marbles than Ravi.","Sunil has the most marbles of all."]},
+    {c:7,w:["little","less","least"],r:"Irregular. Here the amount gets smaller, not bigger.",ex:["Gopi has little time.","Hari has less time than Gopi.","Anu has the least time of all."],shrink:1}
+  ];
+  var RULES=[
+    {c:6,n:"Positive degree",f:"tall",d:"Describes one person or thing. No comparing.",ex:"Ravi is <span class=\"hl\">tall</span>."},
+    {c:6,n:"Comparative degree",f:"taller + than",d:"Compares two persons or things.",ex:"Anil is <span class=\"hl\">taller</span> than Ravi."},
+    {c:6,n:"Superlative degree",f:"the tallest",d:"Compares three or more. Use “the” before it.",ex:"Sunil is <span class=\"hl\">the tallest</span> boy in the class."},
+    {c:7,n:"Long words",f:"more …, most …",d:"Words of two or more syllables, like careful, famous, beautiful, take more and most. Never say “more taller”.",ex:"Maths is <span class=\"hl\">more difficult</span> than English for me."},
+    {c:8,n:"as … as",f:"as + adjective + as",d:"Shows two things are equal. “not as … as” shows they are not equal. Use the plain adjective.",ex:"Ravi is <span class=\"hl\">as tall</span> as his father."},
+    {c:8,n:"than",f:"comparative + than",d:"Use than, not then, after a comparative.",ex:"This mango is <span class=\"hl\">sweeter</span> than that one."}
+  ];
+  var dsel=0;
+  function degPool(){return DEG.filter(function(d){return d.c<=cls})}
+  function drawDeg(pop){
+    var P=degPool();if(dsel>=P.length)dsel=0;
+    var d=P[dsel],sz=d.shrink?[6,4.4,2.8]:[2.8,4.4,6],lab=["positive","comparative","superlative"];
+    $("#degPills").innerHTML=P.map(function(x,i){return '<button type="button" data-i="'+i+'" aria-pressed="'+(i===dsel)+'">'+esc(x.w[0])+'</button>'}).join("");
+    $("#grow").innerHTML=d.w.map(function(w,i){return '<div><div class="shape" aria-hidden="true" style="width:'+sz[i]+'rem;height:'+sz[i]+'rem"></div><b>'+esc(w)+'</b><small>'+lab[i]+'</small></div>'}).join("");
+    $("#degRule").textContent=d.r;
+    $("#degEx").innerHTML=d.ex.map(function(s){return "<li>"+esc(s)+"</li>"}).join("");
+    if(pop&&!reduce){document.querySelectorAll("#grow .shape").forEach(function(el,i){if(el.animate)el.animate([{transform:"scale(.2)"},{transform:"none"}],{duration:300+i*120,easing:"cubic-bezier(.3,.7,.2,1)"})})}
+  }
+  $("#degPills").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;dsel=+b.dataset.i;drawDeg(true)});
+
+  function card(r){
+    return '<article class="tcard"><h3>'+r.n+(r.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+      '<span class="formula">'+r.f+'</span><p>'+r.d+'</p><p class="ex">'+r.ex+'</p></article>';
+  }
+  function drawHelper(){
+    $("#kindLead").textContent=cls===6
+      ?"Class 6 learns three kinds: quality, quantity and number."
+      :"Class "+cls+" revises the earlier kinds and adds new ones. The new ones are marked.";
+    $("#klist").innerHTML=KINDS.filter(function(k){return k.c<=cls}).map(card).join("");
+    $("#dlist").innerHTML=RULES.filter(function(r){return r.c<=cls}).map(card).join("");
+    document.querySelectorAll("[data-min]").forEach(function(el){el.hidden=cls<+el.dataset.min});
+    drawDeg(false);
+  }
+
+  /* ---------- practice data ---------- */
+  /* spot: s sentence, n noun described, k kind, ans adjective, o options */
+  var SPOT=[
+    {c:6,s:"Ravi has a red bicycle.",ans:"red",n:"bicycle",k:"quality",o:["Ravi","has","red","bicycle"]},
+    {c:6,s:"The tall boy won the race.",ans:"tall",n:"boy",k:"quality",o:["tall","boy","won","race"]},
+    {c:6,s:"Meena bought three pens.",ans:"three",n:"pens",k:"number",o:["Meena","bought","three","pens"]},
+    {c:6,s:"There is some milk in the jug.",ans:"some",n:"milk",k:"quantity",o:["is","some","milk","jug"]},
+    {c:6,s:"The old man sat under a tree.",ans:"old",n:"man",k:"quality",o:["old","man","sat","tree"]},
+    {c:6,s:"We saw a huge elephant.",ans:"huge",n:"elephant",k:"quality",o:["We","saw","huge","elephant"]},
+    {c:6,s:"Asha wore a green saree.",ans:"green",n:"saree",k:"quality",o:["Asha","wore","green","saree"]},
+    {c:6,s:"The soup is hot.",ans:"hot",n:"soup",k:"quality",o:["soup","is","hot"]},
+    {c:6,s:"Few students came to school.",ans:"Few",n:"students",k:"number",o:["Few","students","came","school"]},
+    {c:6,s:"Do not eat too much sugar.",ans:"much",n:"sugar",k:"quantity",o:["eat","much","sugar"]},
+    {c:6,s:"Lata plucked five roses.",ans:"five",n:"roses",k:"number",o:["Lata","plucked","five","roses"]},
+    {c:6,s:"The kitten has soft fur.",ans:"soft",n:"fur",k:"quality",o:["kitten","has","soft","fur"]},
+    {c:6,s:"Sunil lives in a small village.",ans:"small",n:"village",k:"quality",o:["Sunil","lives","small","village"]},
+    {c:6,s:"Mother made sweet laddoos.",ans:"sweet",n:"laddoos",k:"quality",o:["Mother","made","sweet","laddoos"]},
+    {c:6,s:"The sky is blue.",ans:"blue",n:"sky",k:"quality",o:["sky","is","blue"]},
+    {c:6,s:"Raju found a brown puppy.",ans:"brown",n:"puppy",k:"quality",o:["Raju","found","brown","puppy"]},
+    {c:6,s:"Anil read the first chapter.",ans:"first",n:"chapter",k:"number",o:["Anil","read","first","chapter"]},
+
+    {c:7,s:"This pen belongs to Ravi.",ans:"This",n:"pen",k:"demonstrative",o:["This","pen","belongs","Ravi"]},
+    {c:7,s:"Those boys are playing cricket.",ans:"Those",n:"boys",k:"demonstrative",o:["Those","boys","playing","cricket"]},
+    {c:7,s:"Which bus goes to Hyderabad?",ans:"Which",n:"bus",k:"interrogative",o:["Which","bus","goes","Hyderabad"]},
+    {c:7,s:"Whose bag is on the desk?",ans:"Whose",n:"bag",k:"interrogative",o:["Whose","bag","is","desk"]},
+    {c:7,s:"Her father is a doctor.",ans:"Her",n:"father",k:"possessive",o:["Her","father","is","doctor"]},
+    {c:7,s:"Rahul is taller than Anil.",ans:"taller",n:"Rahul",k:"quality, in the comparative degree",o:["Rahul","is","taller","Anil"]},
+    {c:7,s:"We visited the most beautiful garden in Mysuru.",ans:"beautiful",n:"garden",k:"quality, in the superlative degree",o:["visited","beautiful","garden","Mysuru"]},
+    {c:7,s:"Our school is near the river.",ans:"Our",n:"school",k:"possessive",o:["Our","school","near","river"]},
+    {c:7,s:"These mangoes came from Ratnagiri.",ans:"These",n:"mangoes",k:"demonstrative",o:["These","mangoes","came","Ratnagiri"]},
+    {c:7,s:"What games do you play?",ans:"What",n:"games",k:"interrogative",o:["What","games","do","play"]},
+    {c:7,s:"That house belongs to Uncle Raghu.",ans:"That",n:"house",k:"demonstrative",o:["That","house","belongs","Raghu"]},
+    {c:7,s:"Their cow gives milk.",ans:"Their",n:"cow",k:"possessive",o:["Their","cow","gives","milk"]},
+    {c:7,s:"Priya has the best handwriting.",ans:"best",n:"handwriting",k:"quality, in the superlative degree",o:["Priya","has","best","handwriting"]},
+    {c:7,s:"The cat licked its paw.",ans:"its",n:"paw",k:"possessive",o:["cat","licked","its","paw"]},
+    {c:7,s:"Kiran found your pencil.",ans:"your",n:"pencil",k:"possessive",o:["Kiran","found","your","pencil"]},
+    {c:7,s:"The traffic is worse today.",ans:"worse",n:"traffic",k:"quality, in the comparative degree",o:["traffic","is","worse","today"]},
+    {c:7,s:"Which colour do you like?",ans:"Which",n:"colour",k:"interrogative",o:["Which","colour","do","like"]},
+
+    {c:8,s:"The careful driver stopped slowly.",ans:"careful",n:"driver",k:"quality. “Slowly” is an adverb: it tells how he stopped",o:["careful","driver","stopped","slowly"]},
+    {c:8,s:"Rekha answered quickly with a cheerful smile.",ans:"cheerful",n:"smile",k:"quality. “Quickly” is an adverb",o:["answered","quickly","cheerful","smile"]},
+    {c:8,s:"The famous singer sang beautifully.",ans:"famous",n:"singer",k:"quality. “Beautifully” is an adverb",o:["famous","singer","sang","beautifully"]},
+    {c:8,s:"The children waited patiently for the colourful parade.",ans:"colourful",n:"parade",k:"quality. “Patiently” is an adverb",o:["children","waited","patiently","colourful"]},
+    {c:8,s:"Grandma told us a wonderful story.",ans:"wonderful",n:"story",k:"quality",o:["Grandma","told","wonderful","story"]},
+    {c:8,s:"The lazy cat slept peacefully.",ans:"lazy",n:"cat",k:"quality. “Peacefully” is an adverb",o:["lazy","cat","slept","peacefully"]},
+    {c:8,s:"Ajay spoke politely to the angry customer.",ans:"angry",n:"customer",k:"quality. “Politely” is an adverb",o:["spoke","politely","angry","customer"]},
+    {c:8,s:"Hari is as strong as an ox.",ans:"strong",n:"Hari",k:"quality, used with as … as",o:["Hari","is","strong","ox"]},
+    {c:8,s:"The rainy season brings relief.",ans:"rainy",n:"season",k:"quality, made from the noun rain",o:["rainy","season","brings","relief"]},
+    {c:8,s:"Neha gave a thoughtful reply.",ans:"thoughtful",n:"reply",k:"quality, made from the noun thought",o:["Neha","gave","thoughtful","reply"]},
+    {c:8,s:"The joyful crowd cheered loudly.",ans:"joyful",n:"crowd",k:"quality. “Loudly” is an adverb",o:["joyful","crowd","cheered","loudly"]},
+    {c:8,s:"Raghu is more careful than his brother.",ans:"careful",n:"Raghu",k:"quality, in the comparative degree",o:["Raghu","is","careful","brother"]},
+    {c:8,s:"The poisonous snake moved silently.",ans:"poisonous",n:"snake",k:"quality. “Silently” is an adverb",o:["poisonous","snake","moved","silently"]},
+    {c:8,s:"The honest boy returned the purse immediately.",ans:"honest",n:"boy",k:"quality. “Immediately” is an adverb",o:["honest","boy","returned","immediately"]},
+    {c:8,s:"The magician did amazing tricks easily.",ans:"amazing",n:"tricks",k:"quality. “Easily” is an adverb",o:["did","amazing","tricks","easily"]}
+  ];
+  /* fill: pre ___ (w) post; o[0] is the answer */
+  var FILL=[
+    {c:6,pre:"Ravi is",w:"tall",post:"than his brother.",o:["taller","tallest","tall"],e:"Two people are compared, so use the comparative: taller than."},
+    {c:6,pre:"Mount Everest is the",w:"high",post:"mountain in the world.",o:["highest","higher","high"],e:"One out of all the mountains, so use the superlative: the highest."},
+    {c:6,pre:"This box is",w:"heavy",post:"than that one.",o:["heavier","heaviest","heavyer"],e:"Heavy ends in a consonant and y, so y becomes i: heavier than."},
+    {c:6,pre:"Priya is the",w:"short",post:"girl in our class.",o:["shortest","shorter","short"],e:"One girl out of the whole class, so use the superlative: the shortest."},
+    {c:6,pre:"An elephant is",w:"big",post:"than a horse.",o:["bigger","biggest","biger"],e:"Two animals are compared. Big doubles the g: bigger."},
+    {c:6,pre:"Today is the",w:"hot",post:"day of the year.",o:["hottest","hotter","hotest"],e:"One day out of the whole year: the hottest, with a double t."},
+    {c:6,pre:"My bag is",w:"small",post:"than yours.",o:["smaller","smallest","small"],e:"Two bags are compared, so use smaller than."},
+    {c:6,pre:"The Ganga is",w:"long",post:"than the Yamuna.",o:["longer","longest","long"],e:"Two rivers are compared, so use longer than."},
+    {c:6,pre:"Anil is the",w:"fast",post:"runner in the team.",o:["fastest","faster","fast"],e:"One out of the whole team: the fastest."},
+    {c:6,pre:"Rani is",w:"young",post:"than Sita.",o:["younger","youngest","young"],e:"Two girls are compared, so use younger than."},
+    {c:6,pre:"This is the",w:"wide",post:"road in our town.",o:["widest","wider","wideest"],e:"Wide ends in e, so just add -st: the widest."},
+    {c:6,pre:"Grandpa is the",w:"old",post:"person in our family.",o:["oldest","older","old"],e:"One out of the whole family: the oldest."},
+    {c:6,pre:"A cheetah is",w:"fast",post:"than a dog.",o:["faster","fastest","fast"],e:"Two animals are compared, so use faster than."},
+    {c:6,pre:"Sunday was",w:"sunny",post:"than Saturday.",o:["sunnier","sunniest","sunnyer"],e:"Sunny ends in a consonant and y, so y becomes i: sunnier than."},
+    {c:6,pre:"This is the",w:"sweet",post:"mango in the basket.",o:["sweetest","sweeter","sweet"],e:"One mango out of the whole basket: the sweetest."},
+    {c:6,pre:"Gopal is",w:"happy",post:"than his friend today.",o:["happier","happiest","happyer"],e:"Happy becomes happier: y changes to i."},
+    {c:6,pre:"Winter nights are",w:"long",post:"than summer nights.",o:["longer","longest","long"],e:"Two kinds of nights are compared, so use longer than."},
+    {c:6,pre:"Meena has",w:"some / many",post:"milk in her glass.",o:["some","many","three"],e:"Milk cannot be counted, so use an adjective of quantity: some."},
+
+    {c:7,pre:"This painting is",w:"beautiful",post:"than that one.",o:["more beautiful","most beautiful","beautifuller"],e:"Beautiful is a long word, and two paintings are compared: more beautiful than."},
+    {c:7,pre:"For me, Maths is the",w:"difficult",post:"subject of all.",o:["most difficult","more difficult","difficultest"],e:"One subject out of all: the most difficult."},
+    {c:7,pre:"Your handwriting is",w:"good",post:"than mine.",o:["better","best","gooder"],e:"Good is irregular: good, better, best. Two are compared: better than."},
+    {c:7,pre:"This is the",w:"bad",post:"film I have ever seen.",o:["worst","worse","baddest"],e:"Bad is irregular: bad, worse, worst. One out of all films: the worst."},
+    {c:7,pre:"Asha has",w:"many",post:"marbles than Ravi.",o:["more","most","manier"],e:"Many is irregular: many, more, most. Two are compared: more than."},
+    {c:7,pre:"Of all the children, Raju has the",w:"little",post:"money.",o:["least","less","little"],e:"Little is irregular: little, less, least. One out of all: the least."},
+    {c:7,pre:"The Charminar is the",w:"famous",post:"building in Hyderabad.",o:["most famous","more famous","famousest"],e:"Famous takes more and most. One out of all buildings: the most famous."},
+    {c:7,pre:"A computer is",w:"useful",post:"than a calculator.",o:["more useful","most useful","usefuller"],e:"Useful takes more and most. Two are compared: more useful than."},
+    {c:7,pre:"Today the weather is",w:"bad",post:"than yesterday.",o:["worse","worst","badder"],e:"Bad, worse, worst. Two days are compared: worse than."},
+    {c:7,pre:"Mohan is",w:"careful",post:"than Sohan.",o:["more careful","most careful","carefuller"],e:"Careful takes more and most. Two boys: more careful than."},
+    {c:7,pre:"We need",w:"much",post:"water than this.",o:["more","most","mucher"],e:"Much is irregular: much, more, most. With than, use more."},
+    {c:7,pre:"",w:"which / whose",post:"bag is yours, the red one or the blue one?",o:["Which","Whose","Those"],e:"We choose between two bags, so use the interrogative adjective which."},
+    {c:7,pre:"",w:"whose / which",post:"pen is this? It is Arjun’s.",o:["Whose","Which","These"],e:"The answer tells who owns it, so the question uses whose."},
+    {c:7,pre:"",w:"what / whose",post:"time is it now?",o:["What","Whose","These"],e:"We ask for the time with the interrogative adjective what."},
+    {c:7,pre:"Look at",w:"this / those",post:"birds far up in the sky.",o:["those","this","that"],e:"Birds is plural and they are far away, so use those."},
+    {c:7,pre:"",w:"this / these",post:"book in my hand is new.",o:["This","These","Those"],e:"One book, close to me, so use this."},
+    {c:7,pre:"Rahul lost",w:"his / her",post:"own pencil.",o:["his","her","their"],e:"Rahul is a boy, so his own pencil."},
+    {c:7,pre:"The girls cleaned",w:"their / her",post:"own classroom.",o:["their","her","his"],e:"The girls are many, so their own classroom."},
+    {c:7,pre:"The dog wagged",w:"its / it’s",post:"tail.",o:["its","it’s","their"],e:"Its shows ownership. It’s means it is."},
+
+    {c:8,pre:"Meena sings",w:"good / well",post:"in the school choir.",o:["well","good","gooder"],e:"It tells how she sings, so use the adverb well."},
+    {c:8,pre:"Meena is a",w:"good / well",post:"singer.",o:["good","well","goodly"],e:"It describes the noun singer, so use the adjective good."},
+    {c:8,pre:"The old bus moved",w:"slow / slowly",post:"up the hill.",o:["slowly","slow","slowest"],e:"It tells how the bus moved, so use the adverb slowly."},
+    {c:8,pre:"Arun is a",w:"quick / quickly",post:"runner.",o:["quick","quickly","quickest"],e:"It describes the noun runner, so use the adjective quick."},
+    {c:8,pre:"Ravi is as tall",w:"as / than",post:"his father.",o:["as","than","then"],e:"Equal comparison uses as … as."},
+    {c:8,pre:"This mango is sweeter",w:"than / as",post:"that one.",o:["than","as","then"],e:"A comparative like sweeter is followed by than."},
+    {c:8,pre:"Sita is not as",w:"old",post:"as her sister.",o:["old","older","oldest"],e:"Between as and as, use the plain adjective: not as old as."},
+    {c:8,pre:"Raju runs as",w:"fast",post:"as a deer.",o:["fast","faster","fastest"],e:"Between as and as, use the plain adjective: as fast as."},
+    {c:8,pre:"This story is",w:"more / as",post:"interesting than that one.",o:["more","most","as"],e:"Interesting is a long word, and than follows: more interesting than."},
+    {c:8,pre:"The road is full of danger. It is a",w:"danger",post:"road.",o:["dangerous","dangerful","dangery"],e:"danger + -ous = dangerous."},
+    {c:8,pre:"The bride has great beauty. She looks",w:"beauty",post:".",o:["beautiful","beautify","beauties"],e:"beauty + -ful = beautiful (y changes to i). After looks, use an adjective."},
+    {c:8,pre:"The soldier showed great courage. He was",w:"courage",post:".",o:["courageous","courageful","couraged"],e:"courage + -ous = courageous."},
+    {c:8,pre:"It rains a lot in Cherrapunji. It is a",w:"rain",post:"place.",o:["rainy","rainful","rained"],e:"rain + -y = rainy."},
+    {c:8,pre:"There is a lot of dirt on the floor. The floor is",w:"dirt",post:".",o:["dirty","dirtful","dirted"],e:"dirt + -y = dirty."},
+    {c:8,pre:"Everyone knows this singer. She is very",w:"fame",post:".",o:["famous","fameous","fameful"],e:"fame drops the e and adds -ous: famous."},
+    {c:8,pre:"Divya always takes care. She is a",w:"care",post:"girl.",o:["careful","careless","cared"],e:"care + -ful = careful, full of care. Careless means without care."},
+    {c:8,pre:"Uncle Prakash drives",w:"careful / carefully",post:".",o:["carefully","careful","carefuller"],e:"It tells how he drives, so use the adverb carefully."},
+    {c:8,pre:"Lakshmi speaks English",w:"fluent / fluently",post:".",o:["fluently","fluent","fluency"],e:"It tells how she speaks, so use the adverb fluently."},
+    {c:8,pre:"The sea looks",w:"calm / calmly",post:"today.",o:["calm","calmly","calmness"],e:"After looks, we describe the sea, not the looking. Use the adjective calm."}
+  ];
+  /* order (Class 8): the right order of three adjectives before a noun */
+  var ORD=[
+    {n:"kite",a:[["lovely","opinion"],["small","size"],["red","colour"]]},
+    {n:"dog",a:[["big","size"],["old","age"],["brown","colour"]]},
+    {n:"saree",a:[["beautiful","opinion"],["long","size"],["silk","material"]]},
+    {n:"plate",a:[["small","size"],["round","shape"],["steel","material"]]},
+    {n:"bat",a:[["old","age"],["wooden","material"],["cricket","purpose"]]},
+    {n:"athlete",a:[["tall","size"],["young","age"],["Indian","origin"]]},
+    {n:"laddoos",a:[["tasty","opinion"],["little","size"],["round","shape"]]},
+    {n:"shirt",a:[["new","age"],["blue","colour"],["cotton","material"]]},
+    {n:"temple",a:[["huge","size"],["ancient","age"],["stone","material"]]},
+    {n:"frock",a:[["pretty","opinion"],["little","size"],["pink","colour"]]},
+    {n:"box",a:[["square","shape"],["green","colour"],["plastic","material"]]},
+    {n:"car",a:[["small","size"],["old","age"],["Japanese","origin"]]},
+    {n:"shawl",a:[["beautiful","opinion"],["red","colour"],["Kashmiri","origin"]]},
+    {n:"bag",a:[["large","size"],["black","colour"],["leather","material"]]},
+    {n:"lamp",a:[["nice","opinion"],["round","shape"],["brass","material"]]},
+    {n:"bag",a:[["green","colour"],["nylon","material"],["sleeping","purpose"]]},
+    {n:"shoes",a:[["new","age"],["white","colour"],["running","purpose"]]},
+    {n:"kitten",a:[["cute","opinion"],["tiny","size"],["white","colour"]]},
+    {n:"table",a:[["long","size"],["wooden","material"],["dining","purpose"]]},
+    {n:"pot",a:[["big","size"],["round","shape"],["clay","material"]]}
+  ];
+
+  /* ---------- practice ---------- */
+  var mode="spot",S={};
+  function ordQ(x){var ws=x.a.map(function(p){return p[0]});return {n:x.n,a:x.a,ans:ws,bank:shuffle(ws)}}
+  function resetPractice(){
+    S.spot={i:0,score:0,ans:null,miss:[],q:TLM.deal("adj-spot-"+cls,SPOT.filter(function(x){return x.c<=cls}),8).map(function(x){
+      return {s:x.s,n:x.n,k:x.k,ans:x.ans,o:shuffle(x.o)};
+    })};
+    S.fill={i:0,score:0,ans:null,miss:[],q:TLM.deal("adj-fill-"+cls,FILL.filter(function(x){return x.c<=cls}),8).map(function(x){
+      return {pre:x.pre,w:x.w,post:x.post,e:x.e,ans:x.o[0],o:shuffle(x.o)};
+    })};
+    S.order={i:0,score:0,picked:[],checked:false,ok:false,miss:[],q:cls>=8?TLM.deal("adj-order-"+cls,ORD,8).map(ordQ):[]};
+    if(cls<8&&mode==="order")mode="spot";
+    $('#modeSeg [data-m="order"]').hidden=cls<8;
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You are an adjective expert.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the lesson again, then play once more.",s.miss.length);
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>',last=s.i===n-1;
+    var nextBtn='<button type="button" class="btn" data-act="next"'+(mode==="order"?'':' hidden')+'>'+(last?"See my score":"Next question")+'</button>';
+    if(mode==="spot"){
+      html+='<p class="qs">“'+esc(q.s)+'”</p><p>Which word is the adjective?</p><div class="opts row3">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'+
+        '<p class="fb" aria-live="polite"></p>'+nextBtn;
+    }else if(mode==="fill"){
+      html+='<p class="qs">'+(q.pre?esc(q.pre)+' ':'')+'<span class="gap" id="gap">&nbsp;</span> <span style="color:var(--muted)">('+esc(q.w)+')</span>'+(q.post.charAt(0)==="."?"":" ")+esc(q.post)+'</p><div class="opts row3">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'+
+        '<p class="fb" aria-live="polite"></p>'+nextBtn;
+    }else{
+      var tray=s.picked.map(function(w,i){return '<button type="button" class="pick" data-rm="'+i+'"'+(s.checked?' disabled':'')+'>'+esc(w)+'</button>'}).join("");
+      var bank=q.bank.filter(function(w){return s.picked.indexOf(w)<0}).map(function(w){return '<button type="button" class="pick" data-add="'+esc(w)+'">'+esc(w)+'</button>'}).join("");
+      var fbCls="fb",fbText="",order=q.a.map(function(p){return p[0]+" ("+p[1]+")"}).join(", ");
+      if(s.checked){fbCls+=s.ok?" good":" bad";fbText=s.ok?"Correct. The order is "+order+".":"Not quite. The order is "+order+": the "+q.ans.join(" ")+" "+q.n+"."}
+      html+='<p class="qs">Put the adjectives in the right order before “'+esc(q.n)+'”.</p>'+
+        '<div class="tray'+(s.checked?(s.ok?" good":" bad"):"")+'" aria-label="Your phrase"><span class="w">the</span>'+(tray||'<span class="count">Tap the words in order</span>')+'<span class="w">'+esc(q.n)+'</span></div>'+
+        '<div class="bank">'+bank+'</div><p class="'+fbCls+'" aria-live="polite">'+esc(fbText)+'</p><div class="row">'+
+        (s.checked
+          ?nextBtn
+          :'<button type="button" class="btn" data-act="check"'+(s.picked.length===q.ans.length?'':' disabled')+'>Check</button><button type="button" class="btn alt" data-act="clear"'+(s.picked.length?'':' disabled')+'>Clear</button>')+
+        '</div>';
+    }
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(mode==="order"?S[mode].miss.map(function(x){return ordQ(x)}):S[mode].miss);drawPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;if(mode==="order"){s.picked=[];s.checked=false}drawPractice();return}
+    if(mode==="order"){
+      var q=s.q[s.i];
+      if(b.dataset.act==="check"){s.checked=true;s.ok=s.picked.join("|")===q.ans.join("|");if(s.ok)s.score++;else s.miss.push(q);drawPractice();return}
+      if(b.dataset.act==="clear"){s.picked=[];drawPractice();return}
+      if(s.checked)return;
+      if(b.dataset.add!==undefined){s.picked.push(b.dataset.add);drawPractice();return}
+      if(b.dataset.rm!==undefined){s.picked.splice(+b.dataset.rm,1);drawPractice();return}
+      return;
+    }
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var qq=s.q[s.i],chosen=qq.o[+b.dataset.o],ok=chosen===qq.ans;
+    s.ans=1;if(ok)s.score++;else s.miss.push(qq);
+    var fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    if(mode==="spot"){
+      fb.textContent=(ok?"Correct. ":"Not quite. ")+"“"+qq.ans+"” describes “"+qq.n+"”. It is "+(/^(demonstrative|interrogative|possessive)/.test(qq.k)?"a "+qq.k+" adjective":"an adjective of "+qq.k)+".";
+    }else{
+      $("#gap").textContent=qq.ans;
+      fb.textContent=(ok?"Correct. ":"Not quite. The answer is “"+qq.ans+"”. ")+qq.e;
+    }
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(qq.o[+x.dataset.o]===qq.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawHelper();resetPractice();
+  });
+
+  drawHelper();resetPractice();
+})();
+</script>
+</Base>

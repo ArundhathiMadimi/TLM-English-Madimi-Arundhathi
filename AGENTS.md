@@ -7,14 +7,14 @@ Guide for anyone (human or AI agent) changing this repo.
 Interactive English grammar teaching-learning material (TLM) for Classes 6 to 8, prepared by **Madimi Arundhathi**. It is a static [Astro](https://astro.build) site deployed on Vercel at https://tlmenglish.vercel.app. Every push to `main` builds and deploys automatically.
 
 ```
-src/lessons.js            lesson list: order, title, icon, blurb. Drives the start page cards and Previous/Next buttons
+src/lessons.js            lessons grouped into sections (Words, Verbs, Sentences, Poetry) in learning order. Drives the start page and Previous/Next
 src/layouts/Base.astro    shared <head> (fonts, theme.css) and the "All topics" button on lesson pages
 src/components/LessonNav.astro   Previous / Next buttons at the bottom of each lesson
 src/pages/index.astro     start page
 src/pages/N-Topic.astro   one lesson per topic (1-Voices.astro ... 7-Modal-Verbs.astro)
 public/theme.css          shared colours, fonts and common components, copied to the site as-is
 public/feedback.js        right/wrong sounds (Web Audio, no files), confetti and the Sound on/off button
-public/practice.js        TLM helpers for lesson scripts: deal (random, no repeats), result screen, retry round
+public/practice.js        TLM helpers for lesson scripts: deal (random, no repeats), result screen, retry round; also remembers the student's class (localStorage "tlm-class", set on the start page or any #classSeg) and opens every lesson at it
 tests/check.mjs           npm test: checks practice.js and the Voices/Verbs sentence generators
 astro.config.mjs          build.format "file" -> pages build to 1-Voices.html, not 1-Voices/
 vercel.json               tells Vercel to build with Astro and serve dist/
@@ -74,8 +74,8 @@ Every lesson uses `<Base title="..." lesson>` and keeps the same layout and IDs:
 
 ## Adding a new topic
 
-1. Copy the closest lesson to `src/pages/8-New-Topic.astro`, then change the `slug` passed to `LessonNav`, the title, the content and the chip tokens.
-2. Add `{ slug: '8-New-Topic', title, icon, blurb }` to `src/lessons.js`. The start page card and the Previous/Next buttons update automatically. Write the blurb for kids and use an emoji icon.
+1. Copy the closest lesson to `src/pages/15-New-Topic.astro` (next free number; the number is only part of the URL and is never shown), then change the `slug` passed to `LessonNav`, the title, the content and the chip tokens.
+2. Add `{ slug: '15-New-Topic', title, icon, blurb }` to the right group in `src/lessons.js`, at its place in the learning order. The start page card and the Previous/Next buttons update automatically. Write the blurb for kids and use an emoji icon.
 3. Run `npm run build` and click through the new page.
 
 ## Content and accessibility

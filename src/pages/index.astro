@@ -1,15 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
-import { lessons } from '../lessons.js';
+import { groups } from '../lessons.js';
+const colors = ['var(--c1)', 'var(--c2)', 'var(--c4)', 'var(--c6)'];
 ---
 <Base title="English Grammar TLMs | Madimi Arundhathi">
 <style is:inline slot="head">
 .hero h1{font-size:clamp(2.4rem,11vw,3.8rem);font-weight:800}
 .hero .sub{font-size:1.15rem;color:var(--muted)}
-.topics{display:grid;gap:1rem;margin:1.6rem 0 0;padding:0;list-style:none}
-.topics li:nth-child(6n+1){--t:var(--c1)} .topics li:nth-child(6n+2){--t:var(--c2)} .topics li:nth-child(6n+3){--t:var(--c3)}
-.topics li:nth-child(6n+4){--t:var(--c4)} .topics li:nth-child(6n+5){--t:var(--c5)} .topics li:nth-child(6n+6){--t:var(--c6)}
-.topics a{display:flex;align-items:center;gap:1rem;background:var(--surface);border:3px solid var(--t);border-radius:22px;padding:.85rem 1rem;color:var(--ink);text-decoration:none;box-shadow:0 6px 0 var(--t);transition:transform .15s,box-shadow .15s}
+.pickclass{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem;margin:1.2rem 0 .4rem;padding:.9rem 1rem;background:var(--surface);border:2px solid var(--line);border-radius:22px;box-shadow:0 6px 0 var(--line)}
+.pickclass b{font:800 1.2rem var(--display)}
+.pickclass small{color:var(--muted);flex-basis:100%}
+.group{padding:2rem 0 0}
+.group h2{display:flex;align-items:center;gap:.5rem;color:var(--t)}
+.group .lead{margin-bottom:.2rem}
+.topics{display:grid;gap:1rem;margin:1rem 0 0;padding:0;list-style:none}
+@media (min-width:40rem){.topics{grid-template-columns:1fr 1fr}}
+.topics a{display:flex;align-items:center;gap:1rem;height:100%;background:var(--surface);border:3px solid var(--t);border-radius:22px;padding:.85rem 1rem;color:var(--ink);text-decoration:none;box-shadow:0 6px 0 var(--t);transition:transform .15s,box-shadow .15s}
 .topics a:hover{transform:translateY(-3px);box-shadow:0 9px 0 var(--t)}
 .topics a:active{transform:translateY(4px);box-shadow:0 2px 0 var(--t)}
 .ico{flex:none;width:3.4rem;height:3.4rem;display:grid;place-items:center;border-radius:18px;background:var(--t);font-size:1.8rem}
@@ -19,12 +25,42 @@ import { lessons } from '../lessons.js';
 </style>
 <main class="wrap hero">
 <h1>English Grammar TLMs</h1>
-<p class="sub">Fun, interactive lessons for Classes 6 to 8. Pick a topic and start playing! Works without internet.</p>
-<ul class="topics">
-  {lessons.map((l) => (
-    <li><a href={`${l.slug}.html`}><span class="ico" aria-hidden="true">{l.icon}</span><span><b>{l.title}</b><small>{l.blurb}</small></span></a></li>
-  ))}
-</ul>
+<p class="sub">Fun, interactive lessons for Classes 6 to 8. Pick your class, then pick a topic and start playing! Works without internet.</p>
+
+<div class="pickclass">
+  <b>I am in class</b>
+  <div class="seg" id="homeClass" role="group" aria-label="Class">
+    <button type="button" data-c="6" aria-pressed="false">6</button>
+    <button type="button" data-c="7" aria-pressed="false">7</button>
+    <button type="button" data-c="8" aria-pressed="false">8</button>
+  </div>
+  <small id="classNote" aria-live="polite">Every lesson will open at your class. You can change it inside a lesson too.</small>
+</div>
+
+{groups.map((g, i) => (
+  <section class="group" style={`--t:${colors[i % colors.length]}`}>
+    <h2><span aria-hidden="true">{g.icon}</span> {g.title}</h2>
+    <p class="lead">{g.blurb}</p>
+    <ul class="topics">
+      {g.lessons.map((l) => (
+        <li><a href={`${l.slug}.html`}><span class="ico" aria-hidden="true">{l.icon}</span><span><b>{l.title}</b><small>{l.blurb}</small></span></a></li>
+      ))}
+    </ul>
+  </section>
+))}
+
 <footer>Prepared by <strong>Madimi Arundhathi</strong></footer>
 </main>
+<script is:inline>
+(function(){
+  "use strict";
+  /* same key the lessons read in practice.js */
+  var KEY="tlm-class",seg=document.getElementById("homeClass"),c=null;
+  try{c=localStorage.getItem(KEY)}catch(e){}
+  function draw(){seg.querySelectorAll("button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.c===c)});
+    if(c)document.getElementById("classNote").textContent="Great! Every lesson will open at Class "+c+". You can change it inside a lesson too."}
+  seg.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;c=b.dataset.c;try{localStorage.setItem(KEY,c)}catch(err){}draw()});
+  draw();
+})();
+</script>
 </Base>

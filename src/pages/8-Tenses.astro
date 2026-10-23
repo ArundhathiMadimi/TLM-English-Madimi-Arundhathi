@@ -1,0 +1,505 @@
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Tenses | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
+:root{
+  --S-bg:#FFE3E6; --S-c:#D6334A; --S-t:#8F1226;
+  --V-bg:#FFF0C2; --V-c:#D99A00; --V-t:#6B4A00;
+  --T-bg:#D5F3EE; --T-c:#13927F; --T-t:#0B5E55;
+}
+
+.hero h1{font-size:clamp(2.6rem,12vw,4.2rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.stage{display:flex;flex-wrap:wrap;gap:.6rem;align-items:flex-start;min-height:5.6rem;margin:.2rem 0 .8rem}
+.chip{display:inline-flex;flex-direction:column;gap:.15rem;padding:.5rem .85rem .4rem;border-radius:16px;border:2px solid;font:800 clamp(1.15rem,5.4vw,1.65rem)/1.15 var(--display)}
+.chip i{font:700 .75rem/1 var(--body);font-style:normal;opacity:.85}
+.chip.S{background:var(--S-bg);border-color:var(--S-c);color:var(--S-t)}
+.chip.V{background:var(--V-bg);border-color:var(--V-c);color:var(--V-t);border-width:3px}
+.chip.T{background:var(--T-bg);border-color:var(--T-c);color:var(--T-t)}
+.chip.O{background:transparent;border-color:var(--line);color:var(--ink)}
+.tense{font:800 1.15rem/1.2 var(--display);margin:0 0 .2rem}
+.note{color:var(--muted);min-height:4.4rem;margin:0 0 .8rem}
+.lab{font-weight:700;margin:.8rem 0 .4rem;font-size:.95rem}
+.tl{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+.tl::before{content:"";position:absolute;left:.5rem;right:.5rem;top:50%;height:5px;margin-top:-2px;background:var(--line);border-radius:5px}
+.tl button{position:relative;appearance:none;border:3px solid var(--line);background:var(--surface);color:var(--ink);font:800 1.05rem/1.1 var(--display);min-height:3.2rem;padding:.5rem .4rem;border-radius:999px;cursor:pointer}
+.tl button[aria-pressed="true"]{background:var(--T-bg);border-color:var(--T-c);color:var(--T-t)}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pills button{appearance:none;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1rem/1 var(--body);padding:.7rem 1rem;min-height:2.9rem;border-radius:30px;cursor:pointer}
+.pills button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+.key .S{background:var(--S-bg);border-color:var(--S-c)}
+.key .V{background:var(--V-bg);border-color:var(--V-c)}
+.key .T{background:var(--T-bg);border-color:var(--T-c)}
+
+.hl{border-radius:6px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid}
+.hl.V{background:var(--V-bg);border-color:var(--V-c);color:var(--V-t);font-weight:800}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+
+.arow{margin-top:1.2rem}
+.arow h3{font-size:1.3rem;font-weight:800}
+.cells{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.6rem;margin-top:.5rem}
+.cell{background:var(--surface);border:2px solid var(--line);border-top:6px solid var(--tc);border-radius:16px;padding:.7rem .85rem}
+.cell.t0{--tc:var(--c4)} .cell.t1{--tc:var(--c3)} .cell.t2{--tc:var(--c2)}
+.cell small{display:block;color:var(--muted);font-weight:700;font-size:.8rem}
+.cell h4{font:800 1.12rem/1.2 var(--display);margin:.1rem 0 .3rem;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.cell p{margin:.25rem 0}
+.formula{display:inline-block;margin:.2rem 0;padding:.25rem .6rem;border-radius:10px;border:2px solid var(--V-c);background:var(--V-bg);color:var(--V-t);font-weight:700}
+.cell .ex{font:800 1.08rem/1.7 var(--display)}
+
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--T-c);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.3rem 0}
+.words{display:flex;flex-wrap:wrap;gap:.4rem;margin:.4rem 0}
+.words span{background:var(--T-bg);border:2px solid var(--T-c);color:var(--T-t);border-radius:20px;padding:.2rem .7rem;font-weight:700}
+
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.45 var(--display);margin:.6rem 0 1rem}
+.gap{display:inline-block;min-width:4.5rem;border-bottom:4px solid var(--ink);text-align:center;padding:0 .3em}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(10rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="hero wrap">
+  <h1>Tenses</h1>
+  <p class="sub">A tense tells us when something happens. Move along the timeline and watch the verb change.</p>
+
+  <div class="demo">
+    <div class="stage" id="heroStage" aria-live="polite"></div>
+    <p class="tense" id="hTense"></p>
+    <p class="note" id="hNote"></p>
+
+    <p class="lab">When does it happen?</p>
+    <div class="tl" id="tl" role="group" aria-label="Time">
+      <button type="button" data-t="0" aria-pressed="false">← Past</button>
+      <button type="button" data-t="1" aria-pressed="true">Now</button>
+      <button type="button" data-t="2" aria-pressed="false">Future →</button>
+    </div>
+
+    <p class="lab">What kind of action is it?</p>
+    <div class="pills" id="aspects" role="group" aria-label="Kind of action"></div>
+
+    <div class="row" style="margin-top:1rem">
+      <button type="button" class="btn alt" id="nextSent">Next sentence</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="S"></em>subject</span>
+      <span><em class="V"></em>verb</span>
+      <span><em class="T"></em>time words</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="timeline">
+    <h2>The tense timeline</h2>
+    <p class="lead" id="tlLead"></p>
+    <div id="tgrid"></div>
+  </section>
+
+  <section id="clues">
+    <h2>Time words</h2>
+    <p class="lead">Time words are clues. Find the clue first, then choose the tense.</p>
+    <div class="uses">
+      <div class="use" data-min="6"><b>Simple present: habits and facts</b>
+        <div class="words"><span>every day</span><span>always</span><span>usually</span><span>often</span><span>sometimes</span><span>never</span></div>
+        <p>Raju <b>goes</b> to school every day.</p></div>
+      <div class="use" data-min="6"><b>Simple past: finished actions</b>
+        <div class="words"><span>yesterday</span><span>last week</span><span>two days ago</span><span>in 2020</span></div>
+        <p>We <b>visited</b> the zoo yesterday.</p></div>
+      <div class="use" data-min="6"><b>Simple future: later</b>
+        <div class="words"><span>tomorrow</span><span>next week</span><span>soon</span><span>next year</span></div>
+        <p>Grandma <b>will come</b> tomorrow.</p></div>
+      <div class="use" data-min="6"><b>Present continuous: happening now</b>
+        <div class="words"><span>now</span><span>right now</span><span>at the moment</span><span>Look!</span><span>Listen!</span></div>
+        <p>Look! The children <b>are dancing</b>.</p></div>
+      <div class="use" data-min="7"><b>Since or for? <span class="new" hidden>new this year</span></b>
+        <p>Use <b>since</b> with a point in time and <b>for</b> with a length of time.</p>
+        <div class="words"><span>since Monday</span><span>since 2019</span><span>since morning</span><span>for two days</span><span>for five years</span><span>for an hour</span></div>
+        <p>I <b>have lived</b> here since 2019. I <b>have lived</b> here for seven years.</p></div>
+      <div class="use" data-min="7"><b>Already, just, yet <span class="new" hidden>new this year</span></b>
+        <p><b>Already</b> and <b>just</b> come between has / have and V3. <b>Yet</b> comes at the end of questions and “not” sentences.</p>
+        <p>She <b>has already eaten</b>. I <b>have just come</b>. <b>Has</b> he <b>come</b> yet? He <b>has not come</b> yet.</p></div>
+      <div class="use" data-min="7"><b>While and when <span class="new" hidden>new this year</span></b>
+        <p>The longer action that was going on takes the past continuous. The short action takes the simple past.</p>
+        <p>I <b>was reading</b> when the lights <b>went</b> out.</p></div>
+      <div class="use" data-min="8"><b>Choose the tense from the context <span class="new" hidden>new this year</span></b>
+        <p>1. When? Past, present or future. 2. Is the action finished, going on, finished before a time, or going on for some time up to a point?</p>
+        <div class="words"><span>by tomorrow → will have + V3</span><span>since / for + still going on → has been + V-ing</span><span>for … when + past → had been + V-ing</span><span>by next year … for → will have been + V-ing</span></div>
+        <p>By Friday, we <b>will have finished</b> the project. It <b>has been raining</b> since morning.</p></div>
+    </div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="fill" aria-pressed="true">Fill it</button>
+        <button type="button" data-m="name" aria-pressed="false">Name it</button>
+        <button type="button" data-m="spot" aria-pressed="false">Spot it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>say whether an action is in the past, the present or the future;</li>
+        <li>name and form the tenses for their class (Class 6: simple present, past and future, and present continuous; Class 7: past and future continuous, present and past perfect; Class 8: all twelve tenses);</li>
+        <li>use time words as clues, including since and for, already, just and yet;</li>
+        <li>choose the right tense from the context of a sentence.</li>
+      </ul>
+    </details>
+    <details>
+      <summary>How to use this in class</summary>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, and a long line drawn on the board marked Past, Now and Future.</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Ask: “What did you do yesterday? What are you doing now? What will you do tomorrow?” Write the verbs on the board timeline.</li>
+        <li><b>Teach (10 min).</b> Project the hero. Tap Past, Now and Future, then change the kind of action. Students say the sentence aloud before you tap Listen.</li>
+        <li><b>Timeline (10 min).</b> Pick your class on the bar. Students copy the formulas into their notebooks as a table: time across, kind of action down.</li>
+        <li><b>Time words (5 min).</b> Call out a time word. Students show one, two or three fingers for past, present or future.</li>
+        <li><b>Practice (8 min).</b> Teams play Fill it, Name it and Spot it. Use “Try my mistakes again” for the questions they missed.</li>
+        <li><b>Exit ticket.</b> Each student writes about their day in three sentences: one past, one present and one future.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Forgetting -s in the simple present: “He play cricket.” should be “He plays cricket.”</li>
+        <li>Using V2 after did: “Did she went?” should be “Did she go?”</li>
+        <li>Dropping the helper: “They playing.” should be “They are playing.”</li>
+        <li>Mixing since and for: “since two years” should be “for two years”.</li>
+        <li>Using the present perfect with a finished time: “I have seen him yesterday.” should be “I saw him yesterday.”</li>
+        <li>Using the present for an action that is still going on: “I am living here since 2019.” should be “I have been living here since 2019.” and “How long are you learning Hindi?” should be “How long have you been learning Hindi?”</li>
+        <li>Using V2 after have, has or had: “He has went.” should be “He has gone.”</li>
+      </ul>
+    </details>
+  </section>
+
+  <LessonNav slug="8-Tenses" />
+
+  <footer>
+    Teaching learning material (TLM) on Tenses for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+
+<script is:inline>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function hlSent(s){return esc(s).replace(/\{\{(.+?)\}\}/g,'<span class="hl V">$1</span>')}
+
+  /* ---------- the 12 tenses ----------
+     t: 0 past, 1 present, 2 future. a: 0 simple, 1 continuous, 2 perfect, 3 perfect continuous.
+     h(v,p) builds the hero sentence: v = [V1, V2, V3, V1 + s, V-ing], p = "1" (I), "3" (he, she, one person), "p" (plural).
+     It returns [verb, time words]. */
+  function be(p){return p==="1"?"am":p==="3"?"is":"are"}
+  function was(p){return p==="p"?"were":"was"}
+  function has(p){return p==="3"?"has":"have"}
+  var TIMES=["Past","Present","Future"];
+  var ASP=[{n:"Simple",c:6},{n:"Continuous",c:6},{n:"Perfect",c:7},{n:"Perfect continuous",c:8}];
+  var TENSES=[
+    {t:0,a:0,c:6,n:"Simple past",f:"V2",u:"A finished action in the past.",ex:"Ravi {{played}} cricket yesterday.",
+      h:function(v){return [v[1],"yesterday"]}},
+    {t:1,a:0,c:6,n:"Simple present",f:"V1 (V1 + s or es after he, she, it)",u:"Habits, daily routines and facts.",ex:"Meena {{goes}} to school every day.",
+      h:function(v,p){return [p==="3"?v[3]:v[0],"every day"]}},
+    {t:2,a:0,c:6,n:"Simple future",f:"will + V1",u:"An action that will happen later.",ex:"We {{will visit}} Hyderabad tomorrow.",
+      h:function(v){return ["will "+v[0],"tomorrow"]}},
+    {t:0,a:1,c:7,n:"Past continuous",f:"was / were + V-ing",u:"An action that was going on at a time in the past.",ex:"Amma {{was cooking}} when I came home.",
+      h:function(v,p){return [was(p)+" "+v[4],"at this time yesterday"]}},
+    {t:1,a:1,c:6,n:"Present continuous",f:"am / is / are + V-ing",u:"An action that is going on now.",ex:"The children {{are playing}} now.",
+      h:function(v,p){return [be(p)+" "+v[4],"now"]}},
+    {t:2,a:1,c:7,n:"Future continuous",f:"will be + V-ing",u:"An action that will be going on at a time in the future.",ex:"I {{will be travelling}} at this time tomorrow.",
+      h:function(v){return ["will be "+v[4],"at this time tomorrow"]}},
+    {t:0,a:2,c:7,n:"Past perfect",f:"had + V3",u:"The earlier of two past actions.",ex:"The bus {{had left}} before we reached the stop.",
+      h:function(v){return ["had "+v[2],"before Amma came home"]}},
+    {t:1,a:2,c:7,n:"Present perfect",f:"has / have + V3",u:"A finished action that matters now, or that has just happened.",ex:"Kiran {{has}} just {{finished}} her homework.",
+      h:function(v,p){return [has(p)+" just "+v[2],""]}},
+    {t:2,a:2,c:8,n:"Future perfect",f:"will have + V3",u:"An action that will be finished before a time in the future.",ex:"I {{will have finished}} the project by Monday.",
+      h:function(v){return ["will have "+v[2],"by this evening"]}},
+    {t:0,a:3,c:8,n:"Past perfect continuous",f:"had been + V-ing",u:"An action that had been going on for some time before another past action.",ex:"Raju {{had been waiting}} for an hour when the bus came.",
+      h:function(v){return ["had been "+v[4],"for two hours when Amma came home"]}},
+    {t:1,a:3,c:8,n:"Present perfect continuous",f:"has / have been + V-ing",u:"An action that began in the past and is still going on.",ex:"It {{has been raining}} since morning.",
+      h:function(v,p){return [has(p)+" been "+v[4],"since morning"]}},
+    {t:2,a:3,c:8,n:"Future perfect continuous",f:"will have been + V-ing",u:"An action that will have been going on for some time by a point in the future.",ex:"By June, we {{will have been living}} here for five years.",
+      h:function(v){return ["will have been "+v[4],"for two hours by six o’clock"]}}
+  ];
+  function tenseAt(t,a){for(var i=0;i<TENSES.length;i++)if(TENSES[i].t===t&&TENSES[i].a===a)return TENSES[i]}
+  function byName(n){for(var i=0;i<TENSES.length;i++)if(TENSES[i].n===n)return TENSES[i]}
+
+  /* ---------- hero: move along the timeline ---------- */
+  var HS=[
+    {s:"Priya",p:"3",v:["write","wrote","written","writes","writing"],o:"a letter"},
+    {s:"The boys",p:"p",v:["play","played","played","plays","playing"],o:"cricket"},
+    {s:"I",p:"1",v:["cook","cooked","cooked","cooks","cooking"],o:"dinner"}
+  ];
+  var hi=0,ht=1,ha=0;
+  function heroText(){var x=HS[hi],r=tenseAt(ht,ha).h(x.v,x.p);return x.s+" "+r[0]+" "+x.o+(r[1]?" "+r[1]:"")+"."}
+  function drawAspects(){
+    if(ASP[ha].c>cls)ha=0;
+    $("#aspects").innerHTML=ASP.map(function(x,i){return x.c<=cls?'<button type="button" data-a="'+i+'" aria-pressed="'+(i===ha)+'">'+esc(x.n)+'</button>':""}).join("");
+  }
+  function drawHero(pop){
+    var x=HS[hi],tn=tenseAt(ht,ha),r=tn.h(x.v,x.p);
+    $("#heroStage").innerHTML=
+      '<span class="chip S">'+esc(x.s)+'<i>subject</i></span>'+
+      '<span class="chip V" id="vchip">'+esc(r[0])+'<i>'+esc(tn.f)+'</i></span>'+
+      '<span class="chip O">'+esc(x.o)+(r[1]?'':'.')+'</span>'+
+      (r[1]?'<span class="chip T">'+esc(r[1])+'.<i>time words</i></span>':'');
+    $("#hTense").textContent=tn.n;
+    $("#hNote").textContent=tn.u+(tn.c>cls?" You will learn this tense in Class "+tn.c+".":"");
+    document.querySelectorAll("#tl button").forEach(function(b){b.setAttribute("aria-pressed",+b.dataset.t===ht)});
+    document.querySelectorAll("#aspects button").forEach(function(b){b.setAttribute("aria-pressed",+b.dataset.a===ha)});
+    if(pop&&!reduce){var c=$("#vchip");if(c.animate)c.animate([{transform:"translateX("+(ht===0?"-":"")+"1.2rem)",opacity:.3},{transform:"none",opacity:1}],{duration:340,easing:"cubic-bezier(.3,.7,.2,1)"})}
+  }
+  $("#tl").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;ht=+b.dataset.t;drawHero(true)});
+  $("#aspects").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;ha=+b.dataset.a;drawHero(true)});
+  $("#nextSent").addEventListener("click",function(){hi=(hi+1)%HS.length;drawHero(true)});
+  $("#listen").addEventListener("click",function(){
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(heroText());u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+
+  /* ---------- timeline grid and time words ---------- */
+  function drawTimeline(){
+    $("#tlLead").textContent=cls===6
+      ?"Class 6 learns the three simple tenses and the present continuous."
+      :"Class "+cls+" revises the earlier tenses and adds new ones. The new ones are marked.";
+    $("#tgrid").innerHTML=ASP.map(function(asp,a){
+      if(asp.c>cls)return "";
+      var cells=[0,1,2].map(function(t){
+        var x=tenseAt(t,a);if(x.c>cls)return "";
+        return '<article class="cell t'+t+'"><small>'+TIMES[t]+'</small><h4>'+esc(x.n)+(x.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h4>'+
+          '<span class="formula">'+esc(x.f)+'</span><p>'+esc(x.u)+'</p><p class="ex">'+hlSent(x.ex)+'</p></article>';
+      }).join("");
+      return '<div class="arow"><h3>'+esc(asp.n)+'</h3><div class="cells">'+cells+'</div></div>';
+    }).join("");
+    document.querySelectorAll("[data-min]").forEach(function(el){
+      var m=+el.dataset.min;el.hidden=m>cls;
+      var nw=el.querySelector(".new");if(nw)nw.hidden=m!==cls;
+    });
+  }
+
+  /* ---------- practice data ---------- */
+  /* fill: the first option is the answer */
+  var FILL=[
+    {pre:"My mother",v:"cook",post:"dinner every evening.",o:["cooks","cook","cooking"],w:"“Every evening” shows a habit. “My mother” is one person, so use V1 + s: cooks.",c:6},
+    {pre:"The farmers",v:"work",post:"in the fields every day.",o:["work","works","working"],w:"“Every day” shows a habit. “The farmers” is plural, so use V1: work.",c:6},
+    {pre:"Ravi",v:"go",post:"to Chennai yesterday.",o:["went","goes","will go"],w:"“Yesterday” shows the past, so use the simple past (V2): went.",c:6},
+    {pre:"We",v:"watch",post:"a cricket match last Sunday.",o:["watched","watch","will watch"],w:"“Last Sunday” shows the past, so use the simple past (V2): watched.",c:6},
+    {pre:"Anjali",v:"visit",post:"her grandmother tomorrow.",o:["will visit","visited","will visited"],w:"“Tomorrow” shows the future, so use will + V1: will visit.",c:6},
+    {pre:"I",v:"buy",post:"a new pen next week.",o:["will buy","bought","will bought"],w:"“Next week” is in the future, so use will + V1: will buy.",c:6},
+    {pre:"Look! The baby",v:"smile",post:"at you.",o:["is smiling","smiled","smile"],w:"“Look!” shows it is happening now. Use is + V-ing: is smiling.",c:6},
+    {pre:"The children",v:"play",post:"in the park now.",o:["are playing","is playing","played"],w:"“Now” shows it is happening. “The children” is plural, so use are + V-ing: are playing.",c:6},
+    {pre:"Listen! Meena",v:"sing",post:"a song.",o:["is singing","sings","sang"],w:"“Listen!” shows it is happening now. Use is + V-ing: is singing.",c:6},
+    {pre:"I",v:"write",post:"a letter now.",o:["am writing","is writing","wrote"],w:"“Now” shows it is happening. “I” takes am: am writing.",c:6},
+    {pre:"The sun",v:"rise",post:"in the east.",o:["rises","rise","rising"],w:"This is a fact, so use the simple present. “The sun” is one thing: rises.",c:6},
+    {pre:"Kiran",v:"eat",post:"two idlis yesterday morning.",o:["ate","eats","will eat"],w:"“Yesterday morning” shows the past. The V2 of eat is ate.",c:6},
+    {pre:"They",v:"come",post:"to our house next Sunday.",o:["will come","came","will came"],w:"“Next Sunday” is in the future, so use will + V1: will come.",c:6},
+    {pre:"My father",v:"drink",post:"tea every morning.",o:["drinks","drink","drinking"],w:"“Every morning” shows a habit. “My father” is one person: drinks.",c:6},
+    {pre:"We",v:"plant",post:"trees in our school last year.",o:["planted","plant","will plant"],w:"“Last year” shows the past, so use V2: planted.",c:6},
+    {pre:"Right now, Arjun",v:"do",post:"his homework.",o:["is doing","does","did"],w:"“Right now” shows it is happening. Use is + V-ing: is doing.",c:6},
+    {pre:"Next year, my sister",v:"join",post:"Class 7.",o:["will join","joined","join"],w:"“Next year” is in the future, so use will + V1: will join.",c:6},
+    {pre:"I",v:"read",post:"a book when the lights went out.",o:["was reading","am reading","will read"],w:"The reading was going on when another past action happened, so use was + V-ing: was reading.",c:7},
+    {pre:"The boys",v:"play",post:"football at five o’clock yesterday.",o:["were playing","was playing","are playing"],w:"The action was going on at a time in the past. “The boys” is plural: were playing.",c:7},
+    {pre:"At this time tomorrow, we",v:"travel",post:"to Tirupati.",o:["will be travelling","were travelling","have travelled"],w:"“At this time tomorrow” is a moment in the future when the action will be going on: will be travelling.",c:7},
+    {pre:"Look, I",v:"clean",post:"my room. It is neat now.",o:["have cleaned","had cleaned","will clean"],w:"The action is finished and we can see the result now, so use have + V3: have cleaned.",c:7},
+    {pre:"We",v:"live",post:"in Vijayawada since 2019.",o:["have lived","live","lived"],w:"“Since 2019” means from then until now, so use have + V3: have lived.",c:7},
+    {pre:"Neha",v:"know",post:"Farah for five years.",o:["has known","knows","know"],w:"“For five years” up to now needs the present perfect. “Neha” takes has: has known.",c:7},
+    {pre:"The train",v:"leave",post:"before we reached the station.",o:["had left","has left","leaves"],w:"The train left first, before another past action, so use the past perfect: had left.",c:7},
+    {pre:"The film",v:"start",post:"before we reached the cinema.",o:["had started","has started","will start"],w:"The film started first, before we reached, so use had + V3: had started.",c:7},
+    {pre:"Mr Rao",v:"teach",post:"in this school since 2015.",o:["has taught","teaches","taught"],w:"“Since 2015” means from then until now, so use has + V3: has taught.",c:7},
+    {pre:"While Amma was cooking, Appa",v:"read",post:"the newspaper.",o:["was reading","is reading","will read"],w:"Both actions were going on at the same time in the past, so use was + V-ing: was reading.",c:7},
+    {pre:"This time next week, I",v:"write",post:"my exams.",o:["will be writing","was writing","have written"],w:"“This time next week” is a moment in the future when the action will be going on: will be writing.",c:7},
+    {pre:"Have you",v:"eat",post:"your lunch yet?",o:["eaten","ate","eat"],w:"After have, use V3. The V3 of eat is eaten.",c:7},
+    {pre:"It",v:"rain",post:"since morning, and it is still raining.",o:["has been raining","had been raining","rains"],w:"It began in the past and is still going on, so use has been + V-ing: has been raining.",c:8},
+    {pre:"Gopi",v:"wait",post:"for an hour when the bus finally came.",o:["had been waiting","has been waiting","will have been waiting"],w:"The waiting went on for an hour before another past action, so use had been + V-ing: had been waiting.",c:8},
+    {pre:"By next March, my grandparents",v:"live",post:"in Pune for twenty years.",o:["will have been living","have been living","had been living"],w:"“By next March … for twenty years” is a length of time up to a point in the future: will have been living.",c:8},
+    {pre:"By the time you arrive, we",v:"finish",post:"dinner.",o:["will have finished","had finished","have been finishing"],w:"The action will be finished before a time in the future, so use will have + V3: will have finished.",c:8},
+    {pre:"The students",v:"practise",post:"for the drama for three weeks now.",o:["have been practising","had been practising","will be practising"],w:"“For three weeks now” shows an action that began in the past and is still going on: have been practising.",c:8},
+    {pre:"Her eyes were red because she",v:"cry",post:"for a long time.",o:["had been crying","has been crying","will have been crying"],w:"The crying went on for some time before a past moment (her eyes were red), so use had been + V-ing.",c:8},
+    {pre:"By tomorrow evening, the workers",v:"build",post:"the wall.",o:["will have built","had built","have built"],w:"“By tomorrow evening” is a point in the future before which the work will be finished: will have built.",c:8},
+    {pre:"Deepa is tired. She",v:"run",post:"for an hour.",o:["has been running","had been running","will have been running"],w:"She is tired now because of an action that went on until now, so use has been + V-ing.",c:8},
+    {pre:"By next year, Rahul",v:"work",post:"in this office for ten years.",o:["will have worked","had worked","has worked"],w:"“By next year” is a point in the future, so use will have + V3: will have worked.",c:8}
+  ];
+  /* name: the verb is marked with {{ }} */
+  var NAME=[
+    {s:"Lata {{sings}} beautifully.",ans:"Simple present",c:6},
+    {s:"The sun {{sets}} in the west.",ans:"Simple present",c:6},
+    {s:"We {{play}} kabaddi every evening.",ans:"Simple present",c:6},
+    {s:"My uncle {{lives}} in Mumbai.",ans:"Simple present",c:6},
+    {s:"Ravi {{broke}} the glass yesterday.",ans:"Simple past",c:6},
+    {s:"We {{visited}} the Charminar last month.",ans:"Simple past",c:6},
+    {s:"The bell {{rang}} at nine o’clock.",ans:"Simple past",c:6},
+    {s:"Grandpa {{told}} us a story last night.",ans:"Simple past",c:6},
+    {s:"I {{will call}} you tomorrow.",ans:"Simple future",c:6},
+    {s:"The shop {{will open}} at ten o’clock.",ans:"Simple future",c:6},
+    {s:"We {{will plant}} a tree on Monday.",ans:"Simple future",c:6},
+    {s:"Rani {{will help}} her mother.",ans:"Simple future",c:6},
+    {s:"The dog {{is barking}} loudly.",ans:"Present continuous",c:6},
+    {s:"I {{am drawing}} a picture now.",ans:"Present continuous",c:6},
+    {s:"They {{are flying}} kites on the terrace.",ans:"Present continuous",c:6},
+    {s:"Look! It {{is raining}}.",ans:"Present continuous",c:6},
+    {s:"Amma {{was cooking}} when the guests came.",ans:"Past continuous",c:7},
+    {s:"The children {{were sleeping}} at ten o’clock last night.",ans:"Past continuous",c:7},
+    {s:"At this time tomorrow, I {{will be sitting}} in the train.",ans:"Future continuous",c:7},
+    {s:"They {{will be playing}} a match at four o’clock tomorrow.",ans:"Future continuous",c:7},
+    {s:"Suresh {{has finished}} his work.",ans:"Present perfect",c:7},
+    {s:"I {{have}} just {{eaten}} my lunch.",ans:"Present perfect",c:7},
+    {s:"We {{have lived}} here since 2020.",ans:"Present perfect",c:7},
+    {s:"{{Have}} you ever {{seen}} a tiger?",ans:"Present perfect",c:7},
+    {s:"The guests {{had left}} before we arrived.",ans:"Past perfect",c:7},
+    {s:"She {{had}} already {{gone}} home when I called.",ans:"Past perfect",c:7},
+    {s:"It {{has been raining}} since morning.",ans:"Present perfect continuous",c:8},
+    {s:"They {{have been waiting}} for two hours.",ans:"Present perfect continuous",c:8},
+    {s:"Mohan {{had been working}} all day before he fell ill.",ans:"Past perfect continuous",c:8},
+    {s:"The road was wet because it {{had been raining}}.",ans:"Past perfect continuous",c:8},
+    {s:"By Friday, we {{will have finished}} the project.",ans:"Future perfect",c:8},
+    {s:"The train {{will have left}} by the time we reach.",ans:"Future perfect",c:8},
+    {s:"By next June, I {{will have been teaching}} for ten years.",ans:"Future perfect continuous",c:8},
+    {s:"In May, they {{will have been living}} here for five years.",ans:"Future perfect continuous",c:8}
+  ];
+  /* spot: the first option is the correct sentence */
+  var SPOT=[
+    {o:["Raju plays cricket every day.","Raju playing cricket every day.","Raju play cricket every day."],w:"A habit with one person takes V1 + s: plays.",c:6},
+    {o:["We went to the fair yesterday.","We go to the fair yesterday.","We will go to the fair yesterday."],w:"“Yesterday” shows the past, so use V2: went.",c:6},
+    {o:["I will meet you tomorrow.","I met you tomorrow.","I will met you tomorrow."],w:"“Tomorrow” shows the future, so use will + V1: will meet.",c:6},
+    {o:["The girls are dancing now.","The girls is dancing now.","The girls dancing now."],w:"“Now” needs the present continuous. “The girls” is plural: are dancing.",c:6},
+    {o:["She is reading a book now.","She are reading a book now.","She is read a book now."],w:"Present continuous: is + V-ing for one person.",c:6},
+    {o:["My brother goes to school by bus.","My brother go to school by bus.","My brother going to school by bus."],w:"A habit with one person takes V1 + es: goes.",c:6},
+    {o:["They visited Agra last year.","They visit Agra last year.","They will visit Agra last year."],w:"“Last year” shows the past, so use V2: visited.",c:6},
+    {o:["Look! The cat is drinking milk.","Look! The cat drinking milk.","Look! The cat drink milk."],w:"“Look!” shows it is happening now: is drinking.",c:6},
+    {o:["Priya will write the test next week.","Priya wrote the test next week.","Priya will wrote the test next week."],w:"“Next week” is in the future, so use will + V1: will write.",c:6},
+    {o:["Water boils at 100 °C.","Water boil at 100 °C.","Water boiling at 100 °C."],w:"A fact takes the simple present. “Water” is singular: boils.",c:6},
+    {o:["I am eating an apple now.","I is eating an apple now.","I eating an apple now."],w:"“Now” needs the present continuous. “I” takes am: am eating.",c:6},
+    {o:["Sohail bought a bicycle last week.","Sohail buys a bicycle last week.","Sohail buyed a bicycle last week."],w:"“Last week” shows the past. The V2 of buy is bought.",c:6},
+    {o:["We will go to the temple on Sunday.","We will going to the temple on Sunday.","We will went to the temple on Sunday."],w:"After will, use V1: will go.",c:6},
+    {o:["The birds fly in the sky.","The birds flies in the sky.","The birds flying in the sky."],w:"“The birds” is plural, so use V1 with no -s: fly.",c:6},
+    {o:["Ammu did her homework yesterday.","Ammu does her homework yesterday.","Ammu doing her homework yesterday."],w:"“Yesterday” shows the past. The V2 of do is did.",c:6},
+    {o:["Right now the teacher is checking our books.","Right now the teacher are checking our books.","Right now the teacher checking our books."],w:"“Right now” needs the present continuous. “The teacher” is one person: is checking.",c:6},
+    {o:["I was watching TV when the phone rang.","I were watching TV when the phone rang.","I am watching TV when the phone rang."],w:"An action going on in the past takes was / were + V-ing. “I” takes was.",c:7},
+    {o:["They were playing when it started to rain.","They was playing when it started to rain.","They are playing when it started to rain."],w:"Past continuous with a plural subject: were playing.",c:7},
+    {o:["At this time tomorrow, I will be flying to Delhi.","At this time tomorrow, I was flying to Delhi.","At this time tomorrow, I will flying to Delhi."],w:"Future continuous: will be + V-ing.",c:7},
+    {o:["She has lived here since 2018.","She has lived here for 2018.","She lives here since 2018."],w:"Use since with a point in time, and has + V3 for an action up to now.",c:7},
+    {o:["We have known him for six years.","We have known him since six years.","We know him for six years."],w:"Use for with a length of time, and have + V3 for an action up to now.",c:7},
+    {o:["I have just eaten.","I have just ate.","I has just eaten."],w:"“I” takes have, followed by V3: have just eaten.",c:7},
+    {o:["Has he come yet?","Has he came yet?","Have he come yet?"],w:"“He” takes has, followed by V3: has … come.",c:7},
+    {o:["The train had left before we reached.","The train had leave before we reached.","The train has left before we reached."],w:"The earlier of two past actions takes had + V3: had left.",c:7},
+    {o:["When I reached school, the bell had rung.","When I reached school, the bell had rang.","When I reached school, the bell has rung."],w:"The bell rang first, so use had + V3. The V3 of ring is rung.",c:7},
+    {o:["Kavya has not finished her homework yet.","Kavya has not finished her homework already.","Kavya have not finished her homework yet."],w:"Use yet in “not” sentences. “Kavya” takes has.",c:7},
+    {o:["It has been raining since Monday.","It has been raining for Monday.","It is raining since Monday."],w:"An action still going on since a point in time takes has been + V-ing with since.",c:8},
+    {o:["He has been studying for three hours.","He have been studying for three hours.","He has been study for three hours."],w:"Present perfect continuous: has been + V-ing. “He” takes has.",c:8},
+    {o:["They had been waiting for an hour when the bus came.","They had been wait for an hour when the bus came.","They have been waiting for an hour when the bus came."],w:"The waiting went on before another past action: had been + V-ing.",c:8},
+    {o:["By next week, I will have finished the book.","By next week, I will have finish the book.","By next week, I have finished the book."],w:"“By next week” needs the future perfect: will have + V3.",c:8},
+    {o:["By 2030, she will have been working here for ten years.","By 2030, she will been working here for ten years.","By 2030, she has been working here for ten years."],w:"“By 2030 … for ten years” needs the future perfect continuous: will have been + V-ing.",c:8},
+    {o:["The ground was wet because it had been raining all night.","The ground was wet because it has been raining all night.","The ground was wet because it had been rain all night."],w:"The rain went on before a past moment, so use had been + V-ing.",c:8},
+    {o:["By the time we reach, the show will have started.","By the time we reach, the show will have start.","By the time we reach, the show has started."],w:"The show will start before a future time, so use will have + V3: will have started.",c:8},
+    {o:["How long have you been learning Hindi?","How long have you been learn Hindi?","How long are you learning Hindi?"],w:"For an action that began in the past and is still going on, use have been + V-ing.",c:8}
+  ];
+  function nameWhy(x){
+    var t=byName(x.ans),verb=x.s.match(/\{\{(.+?)\}\}/g).map(function(m){return m.slice(2,-2)}).join(" … ");
+    return "“"+verb+"” is "+t.f+", so the tense is the "+t.n.toLowerCase()+".";
+  }
+
+  var mode="fill",S={};
+  function mine(a){return a.filter(function(x){return x.c<=cls})}
+  function resetPractice(){
+    var names=mine(TENSES).map(function(t){return t.n});
+    S.fill={i:0,score:0,ans:null,miss:[],q:TLM.deal("tenses-fill-"+cls,mine(FILL),8).map(function(x){return {pre:x.pre,v:x.v,post:x.post,ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
+    S.name={i:0,score:0,ans:null,miss:[],q:TLM.deal("tenses-name-"+cls,mine(NAME),8).map(function(x){
+      var other=shuffle(names.filter(function(n){return n!==x.ans})).slice(0,2);
+      return {s:x.s,ans:x.ans,w:nameWhy(x),o:shuffle([x.ans].concat(other))};
+    })};
+    S.spot={i:0,score:0,ans:null,miss:[],q:TLM.deal("tenses-spot-"+cls,mine(SPOT),8).map(function(x){return {ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You are a tense expert.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Look at the timeline again, then play once more.",s.miss.length);
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    function opts(row){return '<div class="opts'+(row?' row3':'')+'">'+q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'}
+    if(mode==="fill"){
+      html+='<p class="qs">'+esc(q.pre)+' <span class="gap" id="gap">&nbsp;</span> <span style="color:var(--muted)">('+esc(q.v)+')</span> '+esc(q.post)+'</p>'+opts(true);
+    }else if(mode==="name"){
+      html+='<p class="count">Which tense is the marked verb?</p><p class="qs">'+hlSent(q.s)+'</p>'+opts(false);
+    }else{
+      html+='<p class="qs">Which sentence is correct?</p>'+opts(false);
+    }
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var q=s.q[s.i],ok=q.o[+b.dataset.o]===q.ans,fb=$("#pbody .fb");
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+q.w;
+    if(mode==="fill")$("#gap").textContent=q.ans;
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(q.o[+x.dataset.o]===q.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawAspects();drawHero(false);drawTimeline();resetPractice();
+  });
+
+  drawAspects();drawHero(false);drawTimeline();resetPractice();
+})();
+</script>
+</Base>

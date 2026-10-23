@@ -1,0 +1,458 @@
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Types of Verbs | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
+:root{
+  --A-bg:#D5F3EE; --A-c:#13927F; --A-t:#0B5E55;
+  --H-bg:#FFF0C2; --H-c:#D99A00; --H-t:#6B4A00;
+  --L-bg:#E3E8FF; --L-c:#4F5BD5; --L-t:#28308F;
+  --N-bg:#FFE3E6; --N-c:#D6334A; --N-t:#8F1226;
+}
+
+.hero h1{font-size:clamp(2.6rem,12.5vw,4.4rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.lab{font-weight:700;margin:.2rem 0 .4rem;font-size:.95rem}
+.sent{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;min-height:3.4rem;margin:0 0 .8rem;font:800 clamp(1.3rem,6vw,1.8rem)/1.2 var(--display)}
+.vb{appearance:none;font:inherit;color:var(--ink);background:var(--surface);border:3px dashed var(--accent);border-radius:14px;padding:.3rem .7rem;min-height:2.9rem;cursor:pointer}
+.vb:hover{background:var(--bg)}
+.sent .p{margin-left:-.4rem}
+.vb[aria-pressed="true"]{border-style:solid}
+.vb.A,.chip.A,.key .A{background:var(--A-bg);border-color:var(--A-c);color:var(--A-t)}
+.vb.H,.chip.H,.key .H{background:var(--H-bg);border-color:var(--H-c);color:var(--H-t)}
+.vb.L,.chip.L,.key .L{background:var(--L-bg);border-color:var(--L-c);color:var(--L-t)}
+.vb.N,.chip.N,.key .N{background:var(--N-bg);border-color:var(--N-c);color:var(--N-t)}
+.tense{font:800 1.15rem/1.2 var(--display);margin:0 0 .2rem}
+.note{color:var(--muted);min-height:3.2rem;margin:0 0 .4rem}
+.flow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;min-height:4.6rem;padding:.6rem .8rem;border:2px solid var(--line);border-radius:16px;background:var(--surface)}
+.chip{display:inline-flex;flex-direction:column;gap:.15rem;padding:.45rem .8rem .35rem;border-radius:16px;border:2px solid;font:800 clamp(1.05rem,5vw,1.4rem)/1.15 var(--display)}
+.chip i{font:700 .75rem/1 var(--body);font-style:normal;opacity:.85}
+.chip.O{background:transparent;border-color:var(--ink);color:var(--ink)}
+.arrow{position:relative;flex:0 0 3.2rem;height:5px;border-radius:3px;background:var(--ink);transform-origin:left center}
+.arrow::after{content:"";position:absolute;right:-4px;top:50%;transform:translateY(-50%);border:9px solid transparent;border-left:12px solid var(--ink);border-right:0}
+.join{flex:0 0 2.4rem;height:12px;border-top:4px solid var(--L-c);border-bottom:4px solid var(--L-c)}
+.stop{font:800 1rem/1.2 var(--body);color:var(--bad);border:2px dashed var(--bad);background:var(--bad-bg);border-radius:12px;padding:.45rem .7rem}
+.fcap{width:100%;margin:.2rem 0 0;font-weight:700;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.arrow{animation:vt-grow .5s cubic-bezier(.3,.7,.2,1)}}
+@keyframes vt-grow{from{transform:scaleX(0)}to{transform:none}}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--H-c);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.2rem 0}
+.tag{font:700 .8rem var(--body);border-radius:20px;padding:.1rem .55rem;border:2px solid;margin-left:.3rem;white-space:nowrap}
+.tag.A{background:var(--A-bg);border-color:var(--A-c);color:var(--A-t)}
+.tag.H{background:var(--H-bg);border-color:var(--H-c);color:var(--H-t)}
+.hl{border-radius:6px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid;background:var(--A-bg);border-color:var(--A-c);color:var(--A-t);font-weight:800}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--H-c);background:var(--H-bg);color:var(--H-t);font-weight:700}
+.tcard p{margin:.25rem 0}
+.tcard .ex{font:800 1.12rem/1.8 var(--display);margin-top:.5rem}
+
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.5 var(--display);margin:.6rem 0 1rem}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opts.words{display:flex;flex-wrap:wrap}
+.opts.words .opt{width:auto;font:800 1.2rem/1.2 var(--display);text-align:center}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="hero wrap">
+  <h1>Types of Verbs</h1>
+  <p class="sub">Every sentence needs a verb. Tap a dashed verb to find out what kind it is, and see where its action goes.</p>
+
+  <div class="demo">
+    <p class="lab">Tap a verb</p>
+    <div class="sent" id="heroSent" role="group" aria-label="Sentence"></div>
+    <p class="tense" id="hType" aria-live="polite"></p>
+    <p class="note" id="hNote"></p>
+    <div class="flow" id="flow" aria-live="polite"></div>
+
+    <div class="row" style="margin-top:.8rem">
+      <button type="button" class="btn alt" id="nextSent">Next sentence</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="A"></em>main (action) verb</span>
+      <span><em class="H"></em>helping verb</span>
+      <span data-c="7"><em class="L"></em>linking verb</span>
+      <span data-c="8"><em class="N"></em>non-finite verb</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="kinds">
+    <h2>Kinds of verbs</h2>
+    <p class="lead" id="kindsLead"></p>
+    <div class="tlist" id="tlist"></div>
+    <p style="margin-top:1rem">Can, will, must and should are helping verbs too. Learn them in <a href="7-Modal-Verbs.html">Modal Verbs</a>. For the V1, V2 and V3 forms of regular and irregular verbs, see <a href="5-Correct-Form-of-Verbs.html">Correct Form of Verbs</a>.</p>
+  </section>
+
+  <section id="bdh">
+    <h2>Be, do, have: main or helping?</h2>
+    <p class="lead">These three verbs can do both jobs. If another verb comes after them, they are helping. If they are the only verb, they are the main verb.</p>
+    <div class="uses">
+      <div class="use"><b>be: am, is, are, was, were</b>
+        <p>Meena <span class="hl">is</span> in the garden. <span class="tag A">main verb</span></p>
+        <p>Meena <span class="hl">is</span> watering the plants. <span class="tag H">helping verb</span></p></div>
+      <div class="use"><b>do: do, does, did</b>
+        <p>I <span class="hl">do</span> my homework every evening. <span class="tag A">main verb</span></p>
+        <p>I <span class="hl">do</span> not like brinjal. <span class="tag H">helping verb</span></p></div>
+      <div class="use"><b>have: have, has, had</b>
+        <p>Ravi <span class="hl">has</span> a red bicycle. <span class="tag A">main verb</span></p>
+        <p>Ravi <span class="hl">has</span> lost his bicycle. <span class="tag H">helping verb</span></p></div>
+    </div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="find" aria-pressed="true">Find it</button>
+        <button type="button" data-m="name" aria-pressed="false">Name it</button>
+        <button type="button" data-m="mh" aria-pressed="false">Main or helping</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>tell an action (main) verb from a helping verb, and decide whether be, do or have is main or helping in a sentence (Class 6);</li>
+        <li>identify linking verbs, transitive and intransitive verbs, and regular and irregular verbs (Class 7);</li>
+        <li>tell finite from non-finite verbs (infinitive, gerund, participle), use one verb both transitively and intransitively, and find two objects after verbs like give and tell (Class 8).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, and green, yellow, blue and pink chalk (action, helping, linking, non-finite).</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Mime actions (run, jump, write). Students call out the verb. Then say “I am happy.” Ask: what action is this?</li>
+        <li><b>Teach (10 min).</b> Project the hero. Before you tap each verb, ask students to guess its type and whether the action passes to an object.</li>
+        <li><b>Kinds of verbs (10 min).</b> Pick your class on the bar. For transitive verbs, ask “what?” or “whom?” after the verb. If there is an answer, it is the object.</li>
+        <li><b>Be, do, have (5 min).</b> Read each pair aloud. Students say “main” or “helping” and give the reason.</li>
+        <li><b>Practice (8 min).</b> Teams play Find it, Name it and Main or helping on the count of three.</li>
+        <li><b>Exit ticket.</b> Each student writes one sentence with a helping verb and one with a linking verb (Class 7 and 8 also: one transitive and one intransitive).</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Calling every “is”, “has” or “did” a helping verb. It is helping only when another verb follows it.</li>
+        <li>Picking the helping verb as the main verb in “She is reading.” The main verb carries the meaning: reading.</li>
+        <li>Calling a linking verb an action verb: in “The soup tastes salty” nobody is tasting anything.</li>
+        <li>Taking a word that tells how, when or where as an object: in “Birds fly high” there is no object, so “fly” is intransitive.</li>
+        <li>Deciding “transitive” from the verb alone. Look at the sentence: “She sings a song” (transitive), “She sings sweetly” (intransitive).</li>
+        <li>Thinking a word ending in -ing is always the main verb. In “Swimming is fun” it is a gerund, and the finite verb is “is”.</li>
+        <li>Adding -ed to irregular verbs: “goed”, “catched”. Send students to the Correct Form of Verbs lesson for practice.</li>
+      </ul>
+    </details>
+  </section>
+
+  <LessonNav slug="10-Types-of-Verbs" />
+
+  <footer>
+    Teaching learning material (TLM) on Types of Verbs for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+
+<script is:inline>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function hlSent(s){return esc(s).replace(/\{\{(.+?)\}\}/g,'<span class="hl">$1</span>')}
+
+  /* ---------- hero: tap a verb, see its type and where the action goes ----------
+     verb: w word, t colour (A action/main, H helping, L linking, N non-finite), k label, tr "transitive"/"intransitive" (shown from Class 7),
+     n note, f flow: ["pass",object] ["two",indirect,direct] ["stay"] ["link",subject,complement] ["help",main verb] ["nf"] */
+  var HERO=[
+    {c:6,t:["Ravi",{w:"kicks",t:"A",k:"Action verb",tr:"transitive",n:"“Kicks” is what Ravi does.",f:["pass","the ball"]},"the ball."]},
+    {c:6,t:["The","baby",{w:"sleeps",t:"A",k:"Action verb",tr:"intransitive",n:"“Sleeps” is what the baby does.",f:["stay"]},"."]},
+    {c:6,t:["Meena",{w:"is",t:"H",k:"Helping verb",n:"“Is” is a form of “be”. Here it helps the main verb “reading”.",f:["help","reading"]},
+      {w:"reading",t:"A",k:"Action verb (main verb)",tr:"transitive",n:"“Reading” carries the meaning. “Is” only helps it.",f:["pass","a book"]},"a book."]},
+    {c:6,t:["Arjun",{w:"has",t:"A",k:"Main verb",tr:"transitive",n:"“Has” is the only verb here. It means “owns”, so it is the main verb.",f:["pass","a new bicycle"]},"a new bicycle."]},
+    {c:6,t:["Arjun",{w:"has",t:"H",k:"Helping verb",n:"Another verb comes after “has”, so here it is a helping verb.",f:["help","finished"]},
+      {w:"finished",t:"A",k:"Action verb (main verb)",tr:"transitive",n:"“Finished” carries the meaning. “Has” only helps it.",f:["pass","his homework"]},"his homework."]},
+    {c:7,t:["The","mango",{w:"tastes",t:"L",k:"Linking verb",n:"No one is tasting anything. “Tastes” joins the mango to a word that describes it.",f:["link","The mango","sweet"]},"sweet."]},
+    {c:7,t:["Priya",{w:"became",t:"L",k:"Linking verb",n:"“Became” joins Priya to the word that names what she is now.",f:["link","Priya","a doctor"]},"a doctor."]},
+    {c:7,t:["Birds",{w:"fly",t:"A",k:"Action verb",tr:"intransitive",n:"Fly what? Nothing. “High” only tells where.",f:["stay"]},"high."]},
+    {c:7,t:["Amma",{w:"cooked",t:"A",k:"Action verb, regular",tr:"transitive",n:"Cooked what? Rice. cook → cooked → cooked adds -ed, so it is a regular verb.",f:["pass","rice"]},"rice."]},
+    {c:7,t:["Kiran",{w:"wrote",t:"A",k:"Action verb, irregular",tr:"transitive",n:"Wrote what? A letter. write → wrote → written does not add -ed, so it is irregular.",f:["pass","a letter"]},"a letter."]},
+    {c:8,t:["She",{w:"sings",t:"A",k:"Action verb",tr:"transitive",n:"Sings what? A song. Here “sings” has an object.",f:["pass","a song"]},"a song."]},
+    {c:8,t:["She",{w:"sings",t:"A",k:"Action verb",tr:"intransitive",n:"The same verb, but now there is no object. “Sweetly” only tells how.",f:["stay"]},"sweetly."]},
+    {c:8,t:["Amma",{w:"gave",t:"A",k:"Verb with two objects",tr:"transitive",n:"Gave what? A gift. Gave to whom? Me. So “gave” has two objects.",f:["two","me","a gift"]},"me a gift."]},
+    {c:8,t:["Priya",{w:"wants",t:"A",k:"Finite verb",tr:"transitive",n:"“Wants” changes with the subject and tense: I want, she wants, she wanted.",f:["pass","to dance"]},
+      {w:"to dance",t:"N",k:"Non-finite verb: infinitive",n:"to + V1 is an infinitive. It never changes with the subject.",f:["nf"]},"."]},
+    {c:8,t:[{w:"Swimming",t:"N",k:"Non-finite verb: gerund",n:"“Swimming” is a verb used as a noun. It is the subject of the sentence.",f:["nf"]},
+      {w:"keeps",t:"A",k:"Finite verb",tr:"transitive",n:"“Keeps” shows the present tense and agrees with the subject “swimming”.",f:["pass","us"]},"us fit."]}
+  ];
+  var hi=0,hv=0;
+  function heroList(){return HERO.filter(function(h){return h.c<=cls})}
+  function verbs(h){return h.t.filter(function(x){return typeof x!=="string"})}
+  function sayText(h){return h.t.map(function(x){return typeof x==="string"?x:x.w}).join(" ").replace(/ ([.?!])$/,"$1")}
+  function label(v){return v.k+(cls>=7&&v.tr?", "+v.tr:"")}
+  function chip(t,w,i){return '<span class="chip '+t+'">'+esc(w)+'<i>'+esc(i)+'</i></span>'}
+  var ARROW='<span class="arrow" aria-hidden="true"></span>';
+  function drawHero(){
+    var h=heroList()[hi],vs=verbs(h),v=vs[hv],n=0,f=v.f,html,cap;
+    $("#heroSent").innerHTML=h.t.map(function(x){
+      if(typeof x==="string")return '<span'+(/^[.?!]$/.test(x)?' class="p"':'')+'>'+esc(x)+'</span>';
+      var i=n++,on=i===hv;
+      return '<button type="button" class="vb'+(on?" "+x.t:"")+'" data-v="'+i+'" aria-pressed="'+on+'">'+esc(x.w)+'</button>';
+    }).join("");
+    $("#hType").textContent="“"+v.w+"”: "+label(v);
+    $("#hNote").textContent=v.n;
+    var vc=chip(v.t,v.w,"verb");
+    if(f[0]==="pass"){html=vc+ARROW+chip("O",f[1],"object");cap="The action passes to “"+f[1]+"”."}
+    else if(f[0]==="two"){html=vc+ARROW+chip("O",f[1],"to whom?")+ARROW+chip("O",f[2],"what?");cap="The action passes to two objects: “"+f[1]+"” and “"+f[2]+"”."}
+    else if(f[0]==="stay"){html=vc+'<span class="stop">no object</span>';cap="The action stays with the doer. Nothing receives it."}
+    else if(f[0]==="link"){html=chip("O",f[1],"subject")+'<span class="join" aria-hidden="true"></span>'+vc+'<span class="join" aria-hidden="true"></span>'+chip("O",f[2],"describes or names");cap="No action. “"+v.w+"” links “"+f[1]+"” to “"+f[2]+"”."}
+    else if(f[0]==="help"){html=vc+ARROW+chip("A",f[1],"main verb");cap="“"+v.w+"” helps the main verb “"+f[1]+"”."}
+    else{html=vc;cap="It does not show tense and does not change with the subject."}
+    $("#flow").innerHTML=html+'<p class="fcap">'+esc(cap)+'</p>';
+  }
+  $("#heroSent").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;hv=+b.dataset.v;drawHero()});
+  $("#nextSent").addEventListener("click",function(){hi=(hi+1)%heroList().length;hv=0;drawHero()});
+  $("#listen").addEventListener("click",function(){
+    var h=heroList()[hi],v=verbs(h)[hv],l=label(v).toLowerCase();
+    var say=sayText(h)+" “"+v.w+"” is "+(/^[aeiou]/.test(l)?"an ":"a ")+l+".";
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(say);u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+
+  /* ---------- kinds of verbs ---------- */
+  var KINDS=[
+    {c:6,n:"Action verb",m:"run, eat, write, kick, sleep",d:"Tells what someone or something does.",ex:"Ravi {{kicks}} the ball. Birds {{fly}}."},
+    {c:6,n:"Helping verb (auxiliary)",m:"be: am, is, are, was, were · do: do, does, did · have: has, have, had",d:"Comes before the main verb and helps it show tense, a question or a negative.",ex:"Meena {{is}} reading. {{Did}} you eat? He {{has}} gone."},
+    {c:6,n:"Main verb",m:"helping verb + main verb",d:"The main verb carries the meaning. Helping verbs come before it, and the main verb comes after them.",ex:"We are {{playing}}. She has {{eaten}}. They do not {{know}}."},
+    {c:7,n:"Linking verb",m:"be, seem, look, become, feel, taste, smell",d:"Shows no action. It joins the subject to a word that describes it or names it.",ex:"The tea {{is}} hot. Priya {{looks}} happy. He {{became}} a pilot."},
+    {c:7,n:"Transitive verb",m:"verb + object",d:"The action passes to an object. Ask “what?” or “whom?” after the verb. The answer is the object.",ex:"Amma {{cooks}} rice. (Cooks what? Rice.)"},
+    {c:7,n:"Intransitive verb",m:"verb, no object",d:"The action stays with the doer. Words that tell how, when or where are not objects.",ex:"The baby {{sleeps}}. Birds {{fly}} high."},
+    {c:7,n:"Regular and irregular verbs",m:"play → played → played · go → went → gone",d:"A regular verb adds -d or -ed for V2 and V3. An irregular verb changes in another way.",ex:"We {{played}} kabaddi. We {{went}} home."},
+    {c:8,n:"Finite verb",m:"changes with subject and tense",d:"A finite verb has a subject and shows the tense. Every full sentence has one.",ex:"She {{goes}} to school. They {{went}} to school."},
+    {c:8,n:"Non-finite verbs",m:"infinitive: to + V1 · gerund: V1 + ing as a noun · participle: V-ing or V3 as an adjective",d:"They never change with the subject and do not show tense on their own.",ex:"I want {{to learn}}. {{Swimming}} is fun. Look at the {{broken}} toy."},
+    {c:8,n:"One verb, two jobs",m:"transitive or intransitive?",d:"Many verbs can be used both ways. The sentence decides.",ex:"She {{sings}} a song. (transitive) She {{sings}} sweetly. (intransitive)"},
+    {c:8,n:"Verbs with two objects",m:"verb + whom + what",d:"Verbs like give, tell, show, send and buy can take two objects: a person (indirect object) and a thing (direct object).",ex:"Amma {{gave}} me a gift. The teacher {{told}} us a story."}
+  ];
+  function drawKinds(){
+    $("#kindsLead").textContent=cls===6
+      ?"Class 6 learns action verbs, helping verbs and main verbs."
+      :"Class "+cls+" revises the earlier kinds and adds new ones. The new ones are marked.";
+    $("#tlist").innerHTML=KINDS.filter(function(k){return k.c<=cls}).map(function(k){
+      return '<article class="tcard"><h3>'+esc(k.n)+(k.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<span class="formula">'+esc(k.m)+'</span><p>'+esc(k.d)+'</p><p class="ex">'+hlSent(k.ex)+'</p></article>';
+    }).join("");
+    document.querySelectorAll(".key [data-c]").forEach(function(s){s.hidden=+s.dataset.c>cls});
+  }
+
+  /* ---------- practice data ---------- */
+  /* Find it: tap one word. "~" joins two words into one button. */
+  var ASK={main:"Tap the main verb.",helping:"Tap the helping verb.",linking:"Tap the linking verb.",object:"Who or what receives the action? Tap the noun.",
+    finite:"Tap the finite verb.",nonfinite:"Tap the non-finite verb.",io:"Tap the indirect object: the person who receives something."};
+  var FIND=[
+    {s:"Meena is reading a story.",k:"helping",a:"is",w:"“Is” helps the main verb “reading”.",c:6},
+    {s:"The boys are playing cricket.",k:"main",a:"playing",w:"“Playing” is the action. “Are” only helps it.",c:6},
+    {s:"Ravi has finished his homework.",k:"helping",a:"has",w:"“Has” helps the main verb “finished”.",c:6},
+    {s:"We have eaten our lunch.",k:"main",a:"eaten",w:"“Eaten” carries the meaning. “Have” is the helping verb.",c:6},
+    {s:"Amma does not like spicy food.",k:"helping",a:"does",w:"“Does” helps the main verb “like” to make a negative.",c:6},
+    {s:"Do you know Lakshmi?",k:"main",a:"know",w:"“Know” is the main verb. “Do” helps it to make a question.",c:6},
+    {s:"The baby was sleeping in the cradle.",k:"helping",a:"was",w:"“Was” helps the main verb “sleeping”.",c:6},
+    {s:"Kiran jumped over the wall.",k:"main",a:"jumped",w:"“Jumped” is the only verb. It tells what Kiran did.",c:6},
+    {s:"The farmers were working in the fields.",k:"main",a:"working",w:"“Working” is the action. “Were” only helps it.",c:6},
+    {s:"Anil had already left the room.",k:"helping",a:"had",w:"“Had” helps the main verb “left”.",c:6},
+    {s:"My sister draws beautiful pictures.",k:"main",a:"draws",w:"“Draws” tells what my sister does.",c:6},
+    {s:"Did Suresh call you yesterday?",k:"helping",a:"Did",w:"“Did” helps the main verb “call” to make a question.",c:6},
+    {s:"The children are singing a song.",k:"helping",a:"are",w:"“Are” helps the main verb “singing”.",c:6},
+    {s:"Grandpa walks in the park every morning.",k:"main",a:"walks",w:"“Walks” tells what Grandpa does.",c:6},
+    {s:"I am writing a letter to my uncle.",k:"helping",a:"am",w:"“Am” helps the main verb “writing”.",c:6},
+    {s:"Rani has planted a mango tree.",k:"main",a:"planted",w:"“Planted” carries the meaning. “Has” only helps it.",c:6},
+    {s:"The dog barked at the stranger.",k:"main",a:"barked",w:"“Barked” tells what the dog did.",c:6},
+    {s:"They were watching a cartoon.",k:"helping",a:"were",w:"“Were” helps the main verb “watching”.",c:6},
+    {s:"The soup tastes salty.",k:"linking",a:"tastes",w:"“Tastes” joins the soup to “salty”, a word that describes it.",c:7},
+    {s:"Priya looks tired today.",k:"linking",a:"looks",w:"“Looks” joins Priya to “tired”, a word that describes her.",c:7},
+    {s:"The caterpillar became a butterfly.",k:"linking",a:"became",w:"“Became” joins the caterpillar to what it is now.",c:7},
+    {s:"My father is a doctor.",k:"linking",a:"is",w:"“Is” joins my father to “a doctor”, which names what he is.",c:7},
+    {s:"The milk smells sour.",k:"linking",a:"smells",w:"“Smells” joins the milk to “sour”, a word that describes it.",c:7},
+    {s:"Amma cooks rice every day.",k:"object",a:"rice",w:"Amma cooks what? Rice. So “rice” is the object.",c:7},
+    {s:"Kiran ate mangoes.",k:"object",a:"mangoes",w:"Kiran ate what? Mangoes. So “mangoes” is the object.",c:7},
+    {s:"The teacher praised Lakshmi.",k:"object",a:"Lakshmi",w:"The teacher praised whom? Lakshmi. So “Lakshmi” is the object.",c:7},
+    {s:"Arjun opened the door.",k:"object",a:"door",w:"Arjun opened what? The door. So “door” is the object.",c:7},
+    {s:"Priya wants to~dance.",k:"nonfinite",a:"to dance",w:"“To dance” is an infinitive (to + V1). It does not change with the subject.",c:8},
+    {s:"Swimming is good exercise.",k:"nonfinite",a:"Swimming",w:"“Swimming” is a gerund: a verb used as a noun.",c:8},
+    {s:"The barking dog woke me.",k:"finite",a:"woke",w:"“Woke” shows the past tense and has a subject, “the dog”. “Barking” is a participle.",c:8},
+    {s:"We saw a broken chair.",k:"nonfinite",a:"broken",w:"“Broken” is a past participle (V3) that describes the chair.",c:8},
+    {s:"Rahul likes reading comics.",k:"finite",a:"likes",w:"“Likes” agrees with “Rahul” and shows the present tense. “Reading” is a gerund.",c:8},
+    {s:"Ravi went to~buy vegetables.",k:"nonfinite",a:"to buy",w:"“To buy” is an infinitive (to + V1).",c:8},
+    {s:"She enjoys painting.",k:"finite",a:"enjoys",w:"“Enjoys” agrees with “she” and shows the tense. “Painting” is a gerund.",c:8},
+    {s:"I heard a crying baby.",k:"nonfinite",a:"crying",w:"“Crying” is a present participle that describes the baby.",c:8},
+    {s:"Amma gave me a sweet.",k:"io",a:"me",w:"Amma gave a sweet to whom? To me. “Me” is the indirect object and “a sweet” is the direct object.",c:8},
+    {s:"The teacher told us a story.",k:"io",a:"us",w:"The teacher told a story to whom? To us. “Us” is the indirect object.",c:8}
+  ];
+  /* Name it: o[0] is the answer. */
+  var NAME=[
+    {t:"Ravi {{runs}} to school.",o:["Action verb","Helping verb","Noun"],w:"“Runs” tells what Ravi does.",c:6},
+    {t:"Sita {{is}} drawing a rangoli.",o:["Helping verb","Action verb","Noun"],w:"“Is” helps the main verb “drawing”.",c:6},
+    {t:"The cat {{climbed}} the tree.",o:["Action verb","Helping verb","Noun"],w:"“Climbed” tells what the cat did.",c:6},
+    {t:"They {{have}} gone to Chennai.",o:["Helping verb","Action verb","Noun"],w:"“Have” helps the main verb “gone”.",c:6},
+    {t:"We {{do}} not eat meat.",o:["Helping verb","Action verb","Noun"],w:"“Do” helps the main verb “eat” to make a negative.",c:6},
+    {t:"Gopal {{threw}} the ball.",o:["Action verb","Helping verb","Noun"],w:"“Threw” tells what Gopal did.",c:6},
+    {t:"The girls {{were}} dancing on the stage.",o:["Helping verb","Action verb","Noun"],w:"“Were” helps the main verb “dancing”.",c:6},
+    {t:"Birds {{build}} nests.",o:["Action verb","Helping verb","Noun"],w:"“Build” tells what birds do.",c:6},
+    {t:"{{Does}} your brother play chess?",o:["Helping verb","Action verb","Noun"],w:"“Does” helps the main verb “play” to make a question.",c:6},
+    {t:"Mother {{washes}} the clothes.",o:["Action verb","Helping verb","Noun"],w:"“Washes” tells what Mother does.",c:6},
+    {t:"I {{am}} waiting for the bus.",o:["Helping verb","Action verb","Noun"],w:"“Am” helps the main verb “waiting”.",c:6},
+    {t:"The baby {{cried}} loudly.",o:["Action verb","Helping verb","Noun"],w:"“Cried” tells what the baby did.",c:6},
+    {t:"Suma {{had}} cooked dinner before we came.",o:["Helping verb","Action verb","Noun"],w:"“Had” helps the main verb “cooked”.",c:6},
+    {t:"The monkey {{jumped}} from branch to branch.",o:["Action verb","Helping verb","Noun"],w:"“Jumped” tells what the monkey did.",c:6},
+    {t:"My friends {{are}} coming tomorrow.",o:["Helping verb","Action verb","Noun"],w:"“Are” helps the main verb “coming”.",c:6},
+    {t:"Arun {{writes}} neatly.",o:["Action verb","Helping verb","Noun"],w:"“Writes” tells what Arun does.",c:6},
+    {t:"We {{did}} not see the film.",o:["Helping verb","Action verb","Noun"],w:"“Did” helps the main verb “see” to make a negative.",c:6},
+    {t:"The flowers {{smell}} sweet.",o:["Linking verb","Helping verb","Transitive verb"],w:"No one is smelling. “Smell” joins the flowers to “sweet”.",c:7},
+    {t:"Ramesh {{seems}} worried.",o:["Linking verb","Action verb","Helping verb"],w:"“Seems” shows no action. It joins Ramesh to “worried”.",c:7},
+    {t:"Hari {{feels}} happy today.",o:["Linking verb","Transitive verb","Helping verb"],w:"“Feels” joins Hari to “happy”, a word that describes him.",c:7},
+    {t:"The weather {{became}} cold.",o:["Linking verb","Transitive verb","Helping verb"],w:"“Became” joins the weather to “cold”.",c:7},
+    {t:"The children {{laughed}}.",o:["Intransitive verb","Transitive verb","Linking verb"],w:"Laughed what? Nothing. There is no object.",c:7},
+    {t:"Ammu {{broke}} the glass.",o:["Transitive verb","Intransitive verb","Linking verb"],w:"Broke what? The glass. The action passes to an object.",c:7},
+    {t:"The sun {{rises}} in the east.",o:["Intransitive verb","Transitive verb","Helping verb"],w:"“In the east” tells where. It is not an object.",c:7},
+    {t:"Leela {{wrote}} a letter.",o:["Transitive verb","Intransitive verb","Linking verb"],w:"Wrote what? A letter. The action passes to an object.",c:7},
+    {t:"The guests {{arrived}} late.",o:["Intransitive verb","Transitive verb","Linking verb"],w:"“Late” tells when. There is no object.",c:7},
+    {t:"Ravi {{played}} kabaddi.",o:["Regular verb","Irregular verb","Helping verb"],w:"play → played → played adds -ed, so it is regular.",c:7},
+    {t:"We {{went}} to the temple.",o:["Irregular verb","Regular verb","Helping verb"],w:"go → went → gone does not add -ed, so it is irregular.",c:7},
+    {t:"Asha {{sang}} a song.",o:["Irregular verb","Regular verb","Linking verb"],w:"sing → sang → sung changes its vowel, so it is irregular.",c:7},
+    {t:"The teacher {{helped}} us.",o:["Regular verb","Irregular verb","Linking verb"],w:"help → helped → helped adds -ed, so it is regular.",c:7},
+    {t:"Priya loves {{to sing}}.",o:["Infinitive","Gerund","Finite verb"],w:"to + V1 is an infinitive.",c:8},
+    {t:"{{Walking}} is good for health.",o:["Gerund","Infinitive","Finite verb"],w:"“Walking” is a verb used as a noun, the subject of the sentence.",c:8},
+    {t:"I found a {{broken}} pencil.",o:["Participle","Gerund","Finite verb"],w:"“Broken” (V3) describes the pencil, so it is a participle.",c:8},
+    {t:"I saw the {{rising}} sun.",o:["Participle","Infinitive","Finite verb"],w:"“Rising” describes the sun, so it is a participle.",c:8},
+    {t:"He went to the market {{to buy}} fruit.",o:["Infinitive","Gerund","Finite verb"],w:"to + V1 is an infinitive. It tells why he went.",c:8},
+    {t:"Raju {{likes}} cricket.",o:["Finite verb","Infinitive","Participle"],w:"“Likes” changes with the subject and tense: I like, he likes, he liked.",c:8},
+    {t:"She {{sings}} a song.",o:["Transitive verb","Intransitive verb","Linking verb"],w:"Sings what? A song. Here the verb has an object.",c:8},
+    {t:"She {{sings}} sweetly.",o:["Intransitive verb","Transitive verb","Linking verb"],w:"“Sweetly” tells how. Here there is no object.",c:8},
+    {t:"The driver {{stopped}} the bus.",o:["Transitive verb","Intransitive verb","Linking verb"],w:"Stopped what? The bus. Here the verb has an object.",c:8},
+    {t:"The bus {{stopped}} suddenly.",o:["Intransitive verb","Transitive verb","Linking verb"],w:"“Suddenly” tells how. Here there is no object.",c:8},
+    {t:"Grandma {{told}} us a story.",o:["Verb with two objects","Intransitive verb","Linking verb"],w:"Told whom? Us. Told what? A story. So it has two objects.",c:8},
+    {t:"Father {{bought}} Ravi a pen.",o:["Verb with two objects","Intransitive verb","Linking verb"],w:"Bought for whom? Ravi. Bought what? A pen. So it has two objects.",c:8}
+  ];
+  /* Main or helping: is the highlighted be / do / have the main verb or a helping verb? m true = main */
+  var MH=[
+    {t:"Ravi {{has}} a red bicycle.",m:true,w:"“Has” is the only verb. It tells what Ravi owns.",c:6},
+    {t:"Ravi {{has}} lost his bicycle.",m:false,w:"“Has” helps the main verb “lost”.",c:6},
+    {t:"I {{do}} my homework every evening.",m:true,w:"“Do” is the only verb. It is the action.",c:6},
+    {t:"I {{do}} not like brinjal.",m:false,w:"“Do” helps the main verb “like” to make a negative.",c:6},
+    {t:"Meena {{is}} in the garden.",m:true,w:"“Is” is the only verb in the sentence.",c:6},
+    {t:"Meena {{is}} watering the plants.",m:false,w:"“Is” helps the main verb “watering”.",c:6},
+    {t:"We {{had}} idli for breakfast.",m:true,w:"“Had” is the only verb. Here it means “ate”.",c:6},
+    {t:"We {{had}} finished our work before the bell rang.",m:false,w:"“Had” helps the main verb “finished”.",c:6},
+    {t:"{{Does}} he work in a bank?",m:false,w:"“Does” helps the main verb “work” to make a question.",c:6},
+    {t:"He {{does}} the dishes after dinner.",m:true,w:"“Does” is the only verb. It is the action.",c:6},
+    {t:"The children {{were}} very happy.",m:true,w:"“Were” is the only verb in the sentence.",c:6},
+    {t:"The children {{were}} singing loudly.",m:false,w:"“Were” helps the main verb “singing”.",c:6},
+    {t:"My uncle {{has}} two cows.",m:true,w:"“Has” is the only verb. It tells what my uncle owns.",c:6},
+    {t:"They {{have}} gone to the market.",m:false,w:"“Have” helps the main verb “gone”.",c:6},
+    {t:"I {{am}} a student of Class 6.",m:true,w:"“Am” is the only verb in the sentence.",c:6},
+    {t:"I {{am}} learning English.",m:false,w:"“Am” helps the main verb “learning”.",c:6},
+    {t:"She {{did}} a good job.",m:true,w:"“Did” is the only verb. It is the action.",c:6},
+    {t:"She {{did}} not come yesterday.",m:false,w:"“Did” helps the main verb “come” to make a negative.",c:6},
+    {t:"We {{have}} a test tomorrow.",m:true,w:"“Have” is the only verb in the sentence.",c:6},
+    {t:"{{Have}} you seen my pen?",m:false,w:"“Have” helps the main verb “seen” to make a question.",c:6},
+    {t:"She {{has}} done her work.",m:false,w:"“Has” helps. The main verb is “done”.",c:6},
+    {t:"What {{did}} you do on Sunday?",m:false,w:"“Did” helps the main verb “do” to make a question.",c:6}
+  ];
+
+  var mode="find",S={};
+  function words(s){return s.split(" ").map(function(w){return w.replace(/~/g," ").replace(/[.,?!]$/,"")})}
+  function resetPractice(){
+    var F=FIND.filter(function(x){return x.c<=cls}),N=NAME.filter(function(x){return x.c<=cls}),M=MH.filter(function(x){return x.c<=cls});
+    S.find={i:0,score:0,ans:null,miss:[],q:TLM.deal("verbtypes-find-"+cls,F,8).map(function(x){return {ask:ASK[x.k],ans:x.a,w:x.w,words:words(x.s),o:words(x.s)}})};
+    S.name={i:0,score:0,ans:null,miss:[],q:TLM.deal("verbtypes-name-"+cls,N,8).map(function(x){return {t:x.t,ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
+    S.mh={i:0,score:0,ans:null,miss:[],q:TLM.deal("verbtypes-mh-"+cls,M,8).map(function(x){return {t:x.t,ans:x.m?"Main verb":"Helping verb",w:x.w,o:shuffle(["Main verb","Helping verb"])}})};
+    drawPractice();
+  }
+  function optList(q){return q.words||q.o}
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You are a verb detective.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the kinds of verbs again, then play once more.",s.miss.length);
+      return;
+    }
+    var q=s.q[s.i],L=optList(q),html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    var btns=L.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("");
+    if(mode==="find"){
+      html+='<p class="qs">'+esc(q.ask)+'</p><div class="opts words" role="group" aria-label="Words of the sentence">'+btns+'</div>';
+    }else{
+      html+='<p class="qs">'+hlSent(q.t)+'</p><p class="count" style="margin-bottom:.6rem">'+(mode==="mh"?"Is the highlighted word the main verb or a helping verb?":"What kind of verb is the highlighted word?")+'</p><div class="opts'+(mode==="mh"?" row3":"")+'">'+btns+'</div>';
+    }
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var q=s.q[s.i],L=optList(q),ok=L[+b.dataset.o]===q.ans;
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
+    var fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+(mode==="find"?"":q.ans+". ")+q.w;
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(L[+x.dataset.o]===q.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    hi=0;hv=0;drawHero();drawKinds();resetPractice();
+  });
+
+  drawHero();drawKinds();resetPractice();
+})();
+</script>
+</Base>

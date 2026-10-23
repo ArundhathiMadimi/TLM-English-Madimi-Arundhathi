@@ -1,0 +1,395 @@
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Prepositions | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
+:root{
+  --B-bg:#FCE3C4; --B-c:#C26A1B; --B-t:#6E3A08;
+  --P-bg:#E3EEFF; --P-c:#2F6FD6; --P-t:#123F86;
+}
+
+.hero h1{font-size:clamp(2.6rem,12.5vw,4.4rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.scene{position:relative;height:12.5rem;overflow:hidden;border-radius:18px;background:var(--bg);border:2px solid var(--line);margin:.2rem 0 .8rem}
+.scene::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5rem;background:var(--line)}
+.box{position:absolute;left:50%;bottom:1.5rem;width:8.5rem;height:4.6rem;margin-left:-4.25rem;background:var(--B-bg);border:3px solid var(--B-c);border-radius:6px;z-index:2;transform-origin:100% 100%;transition:transform .5s cubic-bezier(.3,.7,.2,1)}
+.box::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1.1rem;margin-left:-.55rem;background:var(--B-c);opacity:.35}
+.cat{position:absolute;left:50%;bottom:1.5rem;width:3.6rem;margin-left:-1.8rem;font-size:3.6rem;line-height:1;text-align:center;z-index:3;transition:transform .55s cubic-bezier(.3,.7,.2,1)}
+.scene[data-pos="in"] .cat{transform:translate(0,-2.6rem);z-index:1}
+.scene[data-pos="on"] .cat{transform:translate(0,-4.6rem)}
+.scene[data-pos="under"] .cat{transform:translate(-2.6rem,0) scale(.8);z-index:1}
+.scene[data-pos="under"] .box{transform:rotate(16deg)}
+.scene[data-pos="behind"] .cat{transform:translate(3.6rem,-2.4rem) scale(.8);z-index:1}
+.scene[data-pos="front"] .cat{transform:translate(0,.5rem) scale(1.15)}
+.scene[data-pos="next"] .cat{transform:translate(-6.4rem,0)}
+.sent{font:800 clamp(1.3rem,6vw,1.8rem)/1.3 var(--display);margin:0 0 .2rem}
+.note{color:var(--muted);min-height:3.2rem;margin:0 0 .4rem}
+.lab{font-weight:700;margin:.9rem 0 .4rem;font-size:.95rem}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pills button{appearance:none;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:800 1.05rem/1 var(--display);padding:.65rem 1rem;min-height:2.9rem;border-radius:30px;cursor:pointer}
+.pills button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.hl{border-radius:6px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid;background:var(--B-bg);border-color:var(--B-c);color:var(--B-t);font-weight:800}
+
+.tgrid{display:grid;gap:.8rem;margin-top:1rem;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))}
+.tbox{background:var(--surface);border:2px solid var(--line);border-top:6px solid var(--P-c);border-radius:18px;padding:.9rem 1rem}
+.tbox .big{display:block;font:800 2.2rem/1 var(--display);color:var(--P-t)}
+.tbox p{margin:.3rem 0}
+.tbox .ex{font:800 1.05rem/1.6 var(--display)}
+.tip{margin-top:.9rem;border-left:6px solid var(--P-c);background:var(--P-bg);color:var(--P-t);border-radius:0 16px 16px 0;padding:.7rem 1rem;font-weight:700}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--P-c);background:var(--P-bg);color:var(--P-t);font-weight:700}
+.tcard p{margin:.25rem 0}
+.tcard .ex{font:800 1.12rem/1.8 var(--display);margin-top:.5rem}
+
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.5 var(--display);margin:.6rem 0 1rem}
+.gap{display:inline-block;min-width:4.5rem;border-bottom:4px solid var(--ink);text-align:center;padding:0 .3em}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.box,.cat{transition:none}}
+</style>
+
+<header class="hero wrap">
+  <h1>Prepositions</h1>
+  <p class="sub">Little words that tell us where, when and how. Tap a word and watch the cat move.</p>
+
+  <div class="demo">
+    <div class="scene" id="scene" data-pos="in" role="img" aria-label="The cat is in the box.">
+      <div class="box"></div>
+      <div class="cat" aria-hidden="true">🐈</div>
+    </div>
+    <p class="sent" id="hSent" aria-live="polite"></p>
+    <p class="note" id="hNote"></p>
+
+    <p class="lab">Where is the cat?</p>
+    <div class="pills" id="preps" role="group" aria-label="Preposition"></div>
+
+    <div class="row" style="margin-top:.8rem">
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="what">
+    <h2>What is a preposition?</h2>
+    <p class="lead">A preposition is a word that joins a noun or pronoun to the rest of the sentence. It shows place, time, direction or a link.</p>
+    <div class="tip">The pen is <span class="hl">on</span> the desk. We met <span class="hl">at</span> five. She ran <span class="hl">into</span> the room.</div>
+  </section>
+
+  <section id="time">
+    <h2>At, on, in for time</h2>
+    <p class="lead">Three small words do most of the work with time.</p>
+    <div class="tgrid">
+      <div class="tbox"><b class="big">at</b><p>clock times and exact points of time</p><p class="ex">at 7 o’clock<br>at noon<br>at night</p></div>
+      <div class="tbox"><b class="big">on</b><p>days and dates</p><p class="ex">on Monday<br>on 15 August<br>on my birthday</p></div>
+      <div class="tbox"><b class="big">in</b><p>months, years, seasons and parts of the day</p><p class="ex">in May<br>in 2024<br>in the morning</p></div>
+    </div>
+    <p class="tip">Small to big: “at” for a point, “on” for a day, “in” for a longer time.</p>
+  </section>
+
+  <section id="kinds">
+    <h2>Prepositions for your class</h2>
+    <p class="lead" id="kindsLead"></p>
+    <div class="tlist" id="tlist"></div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="fill" aria-pressed="true">Fill it</button>
+        <button type="button" data-m="fix" aria-pressed="false">Fix it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>use prepositions of place (in, on, under, behind, between, in front of, near, above, below) and at, on, in for time (Class 6);</li>
+        <li>use prepositions of movement (into, onto, out of, across, through, along, towards, up, down), and choose between since and for, by and with, among and between (Class 7);</li>
+        <li>use fixed prepositions after words (good at, afraid of, interested in, depend on, different from, angry with or at), and tell apart beside and besides, in and into, on and upon, till and by (Class 8).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, a cardboard box and a soft toy.</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Put a toy in, on and under a real box. Ask: “Where is the toy?” Write the answers on the board.</li>
+        <li><b>Teach (10 min).</b> Project the hero. Students call out a preposition, and a volunteer taps it. Ask the class to say the sentence before you press Listen.</li>
+        <li><b>Time (5 min).</b> Read the at, on, in boxes. Students give one more example for each.</li>
+        <li><b>Your class (10 min).</b> Pick your class on the bar. Act out the movement words: walk across the room, go out of the door, walk towards the board.</li>
+        <li><b>Practice (8 min).</b> Teams play Fill it and Fix it on the count of three.</li>
+        <li><b>Exit ticket.</b> Each student writes three sentences about their classroom using three different prepositions.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Mixing up time words: “on 7 o’clock”, “in Monday”, “at May”.</li>
+        <li>Adding “of” where it is not needed: “behind of the door”, “above of the table”.</li>
+        <li>Using “since” with a length of time: “since three days” should be “for three days”.</li>
+        <li>Using “between” for more than two: “among the five friends”, not “between the five friends”.</li>
+        <li>Mixing up “by” (the doer) and “with” (the tool): “cut with a knife”, “written by Premchand”.</li>
+        <li>Wrong fixed prepositions: “good in maths”, “afraid from dogs”, “angry on him”.</li>
+        <li>Using “beside” for “in addition to”: “Beside Hindi, I know Tamil” should be “Besides Hindi”.</li>
+        <li>Using “till” for a deadline: “Submit it till Friday” should be “Submit it by Friday”.</li>
+      </ul>
+    </details>
+  </section>
+
+  <LessonNav slug="11-Prepositions" />
+
+  <footer>
+    Teaching learning material (TLM) on Prepositions for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+
+<script is:inline>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function hlSent(s){return esc(s).replace(/\{\{(.+?)\}\}/g,'<span class="hl">$1</span>')}
+
+  /* ---------- hero: where is the cat? ---------- */
+  var PLACES=[
+    {k:"in",p:"in",n:"“In” means inside something."},
+    {k:"on",p:"on",n:"“On” means on top of something and touching it."},
+    {k:"under",p:"under",n:"“Under” means below something and covered by it."},
+    {k:"behind",p:"behind",n:"“Behind” means at the back of something."},
+    {k:"front",p:"in front of",n:"“In front of” means ahead of something, where you can see it."},
+    {k:"next",p:"next to",n:"“Next to” means right at the side of something."}
+  ];
+  var hp=0;
+  function heroSay(){return "The cat is "+PLACES[hp].p+" the box."}
+  function drawHero(){
+    var P=PLACES[hp],sc=$("#scene");
+    sc.setAttribute("data-pos",P.k);
+    sc.setAttribute("aria-label",heroSay());
+    $("#hSent").innerHTML=hlSent("The cat is {{"+P.p+"}} the box.");
+    $("#hNote").textContent=P.n;
+    document.querySelectorAll("#preps button").forEach(function(b,i){b.setAttribute("aria-pressed",i===hp)});
+  }
+  $("#preps").innerHTML=PLACES.map(function(p,i){return '<button type="button" data-i="'+i+'" aria-pressed="false">'+esc(p.p)+'</button>'}).join("");
+  $("#preps").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;hp=+b.dataset.i;drawHero()});
+  $("#listen").addEventListener("click",function(){
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(heroSay());u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+  drawHero();
+
+  /* ---------- prepositions by class ---------- */
+  var KINDS=[
+    {c:6,n:"In, on, under",m:"in · on · under",d:"In: inside. On: on top and touching. Under: below and covered.",ex:"The pencil is {{in}} the box. The book is {{on}} the desk. The cat is {{under}} the chair."},
+    {c:6,n:"Behind and in front of",m:"behind · in front of",d:"Behind: at the back. In front of: ahead, facing you.",ex:"Ravi stands {{behind}} Asha. Asha stands {{in front of}} Ravi."},
+    {c:6,n:"Between",m:"between",d:"In the middle of two people or things.",ex:"The bank is {{between}} the school and the park."},
+    {c:6,n:"Near",m:"near",d:"Close to something, a short distance away.",ex:"We live {{near}} the railway station."},
+    {c:6,n:"Above and below",m:"above · below",d:"Higher or lower than something, without touching it.",ex:"The fan is {{above}} the table. The roots are {{below}} the ground."},
+    {c:6,n:"At, on, in for time",m:"at + time · on + day · in + month or year",d:"At for clock times, on for days and dates, in for months, years and seasons.",ex:"I wake up {{at}} six {{on}} Sundays {{in}} winter."},
+    {c:7,n:"Into, onto, out of",m:"into · onto · out of",d:"These show movement. Into: going inside. Onto: moving to the top. Out of: coming from inside.",ex:"Rohan jumped {{into}} the pool. The cat jumped {{onto}} the wall. Take the book {{out of}} the bag."},
+    {c:7,n:"Across, through, along",m:"across · through · along",d:"Across: from one side to the other. Through: in at one end and out at the other. Along: following a line.",ex:"We walked {{across}} the road, {{through}} the park and {{along}} the river."},
+    {c:7,n:"Towards, up, down",m:"towards · up · down",d:"Towards: in the direction of. Up: to a higher place. Down: to a lower place.",ex:"The dog ran {{towards}} me. We climbed {{up}} the hill and walked {{down}} the steps."},
+    {c:7,n:"Since or for",m:"since + starting point · for + length of time",d:"Since tells when it began. For tells how long it lasted.",ex:"I have lived here {{since}} 2019. I have lived here {{for}} five years."},
+    {c:7,n:"By or with",m:"by + doer · with + tool",d:"By tells who did it. With tells what was used to do it.",ex:"The letter was written {{by}} Meena {{with}} a blue pen."},
+    {c:7,n:"Between or among",m:"between + two · among + more than two",d:"Use between for two people or things, and among for a group.",ex:"Share it {{between}} the two of you. Share it {{among}} all ten of you."},
+    {c:8,n:"Words with fixed prepositions",m:"good at · afraid of · interested in · depend on · different from",d:"Some words always take the same preposition. Learn them as pairs.",ex:"Priya is good {{at}} maths but afraid {{of}} dogs. Her answer is different {{from}} mine."},
+    {c:8,n:"Angry with, angry at",m:"angry with + a person · angry at + a thing",d:"We are angry with a person, and angry at a thing or an event.",ex:"Mother was angry {{with}} me. She was angry {{at}} the long delay."},
+    {c:8,n:"Beside or besides",m:"beside = next to · besides = in addition to",d:"One letter changes the meaning.",ex:"Sit {{beside}} me. {{Besides}} Hindi, she knows Tamil."},
+    {c:8,n:"In or into",m:"in = position · into = movement inside",d:"In tells where something is. Into shows movement from outside to inside.",ex:"The fish are {{in}} the pond. The boy jumped {{into}} the pond."},
+    {c:8,n:"On or upon",m:"on = everyday · upon = formal, in stories",d:"Upon means the same as on but is more formal. It is common in fixed phrases.",ex:"Put it {{on}} the table. Once {{upon}} a time, there lived a king."},
+    {c:8,n:"Till or by",m:"till = up to that time · by = not later than",d:"Till tells how long something goes on. By gives a deadline.",ex:"Wait here {{till}} five o’clock. Finish your work {{by}} five o’clock."}
+  ];
+  function drawKinds(){
+    $("#kindsLead").textContent=cls===6
+      ?"Class 6 learns prepositions of place and time."
+      :"Class "+cls+" revises the earlier ones and adds new ones. The new ones are marked.";
+    $("#tlist").innerHTML=KINDS.filter(function(k){return k.c<=cls}).map(function(k){
+      return '<article class="tcard"><h3>'+esc(k.n)+(k.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<span class="formula">'+esc(k.m)+'</span><p>'+esc(k.d)+'</p><p class="ex">'+hlSent(k.ex)+'</p></article>';
+    }).join("");
+  }
+
+  /* ---------- practice data ---------- */
+  var FILL=[
+    {pre:"The goldfish swims",post:"its glass bowl.",ans:"in",o:["in","on","between"],w:"The fish is inside the bowl, so use in.",c:6},
+    {pre:"The picture hangs",post:"the wall.",ans:"on",o:["on","in","under"],w:"It touches the surface of the wall, so use on.",c:6},
+    {pre:"I bent down and found my slipper",post:"the bed.",ans:"under",o:["under","on","between"],w:"You bend down to look below the bed, so use under.",c:6},
+    {pre:"The letter B comes",post:"A and C.",ans:"between",o:["between","under","on"],w:"B is in the middle of two letters, so use between.",c:6},
+    {pre:"In the class photo, the tall boys stand at the back,",post:"the short boys.",ans:"behind",o:["behind","in front of","under"],w:"They are at the back, so use behind.",c:6},
+    {pre:"The bus stop is",post:"my house, just two minutes away.",ans:"near",o:["near","under","between"],w:"It is close by, so use near.",c:6},
+    {pre:"Look up! A kite is flying high",post:"our house.",ans:"above",o:["above","under","in"],w:"The kite is higher than the house, so use above.",c:6},
+    {pre:"The roots of a tree grow",post:"the ground.",ans:"below",o:["below","above","on"],w:"Roots are lower than the ground, so use below.",c:6},
+    {pre:"The teacher stands",post:"the class so that everyone can see her.",ans:"in front of",o:["in front of","behind","under"],w:"Everyone can see her, so she is in front of the class.",c:6},
+    {pre:"School starts",post:"nine o’clock.",ans:"at",o:["at","on","in"],w:"Use at with clock times.",c:6},
+    {pre:"My birthday is",post:"Monday this year.",ans:"on",o:["on","at","in"],w:"Use on with days.",c:6},
+    {pre:"We have our summer holidays",post:"May.",ans:"in",o:["in","on","at"],w:"Use in with months.",c:6},
+    {pre:"Gandhiji was born",post:"1869.",ans:"in",o:["in","on","at"],w:"Use in with years.",c:6},
+    {pre:"We celebrate Independence Day",post:"15 August.",ans:"on",o:["on","in","at"],w:"Use on with dates.",c:6},
+    {pre:"Owls hunt",post:"night.",ans:"at",o:["at","on","in"],w:"We say at night.",c:6},
+    {pre:"Grandfather goes for a walk",post:"the morning.",ans:"in",o:["in","at","on"],w:"Use in with parts of the day: in the morning.",c:6},
+    {pre:"The shop is closed",post:"Sundays.",ans:"on",o:["on","in","at"],w:"Use on with days.",c:6},
+    {pre:"The milk is kept",post:"the fridge to keep it cool.",ans:"in",o:["in","under","between"],w:"The milk is inside the fridge, so use in.",c:6},
+    {pre:"The frog jumped",post:"the pond. Splash!",ans:"into",o:["into","up","onto"],w:"It moved from outside to inside the water, so use into.",c:7},
+    {pre:"The cat jumped",post:"the table and sat there.",ans:"onto",o:["onto","into","out of"],w:"It moved up to the top of the table, so use onto.",c:7},
+    {pre:"Ravi took his lunch box",post:"his school bag.",ans:"out of",o:["out of","into","onto"],w:"The box came from inside the bag, so use out of.",c:7},
+    {pre:"We walked",post:"the river bank and watched the boats.",ans:"along",o:["along","into","out of"],w:"You follow the line of the bank, so use along.",c:7},
+    {pre:"The train went",post:"a long, dark tunnel.",ans:"through",o:["through","onto","up"],w:"It went in at one end and out at the other, so use through.",c:7},
+    {pre:"Look both ways before you walk",post:"the road.",ans:"across",o:["across","through","out of"],w:"You go from one side to the other, so use across.",c:7},
+    {pre:"Climbing",post:"the stairs is harder than coming down.",ans:"up",o:["up","down","into"],w:"Climbing means going higher, so use up.",c:7},
+    {pre:"The puppy ran",post:"its mother when she barked.",ans:"towards",o:["towards","out of","through"],w:"It ran in her direction, so use towards.",c:7},
+    {pre:"I have lived in Hyderabad",post:"2015.",ans:"since",o:["since","for","at"],w:"2015 is the starting point, so use since.",c:7},
+    {pre:"She has been waiting",post:"two hours.",ans:"for",o:["for","since","at"],w:"Two hours is a length of time, so use for.",c:7},
+    {pre:"It has been raining",post:"Monday.",ans:"since",o:["since","for","at"],w:"Monday is the starting point, so use since.",c:7},
+    {pre:"This poem was written",post:"Rabindranath Tagore.",ans:"by",o:["by","with","at"],w:"Tagore is the person who did it, so use by.",c:7},
+    {pre:"Amma cut the vegetables",post:"a sharp knife.",ans:"with",o:["with","by","at"],w:"The knife is the tool, so use with.",c:7},
+    {pre:"Divide the sweets",post:"the two brothers.",ans:"between",o:["between","among","at"],w:"There are only two brothers, so use between.",c:7},
+    {pre:"The teacher shared the chocolates",post:"all thirty students.",ans:"among",o:["among","between","on"],w:"There are more than two students, so use among.",c:7},
+    {pre:"Priya is very good",post:"drawing.",ans:"at",o:["at","in","on"],w:"We say good at.",c:8},
+    {pre:"My little sister is afraid",post:"dogs.",ans:"of",o:["of","from","with"],w:"We say afraid of.",c:8},
+    {pre:"Kiran is interested",post:"science.",ans:"in",o:["in","on","at"],w:"We say interested in.",c:8},
+    {pre:"Plants depend",post:"sunlight to make their food.",ans:"on",o:["on","of","from"],w:"We say depend on.",c:8},
+    {pre:"My pencil box is different",post:"yours.",ans:"from",o:["from","with","at"],w:"We say different from.",c:8},
+    {pre:"Father was angry",post:"me for coming home late.",ans:"with",o:["with","on","of"],w:"We are angry with a person.",c:8},
+    {pre:"Sita sat",post:"her mother on the bench.",ans:"beside",o:["beside","besides","between"],w:"Beside means next to.",c:8},
+    {pre:"",post:"English, Salma speaks Telugu and Hindi.",ans:"Besides",o:["Besides","Beside","Between"],w:"Besides means in addition to.",c:8},
+    {pre:"Wait here",post:"I come back.",ans:"till",o:["till","by","since"],w:"You keep waiting up to that time, so use till.",c:8},
+    {pre:"Please hand in your project",post:"Friday.",ans:"by",o:["by","till","since"],w:"Friday is a deadline, so use by.",c:8},
+    {pre:"Once",post:"a time, there lived a wise king.",ans:"upon",o:["upon","in","at"],w:"Stories begin with the fixed phrase “Once upon a time”.",c:8},
+    {pre:"Arun dived",post:"the swimming pool.",ans:"into",o:["into","on","at"],w:"Diving is movement from outside to inside, so use into.",c:8},
+    {pre:"The children are playing",post:"the garden.",ans:"in",o:["in","into","onto"],w:"Playing is not movement into a place. It tells where, so use in.",c:8},
+    {pre:"Lakshmi is fond",post:"classical music.",ans:"of",o:["of","in","at"],w:"We say fond of.",c:8},
+    {pre:"I agree",post:"you, Ramesh.",ans:"with",o:["with","to","on"],w:"We agree with a person.",c:8}
+  ];
+  var FIX=[
+    {o:["I get up at six o’clock.","I get up on six o’clock.","I get up in six o’clock."],w:"Use at with clock times.",c:6},
+    {o:["We play cricket on Sundays.","We play cricket in Sundays.","We play cricket at Sundays."],w:"Use on with days.",c:6},
+    {o:["It is very hot in May.","It is very hot on May.","It is very hot at May."],w:"Use in with months.",c:6},
+    {o:["My father was born in 1980.","My father was born on 1980.","My father was born at 1980."],w:"Use in with years.",c:6},
+    {o:["Republic Day is on 26 January.","Republic Day is in 26 January.","Republic Day is at 26 January."],w:"Use on with dates.",c:6},
+    {o:["The stars shine at night.","The stars shine in night.","The stars shine on night."],w:"We say at night.",c:6},
+    {o:["We go to school in the morning.","We go to school at the morning.","We go to school on the morning."],w:"Use in with parts of the day: in the morning.",c:6},
+    {o:["The shop opens at 10 a.m.","The shop opens on 10 a.m.","The shop opens in 10 a.m."],w:"Use at with clock times.",c:6},
+    {o:["Diwali comes in October or November.","Diwali comes on October or November.","Diwali comes at October or November."],w:"Use in with months.",c:6},
+    {o:["The clock is above the door.","The clock is above of the door.","The clock is up of the door."],w:"Above does not need “of” after it.",c:6},
+    {o:["Raju is sitting between Ali and Meena.","Raju is sitting between Ali or Meena.","Raju is sitting between of Ali and Meena."],w:"We say between one person and another, with and.",c:6},
+    {o:["Our car is in front of the house.","Our car is in front the house.","Our car is on front of the house."],w:"The full phrase is in front of.",c:6},
+    {o:["The dog is sleeping under the bed.","The dog is sleeping under of the bed.","The dog is sleeping in under the bed."],w:"Under needs no extra word.",c:6},
+    {o:["Sita lives near the temple.","Sita lives near of the temple.","Sita lives nearly the temple."],w:"Near does not take “of”, and “nearly” means almost.",c:6},
+    {o:["There are ten sweets in the box.","There are ten sweets between the box.","There are ten sweets at the box."],w:"The sweets are inside the box, so use in.",c:6},
+    {o:["Ammu sits behind me in class.","Ammu sits behind of me in class.","Ammu sits back of me in class."],w:"Behind does not need “of” after it.",c:6},
+    {o:["The book is on the desk.","The book is on of the desk.","The book is at of the desk."],w:"On needs no extra word.",c:6},
+    {o:["I have lived here since 2018.","I have lived here for 2018.","I have lived here at 2018."],w:"2018 is the starting point, so use since.",c:7},
+    {o:["She has been ill for three days.","She has been ill since three days.","She has been ill at three days."],w:"Three days is a length of time, so use for.",c:7},
+    {o:["We have known each other since Class 1.","We have known each other for Class 1.","We have known each other at Class 1."],w:"Class 1 is the starting point, so use since.",c:7},
+    {o:["The cat jumped onto the wall.","The cat jumped onto of the wall.","The cat jumped into the wall."],w:"The cat moved up to the top of the wall, so use onto.",c:7},
+    {o:["Ravi came out of the room.","Ravi came out from of the room.","Ravi came out off the room."],w:"The phrase is out of.",c:7},
+    {o:["Divide the cake between the two girls.","Divide the cake among the two girls.","Divide the cake along the two girls."],w:"For two people, use between.",c:7},
+    {o:["The money was divided among the five friends.","The money was divided between the five friends.","The money was divided along the five friends."],w:"For more than two people, use among.",c:7},
+    {o:["The window was broken by Raju.","The window was broken with Raju.","The window was broken from Raju."],w:"Raju is the doer, so use by.",c:7},
+    {o:["She writes with a blue pen.","She writes by a blue pen.","She writes from a blue pen."],w:"The pen is a tool, so use with.",c:7},
+    {o:["We swam across the river.","We swam across of the river.","We swam across from of the river."],w:"Across needs no extra word.",c:7},
+    {o:["She is good at maths.","She is good in maths.","She is good on maths."],w:"We say good at.",c:8},
+    {o:["I am afraid of snakes.","I am afraid from snakes.","I am afraid with snakes."],w:"We say afraid of.",c:8},
+    {o:["He is interested in music.","He is interested on music.","He is interested at music."],w:"We say interested in.",c:8},
+    {o:["Success depends on hard work.","Success depends of hard work.","Success depends from hard work."],w:"We say depend on.",c:8},
+    {o:["My bag is different from yours.","My bag is different with yours.","My bag is different of yours."],w:"We say different from.",c:8},
+    {o:["The teacher was angry with Ravi.","The teacher was angry on Ravi.","The teacher was angry of Ravi."],w:"We are angry with a person.",c:8},
+    {o:["Come and sit beside me, Asha.","Come and sit besides me, Asha.","Come and sit between me, Asha."],w:"Beside means next to.",c:8},
+    {o:["Besides Hindi, I know Tamil.","Beside Hindi, I know Tamil.","Between Hindi, I know Tamil."],w:"Besides means in addition to.",c:8},
+    {o:["Please return the book by Monday.","Please return the book till Monday.","Please return the book since Monday."],w:"Monday is a deadline, so use by.",c:8},
+    {o:["She jumped into the river.","She jumped into of the river.","She jumped in of the river."],w:"Jumping is movement inside, so use into, with no “of”.",c:8}
+  ];
+
+  var mode="fill",S={};
+  function resetPractice(){
+    var F=FILL.filter(function(x){return x.c<=cls}),X=FIX.filter(function(x){return x.c<=cls});
+    S.fill={i:0,score:0,ans:null,miss:[],q:TLM.deal("prep-fill-"+cls,F,8).map(function(x){return {pre:x.pre,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
+    S.fix={i:0,score:0,ans:null,miss:[],q:TLM.deal("prep-fix-"+cls,X,8).map(function(x){return {ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You are a preposition star.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the cards for your class again, then play once more.",s.miss.length);
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    if(mode==="fill"){
+      html+='<p class="qs">'+esc(q.pre)+' <span class="gap" id="gap">&nbsp;</span> '+esc(q.post)+'</p><div class="opts row3">';
+    }else{
+      html+='<p class="qs">Which sentence is correct?</p><div class="opts">';
+    }
+    html+=q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var q=s.q[s.i],ok=q.o[+b.dataset.o]===q.ans;
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
+    var fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+q.w;
+    if(mode==="fill")$("#gap").textContent=q.ans;
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(q.o[+x.dataset.o]===q.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawKinds();resetPractice();
+  });
+
+  drawKinds();resetPractice();
+})();
+</script>
+</Base>

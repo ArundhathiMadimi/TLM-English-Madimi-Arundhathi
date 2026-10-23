@@ -33,3 +33,13 @@ window.TLM=(function(){
 
   return {shuffle:shuffle,pickOne:pickOne,deal:deal,result:result,retry:retry};
 })();
+
+/* Remember the student's class across lessons (also set on the start page). After the lesson script has run,
+   tap the saved class button so the lesson's own class switch redraws the page. */
+document.addEventListener("DOMContentLoaded",function(){
+  var seg=document.getElementById("classSeg"),KEY="tlm-class",c=null;if(!seg)return;
+  try{c=localStorage.getItem(KEY)}catch(e){}
+  var b=c&&seg.querySelector('button[data-c="'+c+'"]');
+  if(b&&b.getAttribute("aria-pressed")!=="true")b.click();
+  seg.addEventListener("click",function(e){var x=e.target.closest("button[data-c]");if(x)try{localStorage.setItem(KEY,x.dataset.c)}catch(err){}});
+});

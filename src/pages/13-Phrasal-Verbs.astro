@@ -1,0 +1,410 @@
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Phrasal Verbs | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
+:root{
+  --V-bg:#D5F3EE; --V-c:#13927F; --V-t:#0B5E55;
+  --P-bg:#FFF0C2; --P-c:#D99A00; --P-t:#6B4A00;
+  --S-bg:#FFE3E6; --S-c:#D6334A; --S-t:#8F1226;
+}
+
+.hero h1{font-size:clamp(2.5rem,12vw,4.4rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.stage{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;min-height:5.2rem;margin:.2rem 0 .6rem}
+.chip{display:inline-flex;flex-direction:column;gap:.15rem;padding:.5rem .85rem .4rem;border-radius:16px;border:2px solid;font:800 clamp(1.2rem,5.6vw,1.7rem)/1.15 var(--display)}
+.chip i{font:700 .75rem/1 var(--body);font-style:normal;opacity:.85}
+.chip.V{background:var(--V-bg);border-color:var(--V-c);color:var(--V-t)}
+.chip.P{background:var(--P-bg);border-color:var(--P-c);color:var(--P-t);border-width:3px}
+.op{font:800 1.6rem var(--display);color:var(--muted)}
+.pic{font-size:clamp(2.4rem,11vw,3.2rem);line-height:1}
+.mean{font:800 1.2rem/1.3 var(--display);margin:0 0 .2rem;min-height:1.6rem}
+.note{min-height:3.2rem;margin:0 0 .4rem;font-size:1.1rem}
+.lab{font-weight:700;margin:.9rem 0 .4rem;font-size:.95rem}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pills button{appearance:none;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:800 1.1rem/1 var(--display);padding:.7rem 1.1rem;min-height:2.9rem;border-radius:30px;cursor:pointer}
+.pills button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+.key .V{background:var(--V-bg);border-color:var(--V-c)}
+.key .P{background:var(--P-bg);border-color:var(--P-c)}
+
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--accent);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use.S{border-left-color:var(--S-c)} .use.P{border-left-color:var(--P-c)} .use.V{border-left-color:var(--V-c)}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.2rem 0}
+.x{color:var(--bad);text-decoration:line-through;text-decoration-color:var(--bad)}
+.hl{border-radius:6px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid;background:var(--P-bg);border-color:var(--P-c);color:var(--P-t);font-weight:800}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.25rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.tcard p{margin:.25rem 0}
+.tcard .ex{font:800 1.1rem/1.7 var(--display);margin-top:.3rem}
+
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.5 var(--display);margin:.6rem 0 1rem}
+.gap{display:inline-block;min-width:4.5rem;border-bottom:4px solid var(--ink);text-align:center;padding:0 .3em}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.1rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opts.row3 .opt{font:800 1.15rem/1.3 var(--display)}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="hero wrap">
+  <h1>Phrasal Verbs</h1>
+  <p class="sub">A verb plus a small word can make a brand new meaning. Tap a small word and see what happens.</p>
+
+  <div class="demo">
+    <div class="stage" id="heroStage" aria-live="polite"></div>
+    <p class="mean" id="hMean"></p>
+    <p class="note" id="hEx"></p>
+
+    <p class="lab">Choose a small word</p>
+    <div class="pills" id="parts" role="group" aria-label="Small word"></div>
+
+    <div class="row" style="margin-top:1rem">
+      <button type="button" class="btn alt" id="nextVerb">Next verb</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="V"></em>verb</span>
+      <span><em class="P"></em>small word (particle)</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="what">
+    <h2>What is a phrasal verb?</h2>
+    <p class="lead">A phrasal verb is a verb with a small word after it, such as up, down, on, off, in, out, after or for. Together they make a new meaning.</p>
+    <div class="uses">
+      <div class="use V"><b>verb + small word = new meaning</b>
+        <p>get + up = get up (get out of bed)</p>
+        <p>I get up at six o’clock.</p></div>
+      <div class="use P"><b>The small word changes everything</b>
+        <p>look <b>at</b> = see with your eyes</p>
+        <p>look <b>for</b> = try to find</p>
+        <p>look <b>after</b> = take care of</p></div>
+      <div class="use S"><b>Do not read it word by word</b>
+        <p>“Give up” does not mean give something upwards. It means stop trying.</p>
+        <p class="x">Look after = look behind</p></div>
+    </div>
+    <div class="card">
+      <h3>The verb still changes</h3>
+      <p>Only the verb takes -s, -ed or -ing. The small word never changes: she <b>gets</b> up, we <b>got</b> up, they are <b>getting</b> up.</p>
+    </div>
+  </section>
+
+  <section id="list">
+    <h2>Phrasal verbs to learn</h2>
+    <p class="lead" id="listLead"></p>
+    <div class="tlist" id="tlist"></div>
+  </section>
+
+  <section id="split" hidden>
+    <h2>Split it or not?</h2>
+    <p class="lead">Some phrasal verbs can be split by the object. Others always stay together.</p>
+    <div class="uses">
+      <div class="use V"><b>Separable: the object can go in the middle</b>
+        <p>Turn off the light. Turn the light off.</p>
+        <p>With it, them, him or her, you must split it: Turn <b>it</b> off. Pick <b>them</b> up.</p>
+        <p class="x">Turn off it.</p>
+        <p>More: put on, take off, pick up, give back, turn down, bring up, make up a story, call off, look up a word.</p></div>
+      <div class="use S"><b>Inseparable: the object always comes at the end</b>
+        <p>Look after her. Get on the bus. I came across an old coin.</p>
+        <p class="x">Look her after.</p>
+        <p>More: look for, take after, run out of, look forward to, put up with, get along with.</p></div>
+      <div class="use P"><b>One phrasal verb, two meanings</b>
+        <p>bring up: raise a child, or start talking about a topic.</p>
+        <p>make up: invent a story, or become friends again after a fight.</p>
+        <p>take off: remove clothes, or (a plane) leave the ground.</p>
+        <p>Read the whole sentence to find the meaning.</p></div>
+    </div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="fill" aria-pressed="true">Fill it</button>
+        <button type="button" data-m="mean" aria-pressed="false">Mean it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>say what a phrasal verb is and use everyday ones such as get up, put on and look for;</li>
+        <li>choose the right small word for the meaning they want (put off or call off, look for or look after);</li>
+        <li>use three-word phrasal verbs, tell separable from inseparable ones and read a phrasal verb with two meanings from its sentence (Class 8).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, verb cards and small-word cards in two colours.</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Act out “stand up”, “sit down”, “wake up”. Students do the action. Ask: which small word made the action change?</li>
+        <li><b>Teach (10 min).</b> Project the hero. Before you tap each small word, ask the class to guess the meaning.</li>
+        <li><b>Card game (8 min).</b> Give pairs a verb card and three small-word cards. They build a phrasal verb and say a sentence with it.</li>
+        <li><b>Phrasal verbs to learn (7 min).</b> Pick your class on the bar. Students copy four phrasal verbs with their meaning and own example.</li>
+        <li><b>Practice (8 min).</b> Teams play Fill it and Mean it on the count of three.</li>
+        <li><b>Exit ticket.</b> Each student writes three sentences about their morning using three phrasal verbs.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Reading the words one by one: thinking “look after” means look behind.</li>
+        <li>Using the wrong small word: “take care for”, “look forward for”.</li>
+        <li>Mixing up “put off” (move to a later day) and “call off” (cancel).</li>
+        <li>Putting a pronoun at the end of a separable verb: “Turn off it” should be “Turn it off”.</li>
+        <li>Splitting an inseparable verb: “Look her after” should be “Look after her”.</li>
+        <li>Using V1 after “look forward to”: “I look forward to meet you” should be “I look forward to meeting you”.</li>
+        <li>Saying “get down from the bus”. In written English we say “get off the bus”.</li>
+      </ul>
+    </details>
+  </section>
+
+  <LessonNav slug="13-Phrasal-Verbs" />
+
+  <footer>
+    Teaching learning material (TLM) on Phrasal Verbs for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+
+<script is:inline>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function hlSent(s){return esc(s).replace(/\{\{(.+?)\}\}/g,'<span class="hl">$1</span>')}
+  function plain(s){return s.replace(/\{\{|\}\}/g,"")}
+
+  /* ---------- phrasal verbs: id, phrase, meaning, emoji, example, class, group (g: never used as distractors for each other) ---------- */
+  var P=[
+    {id:"get up",p:"get up",m:"get out of bed",e:"⏰",ex:"I {{get up}} at six o’clock every morning.",c:6,g:"rise"},
+    {id:"wake up",p:"wake up",m:"stop sleeping",e:"😴",ex:"The rooster crowed and the baby {{woke up}}.",c:6,g:"rise"},
+    {id:"stand up",p:"stand up",m:"rise to your feet",e:"🧍",ex:"We {{stand up}} when the national anthem is played.",c:6,g:"rise"},
+    {id:"sit down",p:"sit down",m:"take a seat",e:"🪑",ex:"Please {{sit down}} and open your books.",c:6},
+    {id:"lie down",p:"lie down",m:"rest flat on a bed or the floor",e:"🛏️",ex:"Grandpa likes to {{lie down}} for a while after lunch.",c:6},
+    {id:"put on",p:"put on",m:"wear clothes, shoes or glasses",e:"🧥",ex:"{{Put on}} your raincoat. It is raining.",c:6},
+    {id:"take off",p:"take off",m:"remove clothes, shoes or glasses",e:"👟",ex:"{{Take off}} your shoes before you enter the prayer room.",c:6},
+    {id:"look for",p:"look for",m:"try to find",e:"🔍",ex:"Ravi is {{looking for}} his lost pencil.",c:6,g:"find"},
+    {id:"turn on",p:"turn on",m:"start a light or machine",e:"💡",ex:"Please {{turn on}} the fan. It is very hot.",c:6},
+    {id:"turn off",p:"turn off",m:"stop a light or machine",e:"🌙",ex:"{{Turn off}} the lights before you go to sleep.",c:6,g:"stop"},
+    {id:"come in",p:"come in",m:"enter a room or house",e:"🚪",ex:"“{{Come in}},” said the teacher when Anu knocked.",c:6},
+    {id:"go out",p:"go out",m:"leave the house",e:"🌳",ex:"We {{go out}} to play after school.",c:6,g:"leave"},
+    {id:"pick up",p:"pick up",m:"lift from the floor or a table",e:"✋",ex:"Please {{pick up}} the papers from the floor.",c:6},
+    {id:"give back",p:"give back",m:"return something to its owner",e:"🔁",ex:"I will {{give back}} your storybook tomorrow.",c:6,g:"return"},
+    {id:"come back",p:"come back",m:"return to a place",e:"🏠",ex:"Father will {{come back}} from the office at seven.",c:6,g:"return"},
+    {id:"get on",p:"get on",m:"enter a bus or train",e:"🚌",ex:"We {{got on}} the school bus at the gate.",c:6},
+    {id:"get off",p:"get off",m:"leave a bus or train",e:"🚏",ex:"We {{got off}} the train at Vijayawada.",c:6},
+    {id:"look out",p:"look out",m:"be careful",e:"⚠️",ex:"{{Look out}}! The floor is wet.",c:6},
+
+    {id:"look after",p:"look after",m:"keep someone safe and well",e:"👶",ex:"Meena {{looks after}} her baby brother.",c:7,g:"care"},
+    {id:"take care of",p:"take care of",m:"keep something safe and in good condition",e:"🪴",ex:"Who will {{take care of}} our plants when we are away?",c:7,g:"care"},
+    {id:"look up",p:"look up",m:"find a word in a dictionary",e:"📖",ex:"{{Look up}} the meaning of “brave” in the dictionary.",c:7,g:"find"},
+    {id:"give up",p:"give up",m:"stop trying",e:"🏳️",ex:"Kiran did not {{give up}} until she solved the sum.",c:7},
+    {id:"run away",p:"run away",m:"escape from a place",e:"🏃",ex:"The calf {{ran away}} from the farm.",c:7},
+    {id:"find out",p:"find out",m:"learn a fact you did not know",e:"🕵️",ex:"Can you {{find out}} the time of the next train?",c:7,g:"find"},
+    {id:"put off",p:"put off",m:"move to a later time (postpone)",e:"📅",ex:"The picnic was {{put off}} till next Sunday because of the rain.",c:7},
+    {id:"carry on",p:"carry on",m:"continue",e:"▶️",ex:"{{Carry on}} with your work while I am away.",c:7},
+    {id:"break down",p:"break down",m:"stop working (for a machine or vehicle)",e:"🔧",ex:"Our bus {{broke down}} near Kurnool.",c:7,g:"stop"},
+    {id:"call off",p:"call off",m:"cancel; decide it will not happen",e:"❌",ex:"Sports day was {{called off}}. It will not take place this year.",c:7},
+    {id:"set off",p:"set off",m:"start a journey",e:"🎒",ex:"We {{set off}} for Tirupati at dawn.",c:7,g:"leave"},
+    {id:"grow up",p:"grow up",m:"become an adult",e:"🌱",ex:"Kiran wants to be a pilot when he {{grows up}}.",c:7,g:"care"},
+
+    {id:"run out of",p:"run out of",m:"have none left",e:"🥛",ex:"We have {{run out of}} milk. Please buy some.",c:8},
+    {id:"look forward to",p:"look forward to",m:"wait happily for something",e:"🎉",ex:"I am {{looking forward to}} the summer holidays.",c:8},
+    {id:"put up with",p:"put up with",m:"bear something unpleasant",e:"😣",ex:"How do you {{put up with}} this noise every day?",c:8},
+    {id:"come across",p:"come across",m:"find by chance",e:"🗝️",ex:"I {{came across}} an old coin in Grandpa’s box.",c:8,g:"find"},
+    {id:"get along with",p:"get along with",m:"be friendly with",e:"🤝",ex:"Sita {{gets along with}} all her classmates.",c:8,g:"friend"},
+    {id:"bring up child",p:"bring up",m:"raise a child",e:"👪",ex:"My grandparents {{brought}} me {{up}} in a village near Warangal.",c:8,g:"care"},
+    {id:"bring up topic",p:"bring up",m:"start talking about a topic",e:"💬",ex:"At the meeting, Lakshmi {{brought up}} the problem of the broken tap.",c:8},
+    {id:"take after",p:"take after",m:"look or behave like an older family member",e:"👨‍👦",ex:"Ravi {{takes after}} his father. Both have curly hair.",c:8},
+    {id:"turn down",p:"turn down",m:"refuse an offer or request",e:"🙅",ex:"Uma {{turned down}} the offer because of her exams.",c:8},
+    {id:"make up story",p:"make up",m:"invent a story or an excuse",e:"🎭",ex:"Raju {{made up}} a story about a lost bag.",c:8},
+    {id:"make up friends",p:"make up",m:"become friends again after a fight",e:"🤗",ex:"Priya and Divya had a fight, but they {{made up}} the next day.",c:8,g:"friend"}
+  ];
+  function pById(id){return P.filter(function(x){return x.id===id})[0]}
+
+  /* ---------- hero ---------- */
+  var HV=[
+    {v:"look",p:[["after","👶","take care of","Meena {{looks after}} her baby brother."],["for","🔍","try to find","Ravi is {{looking for}} his pencil."],["up","📖","find a word in a dictionary","{{Look up}} the word “brave” in the dictionary."],["out","⚠️","be careful","{{Look out}}! The floor is wet."]]},
+    {v:"turn",p:[["on","💡","start a light or machine","Please {{turn on}} the fan."],["off","🌙","stop a light or machine","{{Turn off}} the lights before you sleep."],["down","🙅","refuse an offer","Uma {{turned down}} the offer."]]},
+    {v:"give",p:[["up","🏳️","stop trying","Never {{give up}}! Try the sum once more."],["back","🔁","return something to its owner","Please {{give back}} my pen after the test."],["away","🎁","give something free to others","Amma {{gave away}} our old toys to the children next door."]]},
+    {v:"get",p:[["up","⏰","get out of bed","I {{get up}} at six o’clock."],["on","🚌","enter a bus or train","We {{got on}} the bus at the gate."],["off","🚏","leave a bus or train","We {{got off}} the train at Vijayawada."]]},
+    {v:"put",p:[["on","🧥","wear clothes or shoes","{{Put on}} your sweater. It is cold."],["off","📅","postpone, move to a later time","The match was {{put off}} till Monday."],["up with","😣","bear something unpleasant","I cannot {{put up with}} this noise."]]}
+  ];
+  var hv=0,hp=0,parts=$("#parts");
+  function drawHero(pop,rebuild){
+    var h=HV[hv],x=h.p[hp];
+    $("#heroStage").innerHTML='<span class="chip V"><i>verb</i>'+esc(h.v)+'</span><span class="op" aria-hidden="true">+</span>'+
+      '<span class="chip P" id="hpart"><i>small word</i>'+esc(x[0])+'</span><span class="op" aria-hidden="true">=</span><span class="pic" id="hpic" aria-hidden="true">'+x[1]+'</span>';
+    $("#hMean").textContent=h.v+" "+x[0]+": "+x[2];
+    $("#hEx").innerHTML=hlSent(x[3]);
+    if(rebuild)parts.innerHTML=h.p.map(function(y,i){return '<button type="button" data-i="'+i+'" aria-pressed="false">'+esc(y[0])+'</button>'}).join("");
+    parts.querySelectorAll("button").forEach(function(b,i){b.setAttribute("aria-pressed",i===hp)});
+    if(pop&&!reduce){["#hpart","#hpic"].forEach(function(s){var el=$(s);if(el.animate)el.animate([{transform:"scale(.7)",opacity:.3},{transform:"none",opacity:1}],{duration:320,easing:"cubic-bezier(.3,.7,.2,1)"})})}
+  }
+  parts.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;hp=+b.dataset.i;drawHero(true,false)});
+  $("#nextVerb").addEventListener("click",function(){hv=(hv+1)%HV.length;hp=0;drawHero(false,true)});
+  $("#listen").addEventListener("click",function(){
+    var h=HV[hv],x=h.p[hp];
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(h.v+" "+x[0]+" means "+x[2]+". "+plain(x[3]));u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+  drawHero(false,true);
+
+  /* ---------- list for the class ---------- */
+  function drawList(){
+    $("#listLead").textContent="These are the phrasal verbs for Class "+cls+"."+(cls>6?" Phrasal verbs from earlier classes come back in the practice games.":" Say each example aloud and act it out.");
+    $("#tlist").innerHTML=P.filter(function(x){return x.c===cls}).map(function(x){
+      return '<article class="tcard"><h3><span aria-hidden="true">'+x.e+'</span>'+esc(x.p)+'</h3><p>'+esc(x.m)+'</p><p class="ex">'+hlSent(x.ex)+'</p></article>';
+    }).join("");
+    $("#split").hidden=cls<8;
+  }
+
+  /* ---------- practice data: fill the small word. k = phrasal verb id, a = answer, x = wrong options ---------- */
+  var FILL=[
+    {t:"It is very dark in here. Please turn ___ the light so that we can read.",k:"turn on",a:"on",x:["off","back"]},
+    {t:"Everyone is asleep. Turn ___ the TV and go to bed.",k:"turn off",a:"off",x:["on","in"]},
+    {t:"Ravi cannot find his pencil. He is looking ___ it under the desk.",k:"look for",a:"for",x:["after","out"]},
+    {t:"Grandmother gets ___ at five o’clock and goes for a walk.",k:"get up",a:"up",x:["on","off"]},
+    {t:"It is cold outside. Put ___ your sweater.",k:"put on",a:"on",x:["off","in"]},
+    {t:"Please take ___ your shoes before you enter the temple.",k:"take off",a:"off",x:["on","up"]},
+    {t:"The teacher said, “Sit ___, children, and open your books.”",k:"sit down",a:"down",x:["off","away"]},
+    {t:"When the Chief Guest arrived, everyone stood ___ to greet him.",k:"stand up",a:"up",x:["down","in"]},
+    {t:"My alarm rang, but I did not wake ___.",k:"wake up",a:"up",x:["on","off"]},
+    {t:"Someone knocked on the door. “Come ___,” said the Principal.",k:"come in",a:"in",x:["out","off"]},
+    {t:"Anu dropped her eraser. She bent down to pick it ___.",k:"pick up",a:"up",x:["in","on"]},
+    {t:"Thank you for the storybook. I will give it ___ to you on Monday.",k:"give back",a:"back",x:["up","off"]},
+    {t:"We are inside the house. It is a sunny day, so let us go ___ and play in the park.",k:"go out",a:"out",x:["in","up"]},
+    {t:"Here comes our school bus. Let us get ___.",k:"get on",a:"on",x:["off","over"]},
+    {t:"This is our stop. We must get ___ the bus now.",k:"get off",a:"off",x:["on","up"]},
+    {t:"Look ___! There is a snake on the path.",k:"look out",a:"out",x:["for","after"]},
+    {t:"Father went to Delhi on Monday. He will come ___ home on Friday.",k:"come back",a:"back",x:["in","off"]},
+    {t:"I am very tired. I will lie ___ on the bed for a while.",k:"lie down",a:"down",x:["up","off"]},
+
+    {t:"Meena looks ___ her little brother when her parents are at work.",k:"look after",a:"after",x:["for","up"]},
+    {t:"If you do not know the meaning of a word, look it ___ in the dictionary.",k:"look up",a:"up",x:["after","for"]},
+    {t:"Do not give ___! You can solve this sum if you keep trying.",k:"give up",a:"up",x:["back","on"]},
+    {t:"The puppy was scared of the crackers and ran ___ from home.",k:"run away",a:"away",x:["up","over"]},
+    {t:"The police will find ___ who broke the window.",k:"find out",a:"out",x:["up","off"]},
+    {t:"It is raining heavily, so let us put ___ the picnic till next Sunday.",k:"put off",a:"off",x:["on","up"]},
+    {t:"The teacher left the room and said, “Carry ___ with your work.”",k:"carry on",a:"on",x:["off","away"]},
+    {t:"Our old car broke ___ on the highway, so we called a mechanic.",k:"break down",a:"down",x:["up","in"]},
+    {t:"The match was called ___ because the ground was flooded. It will not be played at all.",k:"call off",a:"off",x:["on","up"]},
+    {t:"Who will take care ___ your plants when you go to Hyderabad?",k:"take care of",a:"of",x:["for","about"]},
+    {t:"We set ___ for Tirupati early in the morning.",k:"set off",a:"off",x:["in","down"]},
+    {t:"Kiran wants to be a doctor when he grows ___.",k:"grow up",a:"up",x:["on","out"]},
+
+    {t:"We have run ___ sugar. Please buy some from the shop.",k:"run out of",a:"out of",x:["away from","into"]},
+    {t:"The children are looking forward ___ the summer holidays.",k:"look forward to",a:"to",x:["for","at"]},
+    {t:"I cannot put ___ this noise any longer!",k:"put up with",a:"up with",x:["on with","off with"]},
+    {t:"While cleaning the cupboard, Amma came ___ an old photo of her school days.",k:"come across",a:"across",x:["up","out"]},
+    {t:"Sita gets ___ all her classmates. She never fights with anyone.",k:"get along with",a:"along with",x:["along to","up with"]},
+    {t:"Ravi takes ___ his father. They both have curly hair and a loud laugh.",k:"take after",a:"after",x:["up","off"]},
+    {t:"Uma was offered a part in the play, but she turned it ___ because of her exams.",k:"turn down",a:"down",x:["on","off"]},
+    {t:"Raju did not do his homework, so he made ___ a story about a lost bag.",k:"make up story",a:"up",x:["down","off"]},
+    {t:"Priya and Divya had a fight, but they made ___ the next day.",k:"make up friends",a:"up",x:["off","down"]},
+    {t:"My grandparents brought me ___ in a small village near Warangal.",k:"bring up child",a:"up",x:["on","off"]},
+    {t:"At the meeting, Lakshmi brought ___ the problem of the broken tap.",k:"bring up topic",a:"up",x:["off","away"]}
+  ];
+
+  var mode="fill",S={};
+  function resetPractice(){
+    var F=FILL.filter(function(x){return pById(x.k).c<=cls}),M=P.filter(function(x){return x.c<=cls});
+    S.fill={i:0,score:0,ans:null,miss:[],q:TLM.deal("phrasal-fill-"+cls,F,8).map(function(x){
+      var p=pById(x.k);return {t:x.t,ans:x.a,w:"“"+p.p+"” means "+p.m+".",o:shuffle([x.a].concat(x.x))};
+    })};
+    S.mean={i:0,score:0,ans:null,miss:[],q:TLM.deal("phrasal-mean-"+cls,M,8).map(function(x){
+      var others=shuffle(M.filter(function(y){return y.p!==x.p&&!(x.g&&y.g===x.g)})).slice(0,2);
+      return {t:x.ex,ans:x.m,w:"“"+x.p+"” means "+x.m+".",o:shuffle([x.m].concat(others.map(function(y){return y.m})))};
+    })};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You are a phrasal verb star.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the phrasal verbs again, then play once more.",s.miss.length);
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    if(mode==="fill"){
+      html+='<p class="qs">'+esc(q.t).replace("___",'<span class="gap" id="gap">&nbsp;</span>')+'</p><div class="opts row3">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    }else{
+      html+='<p class="qs">'+hlSent(q.t)+'</p><p class="count" style="margin-bottom:.6rem">What does the highlighted phrasal verb mean?</p><div class="opts">'+
+        q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>';
+    }
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var q=s.q[s.i],ok=q.o[+b.dataset.o]===q.ans;
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
+    var fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+q.w;
+    if(mode==="fill")$("#gap").textContent=q.ans;
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(q.o[+x.dataset.o]===q.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawList();resetPractice();
+  });
+
+  drawList();resetPractice();
+})();
+</script>
+</Base>

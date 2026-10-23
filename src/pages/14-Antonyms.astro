@@ -1,0 +1,542 @@
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Antonyms | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
+:root{
+  --A-bg:#FFF0C2; --A-c:#D99A00; --A-t:#6B4A00;
+  --O-bg:#DCEBFF; --O-c:#2F6FD6; --O-t:#123E85;
+  --M-bg:#D5F3EE; --M-c:#13927F; --M-t:#0B5E55;
+}
+
+.hero h1{font-size:clamp(2.8rem,13.5vw,4.6rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.flip{appearance:none;border:0;background:none;padding:0;cursor:pointer;display:block;width:100%;max-width:22rem;margin:.2rem auto .9rem;perspective:900px;font:inherit;color:inherit;border-radius:22px}
+.flip .inner{position:relative;display:block;height:12rem;transition:transform .55s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.flip[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;border-radius:22px;border:3px solid;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.face.front{background:var(--A-bg);border-color:var(--A-c);color:var(--A-t)}
+.face.back{background:var(--O-bg);border-color:var(--O-c);color:var(--O-t);transform:rotateY(180deg)}
+.face .em{font-size:3.6rem;line-height:1.1}
+.face b{font:800 clamp(2rem,9vw,2.8rem)/1.1 var(--display)}
+.face small{font:700 .85rem var(--body);text-transform:uppercase;letter-spacing:.08em}
+.sent{font:800 clamp(1.25rem,5.8vw,1.8rem)/1.5 var(--display);min-height:3rem;margin:.1rem 0 .4rem;text-align:center}
+.note{color:var(--muted);text-align:center;margin:0 0 .4rem}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:2px solid;display:inline-block}
+.key .A{background:var(--A-bg);border-color:var(--A-c)}
+.key .O{background:var(--O-bg);border-color:var(--O-c)}
+
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--accent);background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use.A{border-left-color:var(--A-c)} .use.O{border-left-color:var(--O-c)} .use.M{border-left-color:var(--M-c)}
+.use b{font-family:var(--display);font-size:1.15rem}
+.use p{margin:.2rem 0}
+
+.glist{display:grid;gap:.8rem;margin-top:1rem}
+.gcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.gcard h3{font-size:1.25rem;font-weight:800;margin-bottom:.4rem}
+.gcard p{margin:.3rem 0}
+.pairs{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+.pair{display:inline-flex;align-items:center;gap:.35rem;font:800 1.05rem var(--display)}
+.w{border-radius:10px;padding:.15rem .55rem;border:2px solid;font-weight:800}
+.w.A{background:var(--A-bg);border-color:var(--A-c);color:var(--A-t)}
+.w.O{background:var(--O-bg);border-color:var(--O-c);color:var(--O-t)}
+.w.M{background:var(--M-bg);border-color:var(--M-c);color:var(--M-t)}
+.pair i{font-style:normal;color:var(--muted)}
+.wrow{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .7rem;padding:.45rem 0;border-top:1px solid var(--line)}
+.wrow:first-of-type{margin-top:.5rem}
+.wrow > b{font:800 1.15rem var(--display);min-width:4.2rem}
+.wrow span.n{color:var(--muted);font-size:.95rem}
+.ladder{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:.6rem 0}
+.ladder i{font-style:normal;color:var(--muted)}
+
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.4 var(--display);margin:.6rem 0 1rem}
+.blank{display:inline-block;min-width:4.5rem;border-bottom:4px solid var(--O-c);color:var(--O-t);text-align:center}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:800 1.15rem/1.3 var(--display);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.flip .inner{transition:none}}
+</style>
+
+<header class="hero wrap">
+  <h1>Antonyms</h1>
+  <p class="sub">An antonym is a word with the opposite meaning. Tap the card to flip a word into its opposite.</p>
+
+  <div class="demo">
+    <button type="button" class="flip" id="flip" aria-pressed="false">
+      <span class="inner">
+        <span class="face front"><span class="em" id="fEm" aria-hidden="true"></span><b id="fW"></b><small>word</small></span>
+        <span class="face back"><span class="em" id="bEm" aria-hidden="true"></span><b id="bW"></b><small>opposite</small></span>
+      </span>
+    </button>
+    <p class="sent" id="heroSent" aria-live="polite"></p>
+    <p class="note">Tap the card to flip it.</p>
+    <div class="row" style="margin-top:1rem">
+      <button type="button" class="btn alt" id="nextEx">Next pair</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span><em class="A"></em>the word</span>
+      <span><em class="O"></em>its opposite</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="what">
+    <h2>What is an antonym?</h2>
+    <p class="lead">An antonym is a word that means the opposite of another word. Hot and cold are antonyms. So are day and night.</p>
+    <div class="uses">
+      <div class="use A"><b>Opposite words</b><p>big – small, up – down, give – take</p></div>
+      <div class="use O"><b>Opposites in a sentence</b><p>The tea is <b>hot</b>, but the ice cream is <b>cold</b>.</p></div>
+      <div class="use M"><b>Synonym or antonym?</b><p>A synonym means the <b>same</b> (big, large). An antonym means the <b>opposite</b> (big, small).</p></div>
+    </div>
+    <div class="card">
+      <h3>Read the whole sentence</h3>
+      <p>Some words have more than one meaning, so they have more than one opposite. A <b>light</b> bag is the opposite of a <b>heavy</b> bag, but a <b>light</b> colour is the opposite of a <b>dark</b> colour.</p>
+    </div>
+  </section>
+
+  <section id="learn">
+    <h2>Opposites for your class</h2>
+    <p class="lead" id="learnLead"></p>
+
+    <div class="glist" data-show="6">
+      <article class="gcard">
+        <h3>Pairs of opposites</h3>
+        <div class="pairs" id="pairs6"></div>
+      </article>
+      <article class="gcard">
+        <h3>Opposites in a sentence</h3>
+        <p>Owls sleep in the <span class="w A">day</span> and hunt at <span class="w O">night</span>.</p>
+        <p>Meena came <span class="w A">early</span>, but Arjun came <span class="w O">late</span>.</p>
+        <p>Please <span class="w A">open</span> the window and <span class="w O">close</span> the door.</p>
+        <p>The lift goes <span class="w A">up</span> and comes <span class="w O">down</span>.</p>
+      </article>
+    </div>
+
+    <div class="glist" data-show="7" hidden>
+      <article class="gcard">
+        <h3>Opposites with a prefix</h3>
+        <p>Add a small part at the <b>start</b> of the word. The new word means “not”.</p>
+        <div class="wrow"><b>un-</b><span class="pair"><span class="w A">happy</span><i aria-hidden="true">→</i><span class="w O">unhappy</span></span><span class="pair"><span class="w A">kind</span><i aria-hidden="true">→</i><span class="w O">unkind</span></span></div>
+        <div class="wrow"><b>dis-</b><span class="pair"><span class="w A">agree</span><i aria-hidden="true">→</i><span class="w O">disagree</span></span><span class="pair"><span class="w A">honest</span><i aria-hidden="true">→</i><span class="w O">dishonest</span></span></div>
+        <div class="wrow"><b>in-</b><span class="pair"><span class="w A">correct</span><i aria-hidden="true">→</i><span class="w O">incorrect</span></span><span class="pair"><span class="w A">visible</span><i aria-hidden="true">→</i><span class="w O">invisible</span></span></div>
+        <div class="wrow"><b>im-</b><span class="pair"><span class="w A">possible</span><i aria-hidden="true">→</i><span class="w O">impossible</span></span><span class="pair"><span class="w A">polite</span><i aria-hidden="true">→</i><span class="w O">impolite</span></span></div>
+        <div class="wrow"><b>il-</b><span class="pair"><span class="w A">legal</span><i aria-hidden="true">→</i><span class="w O">illegal</span></span><span class="pair"><span class="w A">logical</span><i aria-hidden="true">→</i><span class="w O">illogical</span></span></div>
+        <div class="wrow"><b>ir-</b><span class="pair"><span class="w A">regular</span><i aria-hidden="true">→</i><span class="w O">irregular</span></span><span class="pair"><span class="w A">responsible</span><i aria-hidden="true">→</i><span class="w O">irresponsible</span></span></div>
+        <div class="wrow"><b>non-</b><span class="pair"><span class="w A">violent</span><i aria-hidden="true">→</i><span class="w O">non-violent</span></span><span class="pair"><span class="w A">vegetarian</span><i aria-hidden="true">→</i><span class="w O">non-vegetarian</span></span></div>
+        <p>Tip: <b>im-</b> often comes before b, m or p (impatient), <b>il-</b> before l (illegal) and <b>ir-</b> before r (irregular).</p>
+      </article>
+      <article class="gcard">
+        <h3>Opposites with a suffix</h3>
+        <p>Change the <b>end</b> of the word: <b>-ful</b> (full of) becomes <b>-less</b> (without).</p>
+        <div class="pairs">
+          <span class="pair"><span class="w A">careful</span><i aria-hidden="true">↔</i><span class="w O">careless</span></span>
+          <span class="pair"><span class="w A">useful</span><i aria-hidden="true">↔</i><span class="w O">useless</span></span>
+          <span class="pair"><span class="w A">harmful</span><i aria-hidden="true">↔</i><span class="w O">harmless</span></span>
+          <span class="pair"><span class="w A">fearful</span><i aria-hidden="true">↔</i><span class="w O">fearless</span></span>
+        </div>
+      </article>
+      <article class="gcard">
+        <h3>One word, two opposites</h3>
+        <p>Choose the opposite that matches the meaning.</p>
+        <div class="wrow"><b>light</b><span class="n">a light bag → a <b>heavy</b> bag</span><span class="n">a light colour → a <b>dark</b> colour</span></div>
+        <div class="wrow"><b>hard</b><span class="n">a hard pillow → a <b>soft</b> pillow</span><span class="n">a hard sum → an <b>easy</b> sum</span></div>
+        <div class="wrow"><b>old</b><span class="n">an old man → a <b>young</b> man</span><span class="n">an old phone → a <b>new</b> phone</span></div>
+        <div class="wrow"><b>right</b><span class="n">the right hand → the <b>left</b> hand</span><span class="n">the right answer → the <b>wrong</b> answer</span></div>
+      </article>
+    </div>
+
+    <div class="glist" data-show="8" hidden>
+      <article class="gcard">
+        <h3>Gradable opposites</h3>
+        <p>These opposites have words <b>in between</b>, like steps on a scale.</p>
+        <div class="ladder"><span class="w A">hot</span><i aria-hidden="true">→</i><span class="w M">warm</span><i aria-hidden="true">→</i><span class="w M">cool</span><i aria-hidden="true">→</i><span class="w O">cold</span></div>
+        <div class="ladder"><span class="w A">big</span><i aria-hidden="true">→</i><span class="w M">medium</span><i aria-hidden="true">→</i><span class="w O">small</span></div>
+        <p>We can say “very hot” or “a little cold”.</p>
+      </article>
+      <article class="gcard">
+        <h3>Complementary opposites</h3>
+        <p>These opposites have <b>nothing in between</b>. If one is true, the other cannot be.</p>
+        <div class="pairs">
+          <span class="pair"><span class="w A">alive</span><i aria-hidden="true">↔</i><span class="w O">dead</span></span>
+          <span class="pair"><span class="w A">pass</span><i aria-hidden="true">↔</i><span class="w O">fail</span></span>
+          <span class="pair"><span class="w A">true</span><i aria-hidden="true">↔</i><span class="w O">false</span></span>
+          <span class="pair"><span class="w A">present</span><i aria-hidden="true">↔</i><span class="w O">absent</span></span>
+        </div>
+      </article>
+      <article class="gcard">
+        <h3>Harder pairs</h3>
+        <div class="pairs" id="pairs8"></div>
+      </article>
+      <article class="gcard">
+        <h3>Antonyms in a passage</h3>
+        <p>In <span class="w A">ancient</span> times, people wrote on palm leaves. In <span class="w O">modern</span> times, we type on computers. Paper was once <span class="w A">scarce</span>; today it is <span class="w O">plentiful</span>.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead" id="pracLead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="pick" aria-pressed="true">Find the opposite</button>
+        <button type="button" data-m="fill" aria-pressed="false">Fill the gap</button>
+        <button type="button" data-m="odd" aria-pressed="false">Odd pair</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>give the opposites of common words and use them in sentences (Class 6);</li>
+        <li>make opposites with the prefixes un-, dis-, in-, im-, il-, ir-, non- and the suffix -less, and choose the opposite that fits the meaning (Class 7);</li>
+        <li>tell gradable opposites from complementary ones and use harder antonyms in a passage (Class 8).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, word cards with a word on one side and its opposite on the other.</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Say a word and do an action (stand up, sit down). Students call out the opposite and act it out.</li>
+        <li><b>Teach (10 min).</b> Project the hero card. Students guess the opposite before you flip it. Read the sentences aloud.</li>
+        <li><b>Find your partner (8 min).</b> Hand out word cards. Each student finds the classmate holding the opposite word.</li>
+        <li><b>Class section (7 min).</b> Pick your class on the bar. Students copy the pairs, prefixes or scales into their notebooks with one sentence each.</li>
+        <li><b>Practice (8 min).</b> Teams play Find the opposite, Fill the gap and Odd pair.</li>
+        <li><b>Exit ticket.</b> Each student writes one sentence that uses a word and its opposite.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Giving a synonym instead of an antonym (big – large instead of big – small).</li>
+        <li>Using the wrong prefix: “unpossible” for impossible, “unlegal” for illegal, “unagree” for disagree.</li>
+        <li>Choosing an opposite that does not fit the meaning (“a dark bag” for the opposite of “a light bag”).</li>
+        <li>Thinking every pair has only two ends. Hot and cold have warm and cool in between; alive and dead do not.</li>
+        <li>Forgetting to keep the same form: the opposite of “agrees” is “disagrees”, and the opposite of “won” is “lost”.</li>
+      </ul>
+    </details>
+  </section>
+
+  <LessonNav slug="14-Antonyms" />
+
+  <footer>
+    Teaching learning material (TLM) on Antonyms for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+
+<script is:inline>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+
+  /* ---------- hero ---------- */
+  var HP=[
+    {w:"day",e:"☀️",s:"The sun shines in the day.",o:"night",oe:"🌙",os:"The moon shines at night."},
+    {w:"hot",e:"🔥",s:"The tea is hot.",o:"cold",oe:"❄️",os:"The ice cream is cold."},
+    {w:"big",e:"🐘",s:"An elephant is big.",o:"small",oe:"🐭",os:"A mouse is small."},
+    {w:"happy",e:"😄",s:"Ravi is happy with his new bat.",o:"sad",oe:"😢",os:"Ravi is sad about his broken bat."},
+    {w:"up",e:"⬆️",s:"The kite goes up.",o:"down",oe:"⬇️",os:"The kite comes down."},
+    {w:"fast",e:"🐇",s:"The rabbit is fast.",o:"slow",oe:"🐢",os:"The tortoise is slow."},
+    {w:"open",e:"🔓",s:"Please open the window.",o:"close",oe:"🔒",os:"Please close the window."},
+    {w:"tall",e:"🦒",s:"A giraffe is tall.",o:"short",oe:"🐧",os:"A penguin is short."}
+  ];
+  var hi=0,flipped=false,flip=$("#flip");
+  function drawHero(){
+    var h=HP[hi];
+    $("#fEm").textContent=h.e;$("#fW").textContent=h.w;
+    $("#bEm").textContent=h.oe;$("#bW").textContent=h.o;
+    flip.setAttribute("aria-pressed",flipped);
+    flip.setAttribute("aria-label",flipped?h.o+", the opposite of "+h.w+". Tap to flip back.":h.w+". Tap to see its opposite.");
+    $("#heroSent").textContent=flipped?h.os:h.s;
+  }
+  flip.addEventListener("click",function(){flipped=!flipped;drawHero()});
+  $("#nextEx").addEventListener("click",function(){
+    hi=(hi+1)%HP.length;flipped=false;
+    if(!reduce){flip.querySelector(".inner").style.transition="none";drawHero();void flip.offsetWidth;flip.querySelector(".inner").style.transition=""}
+    else drawHero();
+  });
+  $("#listen").addEventListener("click",function(){
+    var h=HP[hi],t=h.s+" "+h.os+" "+h.w+" and "+h.o+" are opposites.";
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+  drawHero();
+
+  /* ---------- data ----------
+     PICK: w = word, a = its opposite, x = two clearly wrong options.
+     p = a phrase that fixes the meaning, q = a custom question, n = a custom explanation. */
+  var PICK=[
+    {c:6,w:"hot",a:"cold",x:["boiling","sunny"]},
+    {c:6,w:"big",a:"small",x:["large","huge"]},
+    {c:6,w:"happy",a:"sad",x:["glad","cheerful"]},
+    {c:6,w:"early",a:"late",x:["soon","morning"]},
+    {c:6,w:"open",a:"close",x:["unlock","start"]},
+    {c:6,w:"give",a:"take",x:["offer","send"]},
+    {c:6,w:"up",a:"down",x:["over","high"]},
+    {c:6,w:"day",a:"night",x:["sun","week"]},
+    {c:6,w:"fast",a:"slow",x:["quick","rapid"]},
+    {c:6,w:"rich",a:"poor",x:["wealthy","kind"]},
+    {c:6,w:"push",a:"pull",x:["press","throw"]},
+    {c:6,w:"buy",a:"sell",x:["pay","shop"]},
+    {c:6,w:"full",a:"empty",x:["filled","heavy"]},
+    {c:6,w:"clean",a:"dirty",x:["neat","washed"]},
+    {c:6,w:"tall",a:"short",x:["high","long"]},
+    {c:6,w:"win",a:"lose",x:["play","beat"]},
+    {c:6,w:"come",a:"go",x:["arrive","walk"]},
+    {c:6,w:"laugh",a:"cry",x:["smile","giggle"]},
+    {c:6,w:"strong",a:"weak",x:["powerful","heavy"]},
+    {c:6,w:"inside",a:"outside",x:["within","under"]},
+    {c:6,w:"wet",a:"dry",x:["damp","cold"]},
+    {c:6,w:"young",a:"old",x:["little","kind"]},
+
+    {c:7,w:"happy",a:"unhappy",x:["dishappy","inhappy"]},
+    {c:7,w:"agree",a:"disagree",x:["unagree","imagree"]},
+    {c:7,w:"possible",a:"impossible",x:["unpossible","dispossible"]},
+    {c:7,w:"legal",a:"illegal",x:["unlegal","inlegal"]},
+    {c:7,w:"regular",a:"irregular",x:["unregular","disregular"]},
+    {c:7,w:"careful",a:"careless",x:["uncareful","discareful"]},
+    {c:7,w:"useful",a:"useless",x:["unuseful","disuseful"]},
+    {c:7,w:"correct",a:"incorrect",x:["uncorrect","discorrect"]},
+    {c:7,w:"like",a:"dislike",x:["inlike","imlike"]},
+    {c:7,w:"polite",a:"impolite",x:["dispolite","inpolite"]},
+    {c:7,w:"honest",a:"dishonest",x:["unhonest","inhonest"]},
+    {c:7,w:"kind",a:"unkind",x:["diskind","inkind"]},
+    {c:7,w:"patient",a:"impatient",x:["unpatient","dispatient"]},
+    {c:7,w:"logical",a:"illogical",x:["unlogical","dislogical"]},
+    {c:7,w:"responsible",a:"irresponsible",x:["unresponsible","disresponsible"]},
+    {c:7,w:"violent",a:"non-violent",x:["unviolent","disviolent"]},
+    {c:7,w:"harmful",a:"harmless",x:["unharmful","disharmful"]},
+    {c:7,w:"visible",a:"invisible",x:["unvisible","disvisible"]},
+    {c:7,w:"light",p:"a light bag",a:"heavy",x:["dark","weak"],n:"A light bag is easy to lift. A heavy bag is hard to lift."},
+    {c:7,w:"light",p:"a light colour",a:"dark",x:["heavy","loud"],n:"Light pink and dark pink: here “light” is about colour, so the opposite is “dark”."},
+    {c:7,w:"hard",p:"a hard pillow",a:"soft",x:["easy","weak"],n:"A hard pillow is not soft. Here “hard” is about touch."},
+    {c:7,w:"hard",p:"a hard sum",a:"easy",x:["soft","quiet"],n:"A hard sum is difficult. The opposite is an easy sum."},
+    {c:7,w:"old",p:"an old man",a:"young",x:["new","small"],n:"For people we use “young”. An old man and a young man."},
+    {c:7,w:"old",p:"an old phone",a:"new",x:["young","cheap"],n:"For things we use “new”. An old phone and a new phone."},
+    {c:7,w:"right",p:"the right hand",a:"left",x:["wrong","back"],n:"Here “right” is a side, so the opposite is “left”."},
+    {c:7,w:"right",p:"the right answer",a:"wrong",x:["left","short"],n:"Here “right” means correct, so the opposite is “wrong”."},
+
+    {c:8,w:"generous",a:"mean",x:["kind","giving"]},
+    {c:8,w:"ancient",a:"modern",x:["old","historic"]},
+    {c:8,w:"victory",a:"defeat",x:["win","success"]},
+    {c:8,w:"permanent",a:"temporary",x:["lasting","fixed"]},
+    {c:8,w:"scarce",a:"plentiful",x:["rare","few"]},
+    {c:8,w:"transparent",a:"opaque",x:["clear","glassy"]},
+    {c:8,w:"expand",a:"contract",x:["grow","spread"]},
+    {c:8,w:"accept",a:"reject",x:["receive","welcome"]},
+    {c:8,w:"increase",a:"decrease",x:["raise","grow"]},
+    {c:8,w:"maximum",a:"minimum",x:["most","highest"]},
+    {c:8,w:"artificial",a:"natural",x:["man-made","false"]},
+    {c:8,w:"superior",a:"inferior",x:["better","higher"]},
+    {c:8,w:"import",a:"export",x:["bring","buy"]},
+    {c:8,w:"optimist",a:"pessimist",x:["dreamer","believer"]},
+    {c:8,w:"humble",a:"proud",x:["modest","shy"]},
+    {c:8,w:"brave",a:"cowardly",x:["bold","daring"]},
+    {c:8,w:"foolish",a:"wise",x:["silly","stupid"]},
+    {c:8,w:"frequent",a:"rare",x:["often","regular"]},
+    {c:8,q:"Which word fits the gap? hot … warm … ___ … cold",a:"cool",x:["boiling","freezing"],n:"Hot and cold are gradable opposites. The steps are hot, warm, cool, cold."},
+    {c:8,q:"Which word fits the gap? big … ___ … small",a:"medium",x:["huge","tiny"],n:"Big and small are gradable. “Medium” is in between."},
+    {c:8,q:"Which pair has nothing in between?",a:"alive – dead",x:["hot – cold","tall – short"],n:"Alive and dead are complementary. Something cannot be a little alive."},
+    {c:8,q:"Which pair has nothing in between?",a:"pass – fail",x:["rich – poor","fast – slow"],n:"Pass and fail are complementary. You either pass or fail a test."},
+    {c:8,q:"Which pair has nothing in between?",a:"present – absent",x:["happy – sad","young – old"],n:"Present and absent are complementary. A student is either present or absent."},
+    {c:8,q:"Which pair has words in between, like hot … warm … cold?",a:"big – small",x:["alive – dead","true – false"],n:"Big and small are gradable. Something can be medium-sized."}
+  ];
+  /* FILL: s = sentence with ___ for the gap, w = the word whose opposite fits. */
+  var FILL=[
+    {c:6,s:"Ravi is tall, but his brother is ___.",w:"tall",a:"short",x:["long","high"]},
+    {c:6,s:"The box is empty now, but it was ___ in the morning.",w:"empty",a:"full",x:["hollow","bare"]},
+    {c:6,s:"Meena came early, but Arjun came ___.",w:"early",a:"late",x:["soon","sudden"]},
+    {c:6,s:"Please open the door when you come in and ___ it when you go out.",w:"open",a:"close",x:["knock","paint"]},
+    {c:6,s:"Please give me the book and ___ this pen.",w:"give",a:"take",x:["send","offer"]},
+    {c:6,s:"The lift goes up to the tenth floor and comes ___ again.",w:"up",a:"down",x:["over","high"]},
+    {c:6,s:"Owls sleep in the day and hunt at ___.",w:"day",a:"night",x:["noon","morning"]},
+    {c:6,s:"The old man walks slowly, but the boy runs ___.",w:"slowly",a:"quickly",x:["softly","gently"]},
+    {c:6,s:"Anu was sad yesterday, but today she is ___.",w:"sad",a:"happy",x:["unhappy","gloomy"]},
+    {c:6,s:"Summer days are hot, and winter days are ___.",w:"hot",a:"cold",x:["sunny","long"]},
+    {c:6,s:"Raju’s bag is heavy, but my bag is ___.",w:"heavy",a:"light",x:["full","big"]},
+    {c:6,s:"Cars stop at a red light and ___ at a green light.",w:"stop",a:"go",x:["wait","halt"]},
+    {c:6,s:"Don’t push the door. ___ it.",w:"push",a:"Pull",x:["Press","Hit"]},
+    {c:6,s:"The shopkeeper buys vegetables in the morning and ___ them in the evening.",w:"buys",a:"sells",x:["eats","cooks"]},
+    {c:6,s:"Our team did not lose the match. We ___!",w:"lose",a:"won",x:["played","tried"]},
+    {c:6,s:"Leela’s clothes were wet from the rain, so she changed into ___ clothes.",w:"wet",a:"dry",x:["damp","soaked"]},
+    {c:6,s:"The rich man helped the ___ families in the village.",w:"rich",a:"poor",x:["wealthy","large"]},
+    {c:6,s:"The giraffe has a long neck, but the rabbit has a ___ tail.",w:"long",a:"short",x:["tall","fluffy"]},
+
+    {c:7,s:"This answer is not correct. It is ___.",w:"correct",a:"incorrect",x:["uncorrect","discorrect"]},
+    {c:7,s:"It is not possible to finish the work in an hour. It is ___.",w:"possible",a:"impossible",x:["unpossible","inpossible"]},
+    {c:7,s:"Riding without a licence is not legal. It is ___.",w:"legal",a:"illegal",x:["unlegal","dislegal"]},
+    {c:7,s:"Kiran does not agree with me. He ___ with me.",w:"agrees",a:"disagrees",x:["unagrees","inagrees"]},
+    {c:7,s:"Throwing litter is a careless act. We must be ___.",w:"careless",a:"careful",x:["careness","uncareless"]},
+    {c:7,s:"A broken umbrella is useless, but a good umbrella is ___ in the rain.",w:"useless",a:"useful",x:["usage","unuseless"]},
+    {c:7,s:"The bus does not come at regular times. Its timings are ___.",w:"regular",a:"irregular",x:["unregular","inregular"]},
+    {c:7,s:"Please don’t be impatient. Be ___ and wait for your turn.",w:"impatient",a:"patient",x:["unpatient","patience"]},
+    {c:7,s:"The sky is dark at night and ___ in the morning.",w:"dark",a:"light",x:["heavy","weak"]},
+    {c:7,s:"This sum is hard, but that one is ___.",w:"hard",a:"easy",x:["soft","weak"]},
+    {c:7,s:"This bed is hard, but that pillow is ___.",w:"hard",a:"soft",x:["easy","simple"]},
+    {c:7,s:"My grandfather is old, but my cousin is ___.",w:"old",a:"young",x:["new","fresh"]},
+    {c:7,s:"My phone is old, but my sister’s phone is ___.",w:"old",a:"new",x:["young","little"]},
+    {c:7,s:"Write with your right hand, not your ___ hand.",w:"right",a:"left",x:["wrong","false"]},
+    {c:7,s:"Your first answer was right, but the second was ___.",w:"right",a:"wrong",x:["left","back"]},
+    {c:7,s:"A feather is light, but a stone is ___.",w:"light",a:"heavy",x:["dark","dim"]},
+    {c:7,s:"This snake is harmless, but that cobra is ___.",w:"harmless",a:"harmful",x:["unharmless","harmness"]},
+    {c:7,s:"The kind girl gave water to the thirsty dog, but the ___ boy threw stones at it.",w:"kind",a:"unkind",x:["diskind","inkind"]},
+
+    {c:8,s:"In ancient times, people wrote on palm leaves. In ___ times, we type on computers.",w:"ancient",a:"modern",x:["old","past"]},
+    {c:8,s:"The tent was a temporary home. After the flood, the family moved into a ___ house.",w:"temporary",a:"permanent",x:["short","brief"]},
+    {c:8,s:"Water is scarce in the desert, but it is ___ near the river.",w:"scarce",a:"plentiful",x:["rare","little"]},
+    {c:8,s:"Glass is transparent, so we can see through it. Wood is ___, so we cannot.",w:"transparent",a:"opaque",x:["clear","shiny"]},
+    {c:8,s:"Our team celebrated its victory. The other team was sad about its ___.",w:"victory",a:"defeat",x:["success","prize"]},
+    {c:8,s:"Ramesh is generous and shares everything. His neighbour is ___ and shares nothing.",w:"generous",a:"mean",x:["kind","giving"]},
+    {c:8,s:"India exports tea to many countries and ___ oil from other countries.",w:"exports",a:"imports",x:["sends","sells"]},
+    {c:8,s:"Prices increased last month, but this month they ___.",w:"increased",a:"decreased",x:["raised","grew"]},
+    {c:8,s:"Metals expand when they are heated and ___ when they are cooled.",w:"expand",a:"contract",x:["swell","grow"]},
+    {c:8,s:"Do not reject the offer. ___ it with thanks.",w:"reject",a:"Accept",x:["Refuse","Deny"]},
+    {c:8,s:"The maximum marks are 100, and the ___ marks to pass are 35.",w:"maximum",a:"minimum",x:["most","highest"]},
+    {c:8,s:"These flowers are not artificial. They are ___ flowers from our garden.",w:"artificial",a:"natural",x:["plastic","paper"]},
+    {c:8,s:"Seema is an optimist and hopes for the best. Her brother is a ___ who expects the worst.",w:"optimist",a:"pessimist",x:["dreamer","believer"]},
+    {c:8,s:"Buses are frequent in the city, but they are ___ in our village.",w:"frequent",a:"rare",x:["regular","common"]},
+    {c:8,s:"A wise person listens to others. A ___ person thinks he knows everything.",w:"wise",a:"foolish",x:["clever","smart"]},
+    {c:8,s:"The doctor said the plant was not dead. It was still ___.",w:"dead",a:"alive",x:["dry","sick"]},
+    {c:8,s:"Rohan was absent on Monday but ___ on Tuesday.",w:"absent",a:"present",x:["away","missing"]}
+  ];
+  /* ODD: synonym pairs hidden among three pairs of opposites. */
+  var SYN=[
+    {c:6,a:"big",b:"large"},{c:6,a:"small",b:"little"},{c:6,a:"happy",b:"glad"},{c:6,a:"fast",b:"quick"},
+    {c:6,a:"start",b:"begin"},{c:6,a:"shut",b:"close"},{c:6,a:"end",b:"finish"},{c:6,a:"sick",b:"ill"},
+    {c:6,a:"rich",b:"wealthy"},{c:6,a:"under",b:"below"},{c:6,a:"gift",b:"present"},{c:6,a:"shout",b:"yell"},
+    {c:6,a:"silent",b:"quiet"},{c:6,a:"stone",b:"rock"},{c:6,a:"jump",b:"leap"},{c:6,a:"kind",b:"nice"},
+    {c:7,a:"unhappy",b:"sad"},{c:7,a:"incorrect",b:"wrong"},{c:7,a:"impolite",b:"rude"},{c:7,a:"unkind",b:"cruel"},
+    {c:7,a:"useless",b:"worthless"},{c:7,a:"dishonest",b:"untruthful"},
+    {c:8,a:"ancient",b:"old"},{c:8,a:"scarce",b:"rare"},{c:8,a:"victory",b:"win"},{c:8,a:"permanent",b:"lasting"},
+    {c:8,a:"transparent",b:"clear"},{c:8,a:"brave",b:"courageous"},{c:8,a:"enormous",b:"huge"}
+  ];
+  function pr(a,b){return a+" – "+b}
+  function antPairs(){return PICK.filter(function(p){return p.c<=cls&&!p.p&&!p.q})}
+
+  /* ---------- class content ---------- */
+  function pairsHTML(list){return list.map(function(p){return '<span class="pair"><span class="w A">'+esc(p.w)+'</span><i aria-hidden="true">↔</i><span class="w O">'+esc(p.a)+'</span></span>'}).join("")}
+  $("#pairs6").innerHTML=pairsHTML(PICK.filter(function(p){return p.c===6}));
+  $("#pairs8").innerHTML=pairsHTML(PICK.filter(function(p){return p.c===8&&!p.q}));
+  var LEAD={6:"Class 6: simple pairs of opposites, and how we use them in a sentence.",7:"Class 7: opposites made with a prefix or a suffix, and choosing the opposite that fits the meaning. Class 6 words come back in the games.",8:"Class 8: gradable and complementary opposites, harder words and antonyms in a passage. Words from earlier classes come back in the games."};
+  function drawLearn(){
+    $("#learnLead").textContent=LEAD[cls];
+    document.querySelectorAll("[data-show]").forEach(function(el){el.hidden=+el.dataset.show!==cls});
+  }
+
+  /* ---------- practice ---------- */
+  function upto(list){return list.filter(function(x){return x.c<=cls})}
+  var mode="pick",S={};
+  function resetPractice(){
+    S.pick={i:0,score:0,ans:null,miss:[],q:TLM.deal("antonyms-pick-"+cls,upto(PICK),8).map(function(p){
+      return {p:p,ans:p.a,o:shuffle([p.a].concat(p.x))};
+    })};
+    S.fill={i:0,score:0,ans:null,miss:[],q:TLM.deal("antonyms-fill-"+cls,upto(FILL),8).map(function(p){
+      return {p:p,ans:p.a,o:shuffle([p.a].concat(p.x))};
+    })};
+    var AP=antPairs();
+    S.odd={i:0,score:0,ans:null,miss:[],q:TLM.deal("antonyms-odd-"+cls,upto(SYN),8).map(function(p){
+      var ans=pr(p.a,p.b),ants=shuffle(AP).slice(0,3).map(function(x){return pr(x.w,x.a)});
+      return {p:p,ans:ans,o:shuffle([ans].concat(ants))};
+    })};
+    drawPractice();
+  }
+  function pickQ(p){
+    if(p.q)return p.q;
+    if(p.p)return "What is the opposite of “"+p.w+"” in “"+p.p+"”?";
+    return "What is the opposite of “"+p.w+"”?";
+  }
+  function pickWhy(p){
+    if(p.n)return p.n;
+    var w=p.w,a=p.a;
+    if(a.length>w.length&&a.slice(-w.length)===w)return "Add “"+a.slice(0,a.length-w.length).replace(/-$/,"")+"-” to “"+w+"” to make “"+a+"”.";
+    if(/ful$/.test(w)&&/less$/.test(a))return "Change “-ful” to “-less”: “"+w+"” becomes “"+a+"”.";
+    return "The opposite of “"+w+"” is “"+a+"”.";
+  }
+  function gapHTML(s,fill){var bits=s.split("___");return esc(bits[0])+'<span class="blank">'+(fill?esc(fill):"&nbsp;")+'</span>'+esc(bits[1])}
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You know your opposites.":s.score>=n*0.7?"Great work. Look at the pairs you missed and try again.":"Good start. Read the opposites for your class again, then play once more.",s.miss.length);
+      return;
+    }
+    var q=s.q[s.i],p=q.p,html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>',last=s.i===n-1;
+    if(mode==="pick")html+='<p class="qs">'+esc(pickQ(p))+'</p>';
+    else if(mode==="fill")html+='<p class="qs" id="gap">'+gapHTML(p.s)+'</p><p>Choose the opposite of “'+esc(p.w)+'” to fill the gap.</p>';
+    else html+='<p class="qs">Three pairs are opposites. Which pair is <u>not</u>?</p>';
+    html+='<div class="opts'+(mode==="odd"?"":" row3")+'">'+
+      q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(x)+'</button>'}).join("")+'</div>'+
+      '<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(last?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var q=s.q[s.i],p=q.p,chosen=q.o[+b.dataset.o],ok=chosen===q.ans;
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
+    var why;
+    if(mode==="pick")why=pickWhy(p);
+    else if(mode==="fill"){why="“"+p.a+"” is the opposite of “"+p.w+"”.";$("#gap").innerHTML=gapHTML(p.s,p.a)}
+    else why="“"+p.a+"” and “"+p.b+"” mean almost the same, so they are synonyms, not opposites.";
+    var fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+why;
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(q.o[+x.dataset.o]===q.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawLearn();resetPractice();
+  });
+
+  drawLearn();resetPractice();
+})();
+</script>
+</Base>

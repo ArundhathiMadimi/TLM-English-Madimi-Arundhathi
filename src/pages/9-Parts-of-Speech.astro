@@ -1,0 +1,552 @@
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Parts of Speech | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
+:root{
+  --N-bg:#DCEBFF; --N-c:#2563EB; --N-t:#1E3A8A;
+  --P-bg:#D9F4FB; --P-c:#0891B2; --P-t:#155E75;
+  --V-bg:#FFE3E6; --V-c:#D6334A; --V-t:#8F1226;
+  --A-bg:#DDF5E3; --A-c:#16A34A; --A-t:#14532D;
+  --D-bg:#FFE9D6; --D-c:#EA580C; --D-t:#7C2D12;
+  --R-bg:#EDE4FF; --R-c:#7C3AED; --R-t:#4C1D95;
+  --C-bg:#FFF0C2; --C-c:#D99A00; --C-t:#6B4A00;
+  --I-bg:#FDE2F3; --I-c:#C026D3; --I-t:#701A75;
+  --T-bg:#D5F3EE; --T-c:#13927F; --T-t:#0B5E55;
+}
+
+.hero h1{font-size:clamp(2.6rem,13vw,4.6rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.stage{display:flex;flex-wrap:wrap;gap:.5rem;align-items:flex-start;min-height:5.6rem;margin:.2rem 0 .9rem}
+.chip{appearance:none;cursor:pointer;display:inline-flex;flex-direction:column;align-items:flex-start;gap:.15rem;padding:.5rem .8rem .4rem;border-radius:16px;border:3px solid var(--line);background:var(--bg);color:var(--ink);font:800 clamp(1.1rem,5.2vw,1.5rem)/1.15 var(--display);text-align:left;min-height:2.9rem;transition:transform .15s}
+.chip b{font-weight:800}
+.chip i{font:700 .75rem/1 var(--body);font-style:normal;opacity:.85}
+.chip.sel{box-shadow:0 0 0 3px var(--bg),0 0 0 6px var(--ink)}
+.chip:hover{transform:translateY(-2px)}
+.N{--k-bg:var(--N-bg);--k-c:var(--N-c);--k-t:var(--N-t)}
+.P{--k-bg:var(--P-bg);--k-c:var(--P-c);--k-t:var(--P-t)}
+.V{--k-bg:var(--V-bg);--k-c:var(--V-c);--k-t:var(--V-t)}
+.A{--k-bg:var(--A-bg);--k-c:var(--A-c);--k-t:var(--A-t)}
+.D{--k-bg:var(--D-bg);--k-c:var(--D-c);--k-t:var(--D-t)}
+.R{--k-bg:var(--R-bg);--k-c:var(--R-c);--k-t:var(--R-t)}
+.C{--k-bg:var(--C-bg);--k-c:var(--C-c);--k-t:var(--C-t)}
+.I{--k-bg:var(--I-bg);--k-c:var(--I-c);--k-t:var(--I-t)}
+.T{--k-bg:var(--T-bg);--k-c:var(--T-c);--k-t:var(--T-t)}
+.chip.on{background:var(--k-bg);border-color:var(--k-c);color:var(--k-t)}
+.panel{border-radius:16px;border:2px solid var(--line);padding:.8rem 1rem;min-height:7.4rem;margin-bottom:.8rem}
+.panel.on{background:var(--k-bg);border-color:var(--k-c);color:var(--k-t)}
+.panel .alone{font:800 clamp(1.3rem,6vw,1.75rem)/1.25 var(--display);margin:0 0 .3rem}
+.panel .verdict{font-weight:700;margin:0}
+.panel .hint{color:var(--muted);margin:0}
+.note{color:var(--muted);min-height:3.2rem;margin:0 0 .8rem}
+.key em{width:.9rem;height:.9rem;border-radius:5px;border:3px solid var(--k-c);background:var(--k-bg);display:inline-block}
+
+.hl{border-radius:6px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid var(--k-c,var(--ink));background:var(--k-bg,var(--line));color:var(--k-t,var(--ink))}
+.hl small{font:700 .7rem var(--body);margin-left:.3em}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-left:8px solid var(--k-c,var(--accent));border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--k-c,var(--line));background:var(--k-bg,var(--bg));color:var(--k-t,var(--ink));font-weight:700}
+.tcard p{margin:.25rem 0}
+.tcard .ex{font:800 1.15rem/1.8 var(--display);margin-top:.5rem}
+
+.words{margin-top:.8rem}
+.words .btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.uses{display:grid;gap:.8rem;margin-top:1rem}
+.use{border-left:6px solid var(--k-c,var(--accent));background:var(--surface);border-radius:0 16px 16px 0;padding:.8rem 1rem}
+.use p{margin:.2rem 0}
+.use .s{font:800 1.2rem/1.6 var(--display)}
+
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.5 var(--display);margin:.6rem 0 1rem}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.opts{display:grid;gap:.55rem}
+.opts.row2{grid-template-columns:repeat(auto-fit,minmax(9rem,1fr))}
+.opts.wordrow{display:flex;flex-wrap:wrap;gap:.5rem}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.wordrow .opt{width:auto;font:800 1.2rem/1.2 var(--display);padding:.6rem .85rem;text-align:center}
+.wordrow .pn{font:800 1.2rem var(--display);align-self:center;margin-left:-.3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chip{transition:none}.chip:hover{transform:none}}
+</style>
+
+<header class="hero wrap">
+  <h1>Parts of Speech</h1>
+  <p class="sub">Every word in a sentence has a job. Tap a word to find out what job it is doing.</p>
+
+  <div class="demo">
+    <div class="stage" id="heroStage"></div>
+    <div class="panel" id="heroPanel" aria-live="polite"></div>
+    <p class="note" id="heroNote"></p>
+    <div class="row">
+      <button type="button" class="btn" id="showAll" aria-pressed="false">Show all</button>
+      <button type="button" class="btn alt" id="nextEx">Next sentence</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+    <div class="key" aria-label="Colour key">
+      <span class="N"><em></em>noun</span>
+      <span class="P"><em></em>pronoun</span>
+      <span class="V"><em></em>verb</span>
+      <span class="A"><em></em>adjective</span>
+      <span class="D"><em></em>adverb</span>
+      <span class="R"><em></em>preposition</span>
+      <span class="C"><em></em>conjunction</span>
+      <span class="I"><em></em>interjection</span>
+      <span class="T"><em></em>article</span>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="what">
+    <h2>What are parts of speech?</h2>
+    <p class="lead">English words are sorted into eight groups by the job they do in a sentence. These groups are the parts of speech.</p>
+    <div class="card">
+      <p><b>The golden rule:</b> do not ask “What is this word?” Ask “What job is this word doing <em>in this sentence</em>?”</p>
+      <p class="qs" style="margin-bottom:.2rem"><span class="hl N">Ravi<small>noun</small></span> <span class="hl V">kicked<small>verb</small></span> the <span class="hl A">red<small>adjective</small></span> <span class="hl N">ball<small>noun</small></span> <span class="hl D">hard<small>adverb</small></span>.</p>
+    </div>
+  </section>
+
+  <section id="helper">
+    <h2>Word families</h2>
+    <p class="lead" id="helpLead"></p>
+    <div class="tlist" id="tlist"></div>
+  </section>
+
+  <section id="jobs">
+    <h2>One word, many jobs</h2>
+    <p class="lead">The same word can be a different part of speech in a different sentence. Pick a word and see how its job changes.</p>
+    <div class="card">
+      <div class="row words" id="jobWords" role="group" aria-label="Choose a word"></div>
+      <div class="uses" id="jobList" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="name" aria-pressed="true">Name it</button>
+        <button type="button" data-m="find" aria-pressed="false">Find it</button>
+        <button type="button" data-m="kind" aria-pressed="false" hidden>What kind?</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>name the eight parts of speech and give a simple example of each (Class 6);</li>
+        <li>sort nouns into common, proper, collective and abstract, pronouns into personal, possessive and reflexive, and adverbs into manner, place and time (Class 7);</li>
+        <li>see that one word can be different parts of speech by its use, use articles and other determiners, and label every word in a longer sentence (Class 8).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, and coloured chalk, one colour for each part of speech.</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Write “Wow! Meena quickly climbed up the tall tree.” Ask: which word is the action? Which word tells how?</li>
+        <li><b>Tap the sentence (8 min).</b> Project the hero. Students guess each word’s job aloud before you tap it.</li>
+        <li><b>Word families (12 min).</b> Pick your class on the bar. Read each card and ask students for one more example of their own.</li>
+        <li><b>One word, many jobs (5 min).</b> Classes 7 and 8: try “fast” and “light”. Ask students to make their own pair of sentences.</li>
+        <li><b>Practice (8 min).</b> Teams play Name it, Find it and What kind? on the count of three.</li>
+        <li><b>Exit ticket.</b> Each student writes one sentence and labels every word with its part of speech.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Learning a word as one fixed part of speech. “Fast”, “light” and “well” change their job; always look at the sentence.</li>
+        <li>Mixing up adjectives and adverbs. An adjective describes a noun (a <i>quick</i> boy); an adverb tells how, when or where an action happens (he ran <i>quickly</i>).</li>
+        <li>Calling “inside”, “outside” or “after” a preposition every time. With a noun after it (“inside the box”) it is a preposition; alone (“come inside”) it is an adverb.</li>
+        <li>Confusing “my, your, her” with “mine, yours, hers”. “Mine, yours, hers, ours, theirs” stand alone as possessive pronouns (“The book is mine”).</li>
+        <li>Thinking only words like “honesty” are abstract. Feelings and ideas you cannot touch, such as joy, fear and childhood, are abstract nouns too.</li>
+        <li>Forgetting that proper nouns (names of people, places, days and months) begin with a capital letter.</li>
+        <li>Articles: “a, an, the” are determiners. Many older books call them adjectives; accept both, but use one name in class.</li>
+      </ul>
+    </details>
+  </section>
+
+  <LessonNav slug="9-Parts-of-Speech" />
+
+  <footer>
+    Teaching learning material (TLM) on Parts of Speech for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+
+<script is:inline>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var cls=6;
+  var calm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  var NAME={N:"noun",P:"pronoun",V:"verb",A:"adjective",D:"adverb",R:"preposition",C:"conjunction",I:"interjection",T:"article"};
+  var JOB={
+    N:"A noun names a person, place, animal, thing or idea.",
+    P:"A pronoun takes the place of a noun.",
+    V:"A verb shows an action or a state of being.",
+    A:"An adjective describes a noun: what kind, which one or how many.",
+    D:"An adverb tells how, when or where. It adds meaning to a verb, an adjective or another adverb.",
+    R:"A preposition shows how a noun or pronoun is linked to another word, often by place or time.",
+    C:"A conjunction joins words or groups of words.",
+    I:"An interjection shows a sudden feeling. It is often followed by “!”.",
+    T:"An article (a, an, the) points to a noun. Articles are determiners; some books call them adjectives."
+  };
+  /* "Meena [sings] well." -> before, word, after */
+  function parts(s){var p=s.split(/\[|\]/);return {pre:p[0],w:p[1],post:p[2]}}
+  function hlS(s,code){var p=parts(s);return esc(p.pre)+'<span class="hl '+(code||"")+'">'+esc(p.w)+'</span>'+esc(p.post)}
+
+  /* ---------- hero: tap a word to reveal its job ---------- */
+  var HEX=[
+    {t:[["Wow","I","!"],["Meena","N"],["quickly","D"],["climbed","V"],["up","R"],["the","T"],["tall","A"],["tree","N","."]],n:"Eight words, seven different jobs. Can you find them all?"},
+    {t:[["Oh","I","!"],["Ravi","N"],["and","C"],["Sita","N"],["walked","V"],["slowly","D"],["to","R"],["the","T"],["old","A"],["temple","N","."]],n:"“And” joins two nouns. “Slowly” tells how they walked."},
+    {t:[["Hurray","I","!"],["We","P"],["won","V"],["the","T"],["match","N"],["because","C"],["Arjun","N"],["played","V"],["very","D"],["well","D","."]],n:"“Very” is an adverb too. It tells how well Arjun played."},
+    {t:[["Alas","I","!"],["The","T"],["little","A"],["puppy","N"],["fell","V"],["into","R"],["the","T"],["deep","A"],["well","N","."]],n:"Here “well” names a thing, so it is a noun. In the last sentence it was an adverb!"},
+    {t:[["Priya","N"],["sings","V"],["sweetly","D"],["but","C"],["I","P"],["sing","V"],["loudly","D","."]],n:"“But” joins two ideas that are different."},
+    {t:[["She","P"],["kept","V"],["the","T"],["new","A"],["books","N"],["on","R"],["a","T"],["high","A"],["shelf","N","."]],n:"“On” links the books to the shelf. It shows place."}
+  ];
+  var exI=0,sel=null,rev=[];
+  function drawHero(){
+    var e=HEX[exI],stage=$("#heroStage");
+    stage.innerHTML=e.t.map(function(t,i){
+      return '<button type="button" class="chip '+t[1]+(rev[i]?" on":"")+(sel===i?" sel":"")+'" data-i="'+i+'" aria-pressed="'+(sel===i)+'"><b>'+esc(t[0])+esc(t[2]||"")+'</b><i>'+(rev[i]?NAME[t[1]]:"tap me")+'</i></button>';
+    }).join("");
+    var p=$("#heroPanel");
+    if(sel===null){
+      p.className="panel";
+      p.innerHTML='<p class="alone">Tap a word to see its job.</p><p class="hint">Guess first, then tap to check.</p>';
+    }else{
+      var t=e.t[sel];
+      p.className="panel on "+t[1];
+      p.innerHTML='<p class="alone">“'+esc(t[0])+'” is '+(/^[aeiou]/.test(NAME[t[1]])?"an ":"a ")+NAME[t[1]]+'.</p><p class="verdict">'+esc(JOB[t[1]])+'</p>';
+    }
+    $("#heroNote").textContent=e.n;
+    var all=rev.length===e.t.length&&rev.every(Boolean);
+    $("#showAll").textContent=all?"Hide all":"Show all";
+    $("#showAll").setAttribute("aria-pressed",all);
+  }
+  $("#heroStage").addEventListener("click",function(ev){
+    var b=ev.target.closest("button");if(!b)return;
+    var i=+b.dataset.i;rev[i]=true;sel=sel===i?null:i;drawHero();
+  });
+  $("#showAll").addEventListener("click",function(){
+    var n=HEX[exI].t.length,all=rev.length===n&&rev.every(Boolean);
+    rev=[];if(!all)for(var i=0;i<n;i++)rev[i]=true;
+    sel=null;drawHero();
+  });
+  $("#nextEx").addEventListener("click",function(){exI=(exI+1)%HEX.length;sel=null;rev=[];drawHero()});
+  $("#listen").addEventListener("click",function(){
+    try{
+      speechSynthesis.cancel();
+      var txt=HEX[exI].t.map(function(t){return t[0]+(t[2]||"")}).join(" ");
+      if(sel!==null){var t=HEX[exI].t[sel];txt=t[0]+". "+NAME[t[1]]+". "+txt}
+      var u=new SpeechSynthesisUtterance(txt);u.lang="en-IN";u.rate=calm?.75:.85;speechSynthesis.speak(u);
+    }catch(err){}
+  });
+  drawHero();
+
+  /* ---------- word family cards ---------- */
+  var RULES=[
+    {c:6,k:"N",n:"Noun",f:"naming word",d:"Names a person, place, animal, thing or idea.",ex:"Meena, Delhi, cow, pen, happiness"},
+    {c:6,k:"P",n:"Pronoun",f:"used instead of a noun",d:"Saves us from repeating the noun. Meena is kind. She helps everyone.",ex:"I, we, you, he, she, it, they"},
+    {c:6,k:"V",n:"Verb",f:"action or being word",d:"Tells what someone does or what someone is.",ex:"run, eat, write, is, are, was"},
+    {c:6,k:"A",n:"Adjective",f:"describes a noun",d:"Tells what kind, which one or how many.",ex:"tall, red, sweet, five, clever"},
+    {c:6,k:"D",n:"Adverb",f:"tells how, when or where",d:"Adds meaning to a verb, an adjective or another adverb. Many adverbs end in -ly.",ex:"slowly, very, soon, here, today"},
+    {c:6,k:"R",n:"Preposition",f:"preposition + noun or pronoun",d:"Shows how a noun is linked to another word, often by place or time.",ex:"in, on, under, near, behind, after"},
+    {c:6,k:"C",n:"Conjunction",f:"joining word",d:"Joins words or groups of words.",ex:"and, but, or, so, because"},
+    {c:6,k:"I",n:"Interjection",f:"word of sudden feeling + !",d:"Shows joy, pain, surprise or sorrow.",ex:"Wow! Oh! Ouch! Hurray! Alas!"},
+    {c:7,k:"N",n:"Kinds of nouns",f:"common, proper, collective, abstract",d:"Common: any one of a kind (girl, city). Proper: a particular name, with a capital letter (Lata, Chennai). Collective: a group taken as one (team, herd, bunch). Abstract: an idea or feeling we cannot touch (honesty, joy, childhood).",ex:"A team of girls from Chennai showed great courage."},
+    {c:7,k:"P",n:"Kinds of pronouns",f:"personal, possessive, reflexive",d:"Personal: I, me, we, you, he, him, she, her, it, they, them. Possessive: mine, yours, his, hers, ours, theirs. Reflexive: myself, yourself, himself, herself, itself, ourselves, themselves.",ex:"This bag is mine. I packed it myself."},
+    {c:7,k:"D",n:"Kinds of adverbs",f:"manner, place, time",d:"Manner tells how (slowly, carefully). Place tells where (here, outside, upstairs). Time tells when (now, yesterday, soon).",ex:"Yesterday the children played happily outside."},
+    {c:8,k:"T",n:"Determiners and articles",f:"come before a noun",d:"Articles: a, an, the. Use “an” before a vowel sound (an apple, an hour). Other determiners: this, that, these, those (demonstratives); some, many, much, few, enough (quantifiers); my, your, his, her, our, their (possessives).",ex:"An owl sat on that tree. Some birds flew away."},
+    {c:8,k:"V",n:"Same word, different job",f:"look at the use, not the word",d:"One word can be a noun, a verb, an adjective or an adverb. Decide by the job it does in the sentence.",ex:"I run fast. It is a fast car. Muslims fast in Ramzan."},
+    {c:8,k:"A",n:"Reading a longer sentence",f:"verb first, then nouns, then the rest",d:"Find the verb first. Ask who or what does it: that is a noun or pronoun. Then find the describing words, the joining words and the linking words.",ex:"Oh! The old farmer and his son worked very hard in the hot sun."}
+  ];
+  function drawHelper(){
+    $("#helpLead").textContent=cls===6
+      ?"Class 6 learns the eight parts of speech. Each colour matches the sentence at the top."
+      :"Class "+cls+" revises the eight parts of speech and adds new ideas. The new ones are marked.";
+    $("#tlist").innerHTML=RULES.filter(function(r){return r.c<=cls}).map(function(r){
+      return '<article class="tcard '+r.k+'"><h3>'+esc(r.n)+(r.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<span class="formula">'+esc(r.f)+'</span><p>'+esc(r.d)+'</p><p class="ex">'+esc(r.ex)+'</p></article>';
+    }).join("");
+  }
+
+  /* ---------- one word, many jobs ---------- */
+  var JOBS={
+    fast:[["Rohan can run [fast].","D","It tells how Rohan runs."],["Papa bought a [fast] car.","A","It describes the car."],["Many Muslims [fast] during Ramzan.","V","It is the action: they go without food."],["Abdul broke his [fast] at sunset.","N","It names a thing: the time without food."]],
+    light:[["Please [light] the lamp.","V","It is the action."],["Switch on the [light].","N","It names a thing."],["This bag is very [light].","A","It describes the bag: not heavy."]],
+    well:[["Sita sings [well].","D","It tells how Sita sings."],["The water in the [well] is cold.","N","It names a thing."],["I was ill, but now I am [well].","A","It describes me: healthy."]],
+    help:[["Please [help] me.","V","It is the action."],["Ravi asked for [help].","N","It names a thing he asked for."]],
+    after:[["We played [after] lunch.","R","It links “lunch” to the action. A noun follows it."],["We played [after] we finished our homework.","C","It joins two groups of words, each with its own verb."]],
+    run:[["We [run] in the park.","V","It is the action."],["Raju goes for a [run] every morning.","N","It names a thing: “a run”."]]
+  };
+  var job="fast";
+  function drawJobs(){
+    $("#jobWords").innerHTML=Object.keys(JOBS).map(function(w){
+      return '<button type="button" class="btn alt" data-w="'+esc(w)+'" aria-pressed="'+(w===job)+'">'+esc(w)+'</button>';
+    }).join("");
+    $("#jobList").innerHTML=JOBS[job].map(function(x){
+      return '<div class="use '+x[1]+'"><p class="s">'+hlS(x[0],x[1])+'</p><p><b>'+NAME[x[1]]+'</b>: '+esc(x[2])+'</p></div>';
+    }).join("");
+  }
+  $("#jobWords").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;job=b.dataset.w;drawJobs();
+  });
+  drawJobs();
+
+  /* ---------- practice data ---------- */
+  var PJOB={
+    N:"names a person, place, animal, thing or idea, so it is a noun.",
+    P:"is used in place of a noun, so it is a pronoun.",
+    V:"shows an action or a state, so it is a verb.",
+    A:"describes a noun, so it is an adjective.",
+    D:"tells how, when or where, so it is an adverb.",
+    R:"links the noun after it to the rest of the sentence, so it is a preposition.",
+    C:"joins words or groups of words, so it is a conjunction.",
+    I:"shows a sudden feeling, so it is an interjection."
+  };
+  var EIGHT=["N","P","V","A","D","R","C","I"];
+  var NAMEQ=[
+    {s:"[Meena] plays the veena.",a:"N",c:6},
+    {s:"The [cat] is sleeping under the table.",a:"N",c:6},
+    {s:"The [mango] is sweet.",a:"N",c:6},
+    {s:"Ravi lost his pen, so [he] borrowed mine.",a:"P",c:6},
+    {s:"[They] are going to Hyderabad.",a:"P",c:6},
+    {s:"[She] waters the plants every morning.",a:"P",c:6},
+    {s:"The children [jumped] into the pool.",a:"V",c:6},
+    {s:"Amma [cooks] tasty dosas.",a:"V",c:6},
+    {s:"The farmer [ploughs] the field.",a:"V",c:6},
+    {s:"Arjun has a [red] cycle.",a:"A",c:6},
+    {s:"We saw a [huge] elephant at the zoo.",a:"A",c:6},
+    {s:"Lakshmi drew a [beautiful] rangoli.",a:"A",c:6},
+    {s:"The tortoise walked [slowly].",a:"D",c:6},
+    {s:"Priya speaks [softly].",a:"D",c:6},
+    {s:"The old man walks [carefully].",a:"D",c:6},
+    {s:"The book is [on] the table.",a:"R",c:6},
+    {s:"The cat hid [under] the bed.",a:"R",c:6},
+    {s:"The bus stopped [near] the school.",a:"R",c:6},
+    {s:"I like tea, [but] my sister likes coffee.",a:"C",c:6},
+    {s:"Rahul [and] Sita are friends.",a:"C",c:6},
+    {s:"Take an umbrella [because] it may rain.",a:"C",c:6},
+    {s:"[Hurray]! We won the match.",a:"I",c:6},
+    {s:"[Oh]! I forgot my lunch box.",a:"I",c:6},
+    {s:"[Ouch]! The thorn pricked my finger.",a:"I",c:6},
+    {s:"The [team] won the cup.",a:"N",c:7,w:"“Team” names a group, so it is a noun (a collective noun)."},
+    {s:"[Honesty] is the best policy.",a:"N",c:7,w:"“Honesty” names an idea, so it is a noun (an abstract noun)."},
+    {s:"A [flock] of birds flew away.",a:"N",c:7,w:"“Flock” names a group of birds, so it is a noun (a collective noun)."},
+    {s:"[Mumbai] is a busy city.",a:"N",c:7,w:"“Mumbai” is the name of a particular place, so it is a noun (a proper noun)."},
+    {s:"Kiran hurt [himself] while playing.",a:"P",c:7,w:"“Himself” stands for Kiran, so it is a pronoun (a reflexive pronoun)."},
+    {s:"This seat is [yours].",a:"P",c:7,w:"“Yours” stands for “your seat”, so it is a pronoun (a possessive pronoun)."},
+    {s:"The children are playing [outside].",a:"D",c:7,w:"“Outside” tells where they are playing. No noun follows it, so here it is an adverb of place."},
+    {s:"We will visit Mysuru [tomorrow].",a:"D",c:7,w:"“Tomorrow” tells when we will visit, so here it is an adverb of time."},
+    {s:"Rohan can run very [fast].",a:"D",c:8,w:"“Fast” tells how Rohan runs, so here it is an adverb."},
+    {s:"Papa bought a [fast] car.",a:"A",c:8,w:"“Fast” describes the car, so here it is an adjective."},
+    {s:"Many Muslims [fast] during Ramzan.",a:"V",c:8,w:"“Fast” is the action (to go without food), so here it is a verb."},
+    {s:"Abdul broke his [fast] at sunset.",a:"N",c:8,w:"“His fast” names a thing, so here it is a noun."},
+    {s:"Please [light] the lamp.",a:"V",c:8,w:"“Light” is the action done to the lamp, so here it is a verb."},
+    {s:"Switch on the [light].",a:"N",c:8,w:"“The light” names a thing, so here it is a noun."},
+    {s:"This bag is very [light].",a:"A",c:8,w:"“Light” describes the bag (not heavy), so here it is an adjective."},
+    {s:"Raju goes for a [run] every morning.",a:"N",c:8,w:"“A run” names a thing, so here it is a noun."},
+    {s:"Sita sings [well].",a:"D",c:8,w:"“Well” tells how Sita sings, so here it is an adverb."},
+    {s:"The water in the [well] is cold.",a:"N",c:8,w:"“The well” names a thing, so here it is a noun."},
+    {s:"We played [after] lunch.",a:"R",c:8,w:"“After” is followed by the noun “lunch”, so here it is a preposition."},
+    {s:"We played [after] we finished our homework.",a:"C",c:8,w:"“After” joins two groups of words, each with its own verb, so here it is a conjunction."},
+    {s:"Ravi asked for [help].",a:"N",c:8,w:"“Help” names the thing Ravi asked for, so here it is a noun."}
+  ];
+  var FINDQ=[
+    {s:"She bought a kite.",ask:"noun",a:"kite",w:"“Kite” names a thing.",c:6},
+    {s:"He climbed a tree.",ask:"noun",a:"tree",w:"“Tree” names a thing. “He” is a pronoun.",c:6},
+    {s:"We drank cold milk.",ask:"noun",a:"milk",w:"“Milk” names a thing.",c:6},
+    {s:"The little girl laughed loudly.",ask:"verb",a:"laughed",w:"“Laughed” is the action.",c:6},
+    {s:"Arjun reads every night.",ask:"verb",a:"reads",w:"“Reads” is the action.",c:6},
+    {s:"Birds fly high.",ask:"verb",a:"fly",w:"“Fly” is the action.",c:6},
+    {s:"Ravi likes sweet mangoes.",ask:"adjective",a:"sweet",w:"“Sweet” describes the mangoes.",c:6},
+    {s:"Lakshmi wore green bangles.",ask:"adjective",a:"green",w:"“Green” describes the bangles.",c:6},
+    {s:"Rani has long hair.",ask:"adjective",a:"long",w:"“Long” describes her hair.",c:6},
+    {s:"Meena sang sweetly.",ask:"adverb",a:"sweetly",w:"“Sweetly” tells how Meena sang.",c:6},
+    {s:"They worked happily.",ask:"adverb",a:"happily",w:"“Happily” tells how they worked.",c:6},
+    {s:"Yesterday we visited Grandma.",ask:"pronoun",a:"we",w:"“We” takes the place of the names of the people.",c:6},
+    {s:"Ramu gave them sweets.",ask:"pronoun",a:"them",w:"“Them” takes the place of the people Ramu gave sweets to.",c:6},
+    {s:"The ball rolled under the sofa.",ask:"preposition",a:"under",w:"“Under” links the sofa to where the ball rolled.",c:6},
+    {s:"Sita sat beside Gita.",ask:"preposition",a:"beside",w:"“Beside” links Gita to where Sita sat.",c:6},
+    {s:"Keep the books in the cupboard.",ask:"preposition",a:"in",w:"“In” links the cupboard to where the books go.",c:6},
+    {s:"I was tired but happy.",ask:"conjunction",a:"but",w:"“But” joins “tired” and “happy”.",c:6},
+    {s:"Is it hot or cold?",ask:"conjunction",a:"or",w:"“Or” joins two choices.",c:6},
+    {s:"Wow, what a lovely garden!",ask:"interjection",a:"Wow",w:"“Wow” shows sudden surprise.",c:6},
+    {s:"Alas, Ravi lost his pen.",ask:"interjection",a:"Alas",w:"“Alas” shows sorrow.",c:6},
+    {s:"A herd of cows grazed in the field.",ask:"collective noun",a:"herd",w:"“Herd” names a group of animals.",c:7},
+    {s:"The children showed great courage.",ask:"abstract noun",a:"courage",w:"“Courage” is a quality we cannot touch.",c:7},
+    {s:"My uncle lives in Chennai.",ask:"proper noun",a:"Chennai",w:"“Chennai” is the name of a particular city.",c:7},
+    {s:"Rekha met her teacher in Agra.",ask:"common noun",a:"teacher",w:"“Teacher” is a name shared by many people. “Rekha” and “Agra” are proper nouns.",c:7},
+    {s:"Anil cut himself with a knife.",ask:"reflexive pronoun",a:"himself",w:"“Himself” points back to Anil.",c:7},
+    {s:"That red umbrella is hers.",ask:"possessive pronoun",a:"hers",w:"“Hers” stands alone and shows who owns the umbrella.",c:7},
+    {s:"Mohan thanked her for the gift.",ask:"personal pronoun",a:"her",w:"“Her” stands for the person Mohan thanked.",c:7},
+    {s:"We reached the station early.",ask:"adverb of time",a:"early",w:"“Early” tells when we reached.",c:7},
+    {s:"The children are playing upstairs.",ask:"adverb of place",a:"upstairs",w:"“Upstairs” tells where they are playing.",c:7},
+    {s:"Tara opened the box gently.",ask:"adverb of manner",a:"gently",w:"“Gently” tells how Tara opened the box.",c:7},
+    {s:"Rahul ate an apple.",ask:"article",a:"an",w:"“An” is the article. We use “an” before a vowel sound.",c:8},
+    {s:"Those mangoes are ripe.",ask:"determiner",a:"Those",w:"“Those” comes before the noun and points to which mangoes.",c:8},
+    {s:"Many students came late.",ask:"determiner",a:"Many",w:"“Many” comes before the noun and tells how many students.",c:8},
+    {s:"Please light the lamp.",ask:"word used as a verb",a:"light",w:"“Light” is the action done to the lamp.",c:8},
+    {s:"We saw a bright light.",ask:"word used as a noun",a:"light",w:"“Light” names the thing we saw.",c:8},
+    {s:"Vande Bharat trains are fast.",ask:"word used as an adjective",a:"fast",w:"“Fast” describes the trains.",c:8},
+    {s:"Rohan ran fast.",ask:"word used as an adverb",a:"fast",w:"“Fast” tells how Rohan ran.",c:8},
+    {s:"Wait here until I return.",ask:"conjunction",a:"until",w:"“Until” joins two groups of words.",c:8},
+    {s:"We rested after the race.",ask:"preposition",a:"after",w:"“After” is followed by the noun “race”.",c:8}
+  ];
+  var GROUPS={
+    noun:["Common noun","Proper noun","Collective noun","Abstract noun"],
+    pron:["Personal pronoun","Possessive pronoun","Reflexive pronoun"],
+    adv:["Adverb of manner","Adverb of place","Adverb of time"],
+    det:["Article","Demonstrative determiner","Quantifier"]
+  };
+  var KWHY={
+    "Common noun":"It is a name shared by every person or thing of that kind.",
+    "Proper noun":"It is the name of a particular person, place or day, and it begins with a capital letter.",
+    "Collective noun":"It names a group taken as one whole.",
+    "Abstract noun":"It names an idea or feeling we cannot see or touch.",
+    "Personal pronoun":"It stands for a person or thing.",
+    "Possessive pronoun":"It stands alone and shows who owns something.",
+    "Reflexive pronoun":"It ends in -self or -selves and points back to the subject.",
+    "Adverb of manner":"It tells how the action happens.",
+    "Adverb of place":"It tells where the action happens.",
+    "Adverb of time":"It tells when the action happens.",
+    "Article":"A, an and the are the articles.",
+    "Demonstrative determiner":"It points to which one: this, that, these, those.",
+    "Quantifier":"It tells how much or how many."
+  };
+  var KINDQ=[
+    {s:"The [army] marched past.",g:"noun",a:"Collective noun",c:7},
+    {s:"A [bunch] of grapes hung from the vine.",g:"noun",a:"Collective noun",c:7},
+    {s:"[Kindness] makes everyone happy.",g:"noun",a:"Abstract noun",c:7},
+    {s:"We felt great [joy] at the wedding.",g:"noun",a:"Abstract noun",c:7},
+    {s:"The [Godavari] is a long river.",g:"noun",a:"Proper noun",c:7},
+    {s:"We have a holiday on [Monday].",g:"noun",a:"Proper noun",c:7},
+    {s:"My [teacher] is very kind.",g:"noun",a:"Common noun",c:7},
+    {s:"The [bus] was full.",g:"noun",a:"Common noun",c:7},
+    {s:"[We] planted a tree.",g:"pron",a:"Personal pronoun",c:7},
+    {s:"Nisha called [him] at night.",g:"pron",a:"Personal pronoun",c:7},
+    {s:"This house is [ours].",g:"pron",a:"Possessive pronoun",c:7},
+    {s:"Is this pencil [yours]?",g:"pron",a:"Possessive pronoun",c:7},
+    {s:"The baby looked at [herself] in the mirror.",g:"pron",a:"Reflexive pronoun",c:7},
+    {s:"We enjoyed [ourselves] at the fair.",g:"pron",a:"Reflexive pronoun",c:7},
+    {s:"The old lady crossed the road [carefully].",g:"adv",a:"Adverb of manner",c:7},
+    {s:"The dog barked [loudly].",g:"adv",a:"Adverb of manner",c:7},
+    {s:"Come [here], Raju.",g:"adv",a:"Adverb of place",c:7},
+    {s:"Please wait [outside].",g:"adv",a:"Adverb of place",c:7},
+    {s:"Grandpa arrived [yesterday].",g:"adv",a:"Adverb of time",c:7},
+    {s:"I will finish it [soon].",g:"adv",a:"Adverb of time",c:7},
+    {s:"[A] dog barked at the postman.",g:"det",a:"Article",c:8},
+    {s:"She is [an] honest girl.",g:"det",a:"Article",c:8},
+    {s:"[This] book is new.",g:"det",a:"Demonstrative determiner",c:8},
+    {s:"[These] flowers smell sweet.",g:"det",a:"Demonstrative determiner",c:8},
+    {s:"[Some] milk is left in the jug.",g:"det",a:"Quantifier",c:8},
+    {s:"We have [enough] time.",g:"det",a:"Quantifier",c:8}
+  ];
+  function tokens(s){return s.split(" ").map(function(t){var m=t.match(/^(.*?)([.,!?]*)$/);return {w:m[1],p:m[2]}})}
+
+  var mode="name",S={};
+  function resetPractice(){
+    var by=function(x){return x.c<=cls};
+    S.name={i:0,score:0,ans:null,miss:[],q:TLM.deal("pos-name-"+cls,NAMEQ.filter(by),8).map(function(x){
+      return {s:x.s,a:x.a,w:x.w,o:shuffle([x.a].concat(shuffle(EIGHT.filter(function(k){return k!==x.a})).slice(0,3)))};
+    })};
+    S.find={i:0,score:0,ans:null,miss:[],q:TLM.deal("pos-find-"+cls,FINDQ.filter(by),8)};
+    S.kind={i:0,score:0,ans:null,miss:[],q:TLM.deal("pos-kind-"+cls,KINDQ.filter(by),8).map(function(x){
+      return {s:x.s,a:x.a,o:shuffle(GROUPS[x.g])};
+    })};
+    if(cls===6&&mode==="kind")mode="name";
+    $('#modeSeg [data-m="kind"]').hidden=cls===6;
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You know every word’s job.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the word families again, then play once more.",s.miss.length);
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    if(mode==="name"){
+      html+='<p class="qs">'+hlS(q.s)+'</p><p class="count" style="margin-bottom:.6rem">What part of speech is the highlighted word?</p><div class="opts row2">'+
+        q.o.map(function(k,i){return '<button type="button" class="opt" data-o="'+i+'">'+NAME[k].charAt(0).toUpperCase()+NAME[k].slice(1)+'</button>'}).join("")+'</div>';
+    }else if(mode==="find"){
+      html+='<p class="qs" style="margin-bottom:.6rem">Tap the '+esc(q.ask)+'.</p><div class="opts wordrow">'+
+        tokens(q.s).map(function(t,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(t.w)+'</button>'+(t.p?'<span class="pn" aria-hidden="true">'+esc(t.p)+'</span>':'')}).join("")+'</div>';
+    }else{
+      html+='<p class="qs">'+hlS(q.s)+'</p><p class="count" style="margin-bottom:.6rem">What kind of word is highlighted?</p><div class="opts">'+
+        q.o.map(function(k,i){return '<button type="button" class="opt" data-o="'+i+'">'+esc(k)+'</button>'}).join("")+'</div>';
+    }
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(s.ans!==null||b.dataset.o===undefined)return;
+    var q=s.q[s.i],ok,why,btns=document.querySelectorAll("#pbody .opt"),correct,i=+b.dataset.o;
+    if(mode==="find"){
+      var tk=tokens(q.s);
+      ok=tk[i].w===q.a;why=q.w;
+      btns.forEach(function(x){if(tk[+x.dataset.o].w===q.a)correct=x});
+    }else{
+      ok=q.o[i]===q.a;
+      why=mode==="name"?(q.w||"“"+parts(q.s).w+"” "+PJOB[q.a]):KWHY[q.a];
+      btns.forEach(function(x){if(q.o[+x.dataset.o]===q.a)correct=x});
+    }
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
+    var fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+why;
+    btns.forEach(function(x){x.disabled=true});
+    correct.classList.add("good");
+    if(!ok)b.classList.add("bad");
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawHelper();resetPractice();
+  });
+
+  drawHelper();resetPractice();
+})();
+</script>
+</Base>
