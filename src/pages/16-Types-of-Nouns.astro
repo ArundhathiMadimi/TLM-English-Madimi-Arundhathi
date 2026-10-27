@@ -96,7 +96,7 @@ import LessonNav from '../components/LessonNav.astro';
     <h2>What is a noun?</h2>
     <p class="lead">A noun is the name of a person, place, animal, thing, group, material, or a feeling or idea.</p>
     <div class="tgrid">
-      <div class="tbox k-p"><b class="big">Proper</b><p>a special name, with a capital letter</p><p class="ex">Ravi, Delhi, Monday</p></div>
+      <div class="tbox k-p"><b class="big">Proper</b><p>a special name, with a capital letter</p><p class="ex">Ravi, Tirupati, Monday</p></div>
       <div class="tbox k-c"><b class="big">Common</b><p>a general name for any one of a kind</p><p class="ex">boy, city, day</p></div>
       <div class="tbox k-k"><b class="big">Collective</b><p>a name for a group</p><p class="ex">team, flock, bunch</p></div>
       <div class="tbox k-m"><b class="big">Material</b><p>what things are made of</p><p class="ex">gold, wood, cotton</p></div>
@@ -187,9 +187,9 @@ import LessonNav from '../components/LessonNav.astro';
   /* [word|kind] marks a noun */
   var SENTS=[
     "[Priya|p] gave her [mother|c] a [bunch|k] of [roses|c].",
-    "A [team|k] of [players|c] from [Chennai|p] won the [cup|c].",
+    "A [team|k] of [players|c] from [Vijayawada|p] won the [cup|c].",
     "My [grandmother|c] wears a [ring|c] made of [gold|m].",
-    "[Arjun|p] felt great [joy|a] when he saw the [Meenakshi Temple|p].",
+    "[Arjun|p] felt great [joy|a] when he visited [Lepakshi|p].",
     "The [flock|k] of [sheep|c] drank [water|m] from the [pond|c].",
     "[Honesty|a] made [Ravi|p] a [hero|c] in his [village|c].",
     "The [crowd|k] cheered with [delight|a] during [Pongal|p].",
@@ -226,7 +226,7 @@ import LessonNav from '../components/LessonNav.astro';
 
   /* ---------- kinds of nouns by class ---------- */
   var KINDS=[
-    {c:6,n:"Proper nouns",m:"the name of one particular person, place or thing",d:"A proper noun is a special name. It always begins with a capital letter. Names of days, months and festivals are proper nouns too.",ex:"{{Ravi}} went to {{Hyderabad}} on {{Monday}} for {{Sankranti}}."},
+    {c:6,n:"Proper nouns",m:"the name of one particular person, place or thing",d:"A proper noun is a special name. It always begins with a capital letter. Names of days, months and festivals are proper nouns too.",ex:"{{Ravi}} went to {{Rajahmundry}} on {{Monday}} for {{Sankranti}}."},
     {c:6,n:"Common nouns",m:"a general name for any one of a kind",d:"A common noun begins with a small letter, unless it starts a sentence.",ex:"The {{boy}} went to the {{city}} by {{train}}."},
     {c:6,n:"Collective nouns",m:"the name for a group, taken as one whole",d:"A collective noun names many people, animals or things together.",ex:"a {{team}} of players, a {{flock}} of birds, a {{herd}} of cows, a {{bunch}} of grapes, a {{crowd}} of people"},
     {c:6,n:"Material nouns",m:"the name of a material things are made of",d:"A material noun names a substance, like a metal, a cloth, a food or a liquid.",ex:"The ring is made of {{gold}}. The table is made of {{wood}}. I drink {{milk}}."},
@@ -315,7 +315,7 @@ import LessonNav from '../components/LessonNav.astro';
     {pre:"Our dining table is made of",post:".",ans:"wood",o:["wood","honesty","flock"],w:"Wood is a material.",c:6},
     {pre:"The baby smiled with",post:".",ans:"joy",o:["joy","table","herd"],w:"Joy is a feeling, an abstract noun.",c:6},
     {pre:"",post:"is the best policy.",ans:"Honesty",o:["Honesty","Pencil","Herd"],w:"Honesty is a quality, an abstract noun.",c:6},
-    {pre:"We visited",post:"last summer.",ans:"Mysuru",o:["Mysuru","mysuru","happiness"],w:"Mysuru is a proper noun, so it needs a capital letter.",c:6},
+    {pre:"We visited",post:"last summer.",ans:"Lepakshi",o:["Lepakshi","lepakshi","happiness"],w:"Lepakshi is a proper noun, so it needs a capital letter.",c:6},
     {pre:"My best friend is",post:".",ans:"Kavya",o:["Kavya","kavya","kindness"],w:"Kavya is a proper noun, so it needs a capital letter.",c:6},
     {pre:"We celebrate",post:"in October or November.",ans:"Diwali",o:["Diwali","diwali","sugar"],w:"Diwali is a proper noun, so it needs a capital letter.",c:6},
     {pre:"The longest river in India is the",post:".",ans:"Ganga",o:["Ganga","ganga","herd"],w:"Ganga is a proper noun, so it needs a capital letter.",c:6},
