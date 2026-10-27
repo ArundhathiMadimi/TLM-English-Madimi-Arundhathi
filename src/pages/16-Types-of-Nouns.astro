@@ -1,0 +1,416 @@
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Types of Nouns | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
+:root{
+  --pr-bg:#E3EEFF; --pr-c:#2F6FD6; --pr-t:#123F86;
+  --co-bg:#DDF5E4; --co-c:#239B56; --co-t:#0F5A2E;
+  --cl-bg:#FCE3C4; --cl-c:#C26A1B; --cl-t:#6E3A08;
+  --ma-bg:#EFE6DA; --ma-c:#8A6A43; --ma-t:#4E3A20;
+  --ab-bg:#F7E1F3; --ab-c:#B23A9E; --ab-t:#6A1A5C;
+}
+
+.hero h1{font-size:clamp(2.6rem,12.5vw,4.4rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.k-p{--kb:var(--pr-bg);--kc:var(--pr-c);--kt:var(--pr-t)}
+.k-c{--kb:var(--co-bg);--kc:var(--co-c);--kt:var(--co-t)}
+.k-k{--kb:var(--cl-bg);--kc:var(--cl-c);--kt:var(--cl-t)}
+.k-m{--kb:var(--ma-bg);--kc:var(--ma-c);--kt:var(--ma-t)}
+.k-a{--kb:var(--ab-bg);--kc:var(--ab-c);--kt:var(--ab-t)}
+.nsent{font:800 clamp(1.3rem,6vw,1.8rem)/2 var(--display);margin:.2rem 0 .4rem}
+.nn{appearance:none;font:inherit;color:inherit;background:var(--surface);border:2px dashed var(--muted);border-radius:12px;padding:.1em .35em;cursor:pointer;min-height:2.9rem}
+.nn:hover{border-color:var(--accent)}
+.nn.on{background:var(--kb);border:2px solid var(--kc);color:var(--kt)}
+.nn small{font:700 .75rem var(--body);margin-left:.2em}
+.note{color:var(--muted);min-height:4.6rem;margin:0 0 .4rem}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem;margin:.4rem 0 0;padding:0;list-style:none}
+.legend li{background:var(--kb);border:2px solid var(--kc);color:var(--kt);border-radius:20px;padding:.15rem .7rem;font-weight:700;font-size:.9rem}
+.hl{border-radius:6px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid;background:var(--cl-bg);border-color:var(--cl-c);color:var(--cl-t);font-weight:800}
+
+.tgrid{display:grid;gap:.8rem;margin-top:1rem;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))}
+.tbox{background:var(--surface);border:2px solid var(--line);border-top:6px solid var(--kc);border-radius:18px;padding:.9rem 1rem}
+.tbox .big{display:block;font:800 1.5rem/1.1 var(--display);color:var(--kt)}
+.tbox p{margin:.3rem 0}
+.tbox .ex{font:800 1.05rem/1.6 var(--display)}
+.tip{margin-top:.9rem;border-left:6px solid var(--pr-c);background:var(--pr-bg);color:var(--pr-t);border-radius:0 16px 16px 0;padding:.7rem 1rem;font-weight:700}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--pr-c);background:var(--pr-bg);color:var(--pr-t);font-weight:700}
+.tcard p{margin:.25rem 0}
+.tcard .ex{font:800 1.12rem/1.8 var(--display);margin-top:.5rem}
+
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.5 var(--display);margin:.6rem 0 1rem}
+.ask{font-weight:700;margin:-.4rem 0 .8rem}
+.gap{display:inline-block;min-width:4.5rem;border-bottom:4px solid var(--ink);text-align:center;padding:0 .3em}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="hero wrap">
+  <h1>Types of Nouns</h1>
+  <p class="sub">A noun is a naming word. Tap each noun in the sentence to find out what kind it is.</p>
+
+  <div class="demo">
+    <p class="nsent" id="hSent"></p>
+    <p class="note" id="hNote" aria-live="polite"></p>
+    <ul class="legend" aria-label="Kinds of nouns">
+      <li class="k-p">proper</li><li class="k-c">common</li><li class="k-k">collective</li><li class="k-m">material</li><li class="k-a">abstract</li>
+    </ul>
+
+    <div class="row" style="margin-top:.8rem">
+      <button type="button" class="btn" id="nextSent">Next sentence</button>
+      <button type="button" class="btn alt" id="showAll">Show all</button>
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="what">
+    <h2>What is a noun?</h2>
+    <p class="lead">A noun is the name of a person, place, animal, thing, group, material, or a feeling or idea.</p>
+    <div class="tgrid">
+      <div class="tbox k-p"><b class="big">Proper</b><p>a special name, with a capital letter</p><p class="ex">Ravi, Delhi, Monday</p></div>
+      <div class="tbox k-c"><b class="big">Common</b><p>a general name for any one of a kind</p><p class="ex">boy, city, day</p></div>
+      <div class="tbox k-k"><b class="big">Collective</b><p>a name for a group</p><p class="ex">team, flock, bunch</p></div>
+      <div class="tbox k-m"><b class="big">Material</b><p>what things are made of</p><p class="ex">gold, wood, cotton</p></div>
+      <div class="tbox k-a"><b class="big">Abstract</b><p>a quality, feeling or idea you cannot touch</p><p class="ex">joy, honesty, courage</p></div>
+    </div>
+    <p class="tip">Ask: Can I touch it? If not, it is an abstract noun. Is it a special name? Then it is a proper noun.</p>
+  </section>
+
+  <section id="kinds">
+    <h2>Nouns for your class</h2>
+    <p class="lead" id="kindsLead"></p>
+    <div class="tlist" id="tlist"></div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="name" aria-pressed="true">Name it</button>
+        <button type="button" data-m="fill" aria-pressed="false">Fill it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>identify proper, common, collective, material and abstract nouns, write proper nouns with a capital letter, and use common collective nouns (team, flock, herd, bunch, swarm, crowd) (Class 6);</li>
+        <li>sort nouns into countable and uncountable, and concrete and abstract, and use more collective nouns (pack, fleet, bundle, army) (Class 7);</li>
+        <li>form abstract nouns from adjectives, verbs and common nouns (brave → bravery, know → knowledge, child → childhood), use compound nouns and their plurals (mothers-in-law), and choose many or much, few or little (Class 8).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, and five sheets of paper labelled proper, common, collective, material and abstract.</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Ask: “What is your name? Where do you live? What is your bag made of? How do you feel today?” Write each answer on the board. Every answer is a noun.</li>
+        <li><b>Teach (10 min).</b> Project the hero. Students call out the nouns in each sentence, then a volunteer taps them to check the kind.</li>
+        <li><b>Sort it (5 min).</b> Stick the five labels on the walls. Call out nouns (Godavari, sugar, crowd, kindness, pencil). Students point to the right wall.</li>
+        <li><b>Your class (10 min).</b> Pick your class on the bar and read the cards. Students give one more example for each card.</li>
+        <li><b>Practice (8 min).</b> Teams play Name it and Fill it on the count of three.</li>
+        <li><b>Exit ticket.</b> Each student writes one sentence that has at least three different kinds of nouns, and marks each one.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Writing proper nouns with a small letter: “ravi”, “diwali”, “monday”.</li>
+        <li>Thinking every noun with a capital letter is proper: a common noun at the start of a sentence still has a capital.</li>
+        <li>Mixing up collective nouns: “a herd of bees”, “a flock of cows”.</li>
+        <li>Adding s or a to uncountable nouns: “informations”, “advices”, “a furniture”.</li>
+        <li>Using an adjective where an abstract noun is needed: “He showed great brave” should be “great bravery”.</li>
+        <li>Making up abstract nouns: “braveness”, “wiseness”, “knowness”.</li>
+        <li>Adding s to the wrong part of a compound noun: “mother-in-laws” should be “mothers-in-law”.</li>
+        <li>Using much with countable nouns: “much students” should be “many students”.</li>
+      </ul>
+    </details>
+  </section>
+
+  <LessonNav slug="16-Types-of-Nouns" />
+
+  <footer>
+    Teaching learning material (TLM) on Types of Nouns for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+
+<script is:inline>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  function hlSent(s){return esc(s).replace(/\{\{(.+?)\}\}/g,'<span class="hl">$1</span>')}
+
+  /* ---------- hero: tap the nouns ---------- */
+  var TYPES={
+    p:{n:"proper",d:"the special name of one particular person, place or thing. It begins with a capital letter."},
+    c:{n:"common",d:"a general name for any person, place, animal or thing of a kind."},
+    k:{n:"collective",d:"the name for a group, taken as one whole."},
+    m:{n:"material",d:"the name of a material that things are made of."},
+    a:{n:"abstract",d:"the name of a quality, feeling or idea. You cannot see or touch it."}
+  };
+  /* [word|kind] marks a noun */
+  var SENTS=[
+    "[Priya|p] gave her [mother|c] a [bunch|k] of [roses|c].",
+    "A [team|k] of [players|c] from [Chennai|p] won the [cup|c].",
+    "My [grandmother|c] wears a [ring|c] made of [gold|m].",
+    "[Arjun|p] felt great [joy|a] when he saw the [Taj Mahal|p].",
+    "The [flock|k] of [sheep|c] drank [water|m] from the [pond|c].",
+    "[Honesty|a] made [Ravi|p] a [hero|c] in his [village|c].",
+    "The [crowd|k] cheered with [delight|a] during [Pongal|p].",
+    "This [shirt|c] is made of [cotton|m], and that [bag|c] is made of [jute|m]."
+  ];
+  var hs=0;
+  function plain(s){return s.replace(/\[(.+?)\|\w\]/g,"$1")}
+  function drawHero(){
+    $("#hSent").innerHTML=esc(SENTS[hs]).replace(/\[(.+?)\|(\w)\]/g,function(_,w,k){
+      return '<button type="button" class="nn k-'+k+'" data-k="'+k+'" data-w="'+w+'" aria-pressed="false">'+w+'</button>';
+    });
+    $("#hNote").textContent="This sentence has "+document.querySelectorAll("#hSent .nn").length+" nouns. Tap each one.";
+  }
+  function reveal(b){
+    if(b.classList.contains("on"))return;
+    b.classList.add("on");b.setAttribute("aria-pressed","true");
+    b.insertAdjacentHTML("beforeend",' <small>'+TYPES[b.dataset.k].n+'</small>');
+  }
+  $("#hSent").addEventListener("click",function(e){
+    var b=e.target.closest(".nn");if(!b)return;
+    reveal(b);
+    var T=TYPES[b.dataset.k];
+    $("#hNote").textContent="“"+b.dataset.w+"” is a"+(b.dataset.k==="a"?"n ":" ")+T.n+" noun: "+T.d;
+  });
+  $("#showAll").addEventListener("click",function(){
+    document.querySelectorAll("#hSent .nn").forEach(reveal);
+    $("#hNote").textContent="All the nouns are marked. Which kinds can you find?";
+  });
+  $("#nextSent").addEventListener("click",function(){hs=(hs+1)%SENTS.length;drawHero()});
+  $("#listen").addEventListener("click",function(){
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(plain(SENTS[hs]));u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+  drawHero();
+
+  /* ---------- kinds of nouns by class ---------- */
+  var KINDS=[
+    {c:6,n:"Proper nouns",m:"the name of one particular person, place or thing",d:"A proper noun is a special name. It always begins with a capital letter. Names of days, months and festivals are proper nouns too.",ex:"{{Ravi}} went to {{Hyderabad}} on {{Monday}} for {{Sankranti}}."},
+    {c:6,n:"Common nouns",m:"a general name for any one of a kind",d:"A common noun begins with a small letter, unless it starts a sentence.",ex:"The {{boy}} went to the {{city}} by {{train}}."},
+    {c:6,n:"Collective nouns",m:"the name for a group, taken as one whole",d:"A collective noun names many people, animals or things together.",ex:"a {{team}} of players, a {{flock}} of birds, a {{herd}} of cows, a {{bunch}} of grapes, a {{crowd}} of people"},
+    {c:6,n:"Material nouns",m:"the name of a material things are made of",d:"A material noun names a substance, like a metal, a cloth, a food or a liquid.",ex:"The ring is made of {{gold}}. The table is made of {{wood}}. I drink {{milk}}."},
+    {c:6,n:"Abstract nouns",m:"the name of a quality, feeling or idea",d:"You cannot see, touch, hear, smell or taste these. You can only think or feel them.",ex:"Her {{kindness}} filled us with {{joy}}. {{Honesty}} is the best policy."},
+    {c:7,n:"Countable nouns",m:"can be counted · have a plural · can take a or an",d:"You can say one, two, three of them.",ex:"one {{pen}}, two {{pens}}; a {{mango}}, five {{mangoes}}"},
+    {c:7,n:"Uncountable nouns",m:"cannot be counted · no plural · never a or an",d:"Most material and abstract nouns are uncountable. Count them with a word like cup, kilo or piece.",ex:"a cup of {{milk}}, a kilo of {{rice}}, a piece of {{advice}}, some {{information}}"},
+    {c:7,n:"Concrete or abstract",m:"concrete: you can see or touch it · abstract: you cannot",d:"Proper, common, collective and material nouns are all concrete nouns.",ex:"The {{child}} (concrete) showed great {{courage}} (abstract)."},
+    {c:7,n:"More collective nouns",m:"herd · swarm · pack · fleet · bundle · army",d:"Each group has its own word. Learn them in pairs.",ex:"a {{swarm}} of bees, a {{pack}} of wolves, a {{fleet}} of ships, a {{bundle}} of sticks, an {{army}} of ants"},
+    {c:8,n:"Abstract nouns from adjectives",m:"brave → bravery · honest → honesty · kind → kindness · wise → wisdom · young → youth",d:"Many abstract nouns are made from describing words.",ex:"The soldier was brave. Everyone praised his {{bravery}}."},
+    {c:8,n:"Abstract nouns from verbs",m:"think → thought · know → knowledge · decide → decision · grow → growth · laugh → laughter",d:"Some abstract nouns are made from action words.",ex:"Books help us know more. They give us {{knowledge}}."},
+    {c:8,n:"Abstract nouns from common nouns",m:"child → childhood · friend → friendship · hero → heroism · slave → slavery",d:"Endings like -hood, -ship and -ism turn a common noun into an abstract noun.",ex:"Krishna and Sudama were friends. Their {{friendship}} is famous."},
+    {c:8,n:"Compound nouns",m:"two or more words → one noun",d:"Some are written as one word, some as two words, and some with hyphens.",ex:"{{toothbrush}}, {{classroom}}, {{bus stop}}, {{mother-in-law}}, {{passer-by}}"},
+    {c:8,n:"Plurals of compound nouns",m:"add s to the main noun",d:"In a hyphenated compound, the main noun takes the s, not the last word.",ex:"two {{mothers-in-law}}, many {{passers-by}}, three {{sons-in-law}}"},
+    {c:8,n:"Many or much, few or little",m:"many, few + countable · much, little + uncountable",d:"These words help you tell countable and uncountable nouns apart.",ex:"How {{many}} mangoes? How {{much}} milk? A {{few}} eggs and a {{little}} sugar."}
+  ];
+  function drawKinds(){
+    $("#kindsLead").textContent=cls===6
+      ?"Class 6 learns the five kinds of nouns."
+      :"Class "+cls+" revises the earlier ones and adds new ones. The new ones are marked.";
+    $("#tlist").innerHTML=KINDS.filter(function(k){return k.c<=cls}).map(function(k){
+      return '<article class="tcard"><h3>'+esc(k.n)+(k.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<span class="formula">'+esc(k.m)+'</span><p>'+esc(k.d)+'</p><p class="ex">'+hlSent(k.ex)+'</p></article>';
+    }).join("");
+  }
+
+  /* ---------- practice data ---------- */
+  var NAME=[
+    {s:"{{Ravi}} is my brother.",ans:"proper",o:["proper","collective","abstract"],w:"Ravi is the special name of one person.",c:6},
+    {s:"We went to {{Tirupati}} by train.",ans:"proper",o:["proper","material","abstract"],w:"Tirupati is the name of one particular place.",c:6},
+    {s:"We celebrate {{Pongal}} in January.",ans:"proper",o:["proper","collective","material"],w:"Pongal is the name of one particular festival.",c:6},
+    {s:"The {{teacher}} smiled at us.",ans:"common",o:["common","proper","material"],w:"Teacher is a general name for anyone who teaches.",c:6},
+    {s:"I saw a {{tiger}} in the zoo.",ans:"common",o:["common","abstract","proper"],w:"Tiger is a general name for any tiger.",c:6},
+    {s:"The {{river}} is full after the rain.",ans:"common",o:["common","proper","abstract"],w:"River is a general name. Godavari would be a proper noun.",c:6},
+    {s:"The {{bird}} built a nest.",ans:"common",o:["common","material","proper"],w:"Bird is a general name for any bird.",c:6},
+    {s:"A {{flock}} of parrots sat on the tree.",ans:"collective",o:["collective","proper","material"],w:"Flock names a group of birds.",c:6},
+    {s:"The {{army}} marched past.",ans:"collective",o:["collective","abstract","proper"],w:"Army names a group of soldiers.",c:6},
+    {s:"Our {{family}} has five members.",ans:"collective",o:["collective","material","abstract"],w:"Family names a group of people.",c:6},
+    {s:"Our {{class}} is going on a trip.",ans:"collective",o:["collective","material","proper"],w:"Class here names a group of students.",c:6},
+    {s:"This bangle is made of {{silver}}.",ans:"material",o:["material","proper","collective"],w:"Silver is a material that things are made of.",c:6},
+    {s:"My shirt is made of {{cotton}}.",ans:"material",o:["material","abstract","proper"],w:"Cotton is a material that things are made of.",c:6},
+    {s:"The temple bell is made of {{brass}}.",ans:"material",o:["material","proper","abstract"],w:"Brass is a metal, a material.",c:6},
+    {s:"{{Kindness}} costs nothing.",ans:"abstract",o:["abstract","proper","material"],w:"Kindness is a quality. You cannot touch it.",c:6},
+    {s:"She jumped with {{joy}}.",ans:"abstract",o:["abstract","collective","material"],w:"Joy is a feeling. You cannot touch it.",c:6},
+    {s:"{{Honesty}} is the best policy.",ans:"abstract",o:["abstract","proper","collective"],w:"Honesty is a quality. You cannot touch it.",c:6},
+    {s:"There is some {{rice}} in the pot.",ans:"uncountable",o:["uncountable","countable","proper"],w:"You cannot count rice grain by grain, so it is uncountable.",c:7},
+    {s:"I ate two {{bananas}}.",ans:"countable",o:["countable","uncountable","proper"],w:"You can count bananas: one, two, three.",c:7},
+    {s:"Please pass the {{salt}}.",ans:"uncountable",o:["uncountable","countable","collective"],w:"Salt cannot be counted, so it is uncountable.",c:7},
+    {s:"She has three {{brothers}}.",ans:"countable",o:["countable","uncountable","abstract"],w:"You can count brothers.",c:7},
+    {s:"Can I have some {{water}}?",ans:"uncountable",o:["uncountable","countable","proper"],w:"Water cannot be counted, so it is uncountable.",c:7},
+    {s:"The {{chairs}} are new.",ans:"countable",o:["countable","uncountable","abstract"],w:"You can count chairs.",c:7},
+    {s:"We need more {{information}}.",ans:"uncountable",o:["uncountable","countable","collective"],w:"Information has no plural, so it is uncountable.",c:7},
+    {s:"Thank you for your {{advice}}.",ans:"uncountable",o:["uncountable","countable","proper"],w:"Advice has no plural, so it is uncountable.",c:7},
+    {s:"Bring me five {{eggs}}.",ans:"countable",o:["countable","uncountable","collective"],w:"You can count eggs.",c:7},
+    {s:"There is {{sugar}} in my tea.",ans:"uncountable",o:["uncountable","countable","proper"],w:"Sugar cannot be counted, so it is uncountable.",c:7},
+    {s:"Three {{pencils}} fell down.",ans:"countable",o:["countable","uncountable","abstract"],w:"You can count pencils.",c:7},
+    {s:"The boy showed great {{courage}}.",ans:"abstract",o:["abstract","collective","proper"],w:"Courage is a quality. You cannot touch it.",c:7},
+    {s:"The king trusted the {{wisdom}} of his minister.",ans:"abstract",o:["abstract","material","proper"],w:"Wisdom is a quality. You cannot touch it.",c:7},
+    {s:"We felt great {{fear}} in the dark.",ans:"abstract",o:["abstract","collective","proper"],w:"Fear is a feeling. You cannot touch it.",c:7},
+    {s:"The {{friendship}} of Krishna and Sudama is famous.",ans:"abstract",o:["abstract","collective","proper"],w:"Friendship is an idea. You cannot touch it.",c:7},
+    {s:"I left my {{toothbrush}} at home.",ans:"compound",o:["compound","abstract","collective"],w:"Tooth + brush make one noun.",c:8},
+    {s:"My aunt’s {{mother-in-law}} lives with them.",ans:"compound",o:["compound","abstract","collective"],w:"Mother-in-law is three words joined into one noun.",c:8},
+    {s:"We waited at the {{bus stop}}.",ans:"compound",o:["compound","abstract","material"],w:"Bus + stop make one noun.",c:8},
+    {s:"The {{classroom}} is clean.",ans:"compound",o:["compound","abstract","proper"],w:"Class + room make one noun.",c:8},
+    {s:"A {{passer-by}} helped the old man.",ans:"compound",o:["compound","abstract","material"],w:"Passer + by make one noun.",c:8},
+    {s:"The {{bookshelf}} is full.",ans:"compound",o:["compound","abstract","proper"],w:"Book + shelf make one noun.",c:8},
+    {s:"The {{postman}} brought a letter.",ans:"compound",o:["compound","abstract","material"],w:"Post + man make one noun.",c:8},
+    {s:"There was a {{traffic jam}} near the school.",ans:"compound",o:["compound","abstract","proper"],w:"Traffic + jam make one noun.",c:8},
+    {s:"Grandpa often talks about his {{childhood}}.",ans:"abstract",o:["abstract","collective","material"],w:"Childhood is the time of being a child. You cannot touch it.",c:8},
+    {s:"The {{bravery}} of the soldiers saved the town.",ans:"abstract",o:["abstract","collective","proper"],w:"Bravery is a quality, made from the adjective brave.",c:8},
+    {s:"{{Knowledge}} is power.",ans:"abstract",o:["abstract","material","proper"],w:"Knowledge is an idea, made from the verb know.",c:8},
+    {s:"The {{growth}} of the plant was slow.",ans:"abstract",o:["abstract","collective","proper"],w:"Growth is an idea, made from the verb grow.",c:8},
+    {s:"{{Freedom}} is our birthright.",ans:"abstract",o:["abstract","material","collective"],w:"Freedom is an idea, made from the adjective free.",c:8},
+    {s:"His {{honesty}} won everyone’s trust.",ans:"abstract",o:["abstract","collective","material"],w:"Honesty is a quality, made from the adjective honest.",c:8}
+  ];
+  var FILL=[
+    {pre:"A",post:"of cows was grazing in the field.",ans:"herd",o:["herd","swarm","bunch"],w:"We say a herd of cows.",c:6},
+    {pre:"A",post:"of birds flew over the lake.",ans:"flock",o:["flock","herd","bunch"],w:"We say a flock of birds.",c:6},
+    {pre:"Amma bought a",post:"of bananas.",ans:"bunch",o:["bunch","flock","crowd"],w:"We say a bunch of bananas.",c:6},
+    {pre:"Our cricket",post:"won the match.",ans:"team",o:["team","herd","bunch"],w:"A group of players is a team.",c:6},
+    {pre:"A",post:"of people gathered to watch the parade.",ans:"crowd",o:["crowd","flock","bunch"],w:"We say a crowd of people.",c:6},
+    {pre:"Our",post:"has forty students.",ans:"class",o:["class","herd","swarm"],w:"A group of students is a class.",c:6},
+    {pre:"The",post:"played sweet music at the wedding.",ans:"band",o:["band","herd","flock"],w:"A group of musicians is a band.",c:6},
+    {pre:"A",post:"of bees came out of the hive.",ans:"swarm",o:["swarm","herd","team"],w:"We say a swarm of bees.",c:6},
+    {pre:"This window is made of",post:".",ans:"glass",o:["glass","joy","team"],w:"Glass is a material. Joy is a feeling and team is a group.",c:6},
+    {pre:"Grandmother wears a chain made of",post:".",ans:"gold",o:["gold","kindness","crowd"],w:"Gold is a material.",c:6},
+    {pre:"Our dining table is made of",post:".",ans:"wood",o:["wood","honesty","flock"],w:"Wood is a material.",c:6},
+    {pre:"The baby smiled with",post:".",ans:"joy",o:["joy","table","herd"],w:"Joy is a feeling, an abstract noun.",c:6},
+    {pre:"",post:"is the best policy.",ans:"Honesty",o:["Honesty","Pencil","Herd"],w:"Honesty is a quality, an abstract noun.",c:6},
+    {pre:"We visited",post:"last summer.",ans:"Mysuru",o:["Mysuru","mysuru","happiness"],w:"Mysuru is a proper noun, so it needs a capital letter.",c:6},
+    {pre:"My best friend is",post:".",ans:"Kavya",o:["Kavya","kavya","kindness"],w:"Kavya is a proper noun, so it needs a capital letter.",c:6},
+    {pre:"We celebrate",post:"in October or November.",ans:"Diwali",o:["Diwali","diwali","sugar"],w:"Diwali is a proper noun, so it needs a capital letter.",c:6},
+    {pre:"The longest river in India is the",post:".",ans:"Ganga",o:["Ganga","ganga","herd"],w:"Ganga is a proper noun, so it needs a capital letter.",c:6},
+    {pre:"My birthday falls on a",post:"this year.",ans:"Monday",o:["Monday","monday","gold"],w:"Days of the week are proper nouns, so they need a capital letter.",c:6},
+    {pre:"How much",post:"do you need?",ans:"sugar",o:["sugar","eggs","pencils"],w:"Much goes with uncountable nouns like sugar.",c:7},
+    {pre:"How many",post:"are there in the box?",ans:"mangoes",o:["mangoes","milk","rice"],w:"Many goes with countable nouns like mangoes.",c:7},
+    {pre:"I need some",post:"about the bus timings.",ans:"information",o:["information","informations","an information"],w:"Information is uncountable: no s and no an.",c:7},
+    {pre:"My teacher gave me some useful",post:".",ans:"advice",o:["advice","advices","an advice"],w:"Advice is uncountable: no s and no an.",c:7},
+    {pre:"We bought two",post:"of milk.",ans:"litres",o:["litres","milks","milk"],w:"Milk is uncountable, so we count it in litres.",c:7},
+    {pre:"There is no",post:"in the jug.",ans:"water",o:["water","waters","a water"],w:"Water is uncountable: no s and no a.",c:7},
+    {pre:"Grandpa bought three",post:".",ans:"loaves of bread",o:["loaves of bread","breads","bread"],w:"Bread is uncountable, so we count it in loaves.",c:7},
+    {pre:"A",post:"of wolves attacked the sheep.",ans:"pack",o:["pack","bunch","crowd"],w:"We say a pack of wolves.",c:7},
+    {pre:"A",post:"of ships sailed into the harbour.",ans:"fleet",o:["fleet","herd","swarm"],w:"We say a fleet of ships.",c:7},
+    {pre:"Rahul has a",post:"of keys.",ans:"bunch",o:["bunch","fleet","pack"],w:"We say a bunch of keys.",c:7},
+    {pre:"An",post:"of ants marched across the floor.",ans:"army",o:["army","fleet","herd"],w:"We say an army of ants.",c:7},
+    {pre:"A",post:"of sticks lay on the ground.",ans:"bundle",o:["bundle","herd","fleet"],w:"We say a bundle of sticks.",c:7},
+    {pre:"The soldier showed great",post:"in the battle.",ans:"courage",o:["courage","gun","river"],w:"Courage is a quality, an abstract noun.",c:7},
+    {pre:"Ramesh was full of",post:"when he won.",ans:"happiness",o:["happiness","happy","happily"],w:"After “full of” we need a noun. Happiness is the abstract noun.",c:7},
+    {pre:"The",post:"of the soldier saved many lives.",ans:"bravery",o:["bravery","brave","bravely"],w:"Bravery is the abstract noun from brave.",c:8},
+    {pre:"Gandhiji was known for his",post:".",ans:"honesty",o:["honesty","honest","honestly"],w:"Honesty is the abstract noun from honest.",c:8},
+    {pre:"Books give us",post:".",ans:"knowledge",o:["knowledge","know","knowing"],w:"Knowledge is the abstract noun from know.",c:8},
+    {pre:"Grandma tells stories about her",post:".",ans:"childhood",o:["childhood","child","childish"],w:"Childhood is the abstract noun from child.",c:8},
+    {pre:"Ram and Shyam share a strong",post:".",ans:"friendship",o:["friendship","friendly","befriend"],w:"Friendship is the abstract noun from friend.",c:8},
+    {pre:"The minister was famous for his",post:".",ans:"wisdom",o:["wisdom","wise","wisely"],w:"Wisdom is the abstract noun from wise.",c:8},
+    {pre:"The",post:"of the children filled the room.",ans:"laughter",o:["laughter","laughed","laughingly"],w:"Laughter is the abstract noun from laugh.",c:8},
+    {pre:"The",post:"of this tree is very fast.",ans:"growth",o:["growth","grow","grown"],w:"Growth is the abstract noun from grow.",c:8},
+    {pre:"We need to make a",post:"quickly.",ans:"decision",o:["decision","decide","decided"],w:"Decision is the abstract noun from decide.",c:8},
+    {pre:"In his",post:", Grandpa was a fast runner.",ans:"youth",o:["youth","young","younger"],w:"Youth is the abstract noun from young.",c:8},
+    {pre:"Both my",post:"came to the wedding.",ans:"sisters-in-law",o:["sisters-in-law","sister-in-laws","sisters-in-laws"],w:"The main noun is sister, so it takes the s.",c:8},
+    {pre:"Many",post:"stopped to help the injured dog.",ans:"passers-by",o:["passers-by","passer-bys","passers-bys"],w:"The main noun is passer, so it takes the s.",c:8},
+    {pre:"How",post:"money do you have?",ans:"much",o:["much","many","a few"],w:"Money is uncountable, so use much.",c:8},
+    {pre:"How",post:"students are absent today?",ans:"many",o:["many","much","a little"],w:"Students can be counted, so use many.",c:8},
+    {pre:"There is very",post:"milk left.",ans:"little",o:["little","few","many"],w:"Milk is uncountable, so use little.",c:8},
+    {pre:"Only a",post:"children came to school in the rain.",ans:"few",o:["few","little","much"],w:"Children can be counted, so use few.",c:8}
+  ];
+
+  var mode="name",S={};
+  function resetPractice(){
+    var N=NAME.filter(function(x){return x.c<=cls}),F=FILL.filter(function(x){return x.c<=cls});
+    S.name={i:0,score:0,ans:null,miss:[],q:TLM.deal("nouns-name-"+cls,N,8).map(function(x){return {s:x.s,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
+    S.fill={i:0,score:0,ans:null,miss:[],q:TLM.deal("nouns-fill-"+cls,F,8).map(function(x){return {pre:x.pre,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You are a noun star.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the cards for your class again, then play once more.",s.miss.length);
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    if(mode==="name"){
+      html+='<p class="qs">'+hlSent(q.s)+'</p><p class="ask">What kind of noun is the marked word?</p><div class="opts row3">';
+    }else{
+      html+='<p class="qs">'+esc(q.pre)+' <span class="gap" id="gap">&nbsp;</span>'+(/^[.,]/.test(q.post)?'':' ')+esc(q.post)+'</p><div class="opts row3">';
+    }
+    html+=q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(i===q.o.indexOf(q.ans)?' data-right':'')+'>'+esc(x)+(mode==="name"?' noun':'')+'</button>'}).join("")+'</div>';
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var q=s.q[s.i],ok=q.o[+b.dataset.o]===q.ans;
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
+    var fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+q.w;
+    if(mode==="fill")$("#gap").textContent=q.ans;
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(q.o[+x.dataset.o]===q.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawKinds();resetPractice();
+  });
+
+  drawKinds();resetPractice();
+})();
+</script>
+</Base>

@@ -1,0 +1,404 @@
+---
+import Base from '../layouts/Base.astro';
+import LessonNav from '../components/LessonNav.astro';
+---
+<Base title="Articles | TLM by Madimi Arundhathi" lesson>
+<style is:inline slot="head">
+:root{
+  --A-bg:#FCE3C4; --A-c:#C26A1B; --A-t:#6E3A08;
+  --T-bg:#E3EEFF; --T-c:#2F6FD6; --T-t:#123F86;
+}
+
+.hero h1{font-size:clamp(2.6rem,12.5vw,4.4rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.15rem;margin:.6rem 0 1.2rem;max-width:30rem}
+.pic{font-size:5.5rem;line-height:1;text-align:center;margin:.3rem 0 .8rem;padding:1rem 0;border-radius:18px;background:var(--bg);border:2px solid var(--line)}
+.sent{font:800 clamp(1.3rem,6vw,1.8rem)/1.4 var(--display);margin:0 0 .2rem}
+.note{color:var(--muted);min-height:4.6rem;margin:0 0 .4rem}
+.lab{font-weight:700;margin:.9rem 0 .4rem;font-size:.95rem}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pills button{appearance:none;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:800 1.05rem/1 var(--display);padding:.65rem 1rem;min-height:2.9rem;border-radius:30px;cursor:pointer}
+.pills button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.hl{border-radius:6px;padding:0 .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid;background:var(--A-bg);border-color:var(--A-c);color:var(--A-t);font-weight:800}
+.hl.t{background:var(--T-bg);border-color:var(--T-c);color:var(--T-t)}
+
+.tgrid{display:grid;gap:.8rem;margin-top:1rem;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))}
+.tbox{background:var(--surface);border:2px solid var(--line);border-top:6px solid var(--A-c);border-radius:18px;padding:.9rem 1rem}
+.tbox.t{border-top-color:var(--T-c)}
+.tbox .big{display:block;font:800 2.2rem/1 var(--display);color:var(--A-t)}
+.tbox.t .big{color:var(--T-t)}
+.tbox p{margin:.3rem 0}
+.tbox .ex{font:800 1.05rem/1.6 var(--display)}
+.tip{margin-top:.9rem;border-left:6px solid var(--T-c);background:var(--T-bg);color:var(--T-t);border-radius:0 16px 16px 0;padding:.7rem 1rem;font-weight:700}
+
+.tlist{display:grid;gap:.8rem;margin-top:1rem}
+.tcard{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:.95rem 1rem}
+.tcard h3{font-size:1.2rem;font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.new{font:700 .75rem var(--body);background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:.2rem .6rem}
+.formula{display:inline-block;margin:.5rem 0;padding:.3rem .7rem;border-radius:10px;border:2px solid var(--T-c);background:var(--T-bg);color:var(--T-t);font-weight:700}
+.tcard p{margin:.25rem 0}
+.tcard .ex{font:800 1.12rem/1.8 var(--display);margin-top:.5rem}
+
+.qs{font:800 clamp(1.25rem,5.8vw,1.7rem)/1.5 var(--display);margin:.6rem 0 1rem}
+.gap{display:inline-block;min-width:4.5rem;border-bottom:4px solid var(--ink);text-align:center;padding:0 .3em}
+.fb{min-height:4.4rem;margin:.9rem 0 .6rem;font-weight:700}
+.opts{display:grid;gap:.55rem}
+.opts.row3{grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.05rem/1.35 var(--body);padding:.8rem 1rem;border-radius:14px;cursor:pointer;min-height:3rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.result{padding:1rem 0}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="hero wrap">
+  <h1>Articles</h1>
+  <p class="sub">A, an and the: three tiny words that come before a noun. Tap a picture word and listen.</p>
+
+  <div class="demo">
+    <div class="pic" id="pic" role="img" aria-label="An apple"></div>
+    <p class="sent" id="hSent" aria-live="polite"></p>
+    <p class="note" id="hNote"></p>
+
+    <p class="lab">What can you see?</p>
+    <div class="pills" id="things" role="group" aria-label="Thing"></div>
+
+    <div class="row" style="margin-top:.8rem">
+      <button type="button" class="btn alt" id="listen">Listen</button>
+    </div>
+  </div>
+  <p class="by">Teaching learning material for Classes 6 to 8, prepared by <strong>Madimi Arundhathi</strong></p>
+</header>
+
+<nav class="classbar" aria-label="Choose your class">
+  <div class="wrap">
+    <b>I am in class</b>
+    <div class="seg" id="classSeg" role="group" aria-label="Class">
+      <button type="button" data-c="6" aria-pressed="true">6</button>
+      <button type="button" data-c="7" aria-pressed="false">7</button>
+      <button type="button" data-c="8" aria-pressed="false">8</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="what">
+    <h2>What are articles?</h2>
+    <p class="lead">A, an and the are called articles. They come before a noun and tell us if we mean any one thing or one particular thing.</p>
+    <div class="tgrid">
+      <div class="tbox"><b class="big">a / an</b><p>any one thing, not a particular one</p><p class="ex">Give me a pen.<br>(any pen will do)</p></div>
+      <div class="tbox t"><b class="big">the</b><p>a particular thing that we both know about</p><p class="ex">Give me the pen.<br>(that pen on the desk)</p></div>
+    </div>
+    <p class="tip">A and an are indefinite articles. The is the definite article.</p>
+  </section>
+
+  <section id="sound">
+    <h2>A or an? Listen to the sound</h2>
+    <p class="lead">Say the next word aloud. Its first sound, not its first letter, decides.</p>
+    <div class="tgrid">
+      <div class="tbox"><b class="big">a</b><p>before a consonant sound</p><p class="ex">a boy<br>a red ball<br>a uniform</p></div>
+      <div class="tbox"><b class="big">an</b><p>before a vowel sound (a, e, i, o, u)</p><p class="ex">an egg<br>an old man<br>an hour</p></div>
+    </div>
+    <p class="tip">“Uniform” begins with the sound “you”, so it takes a. In “hour” the h is silent, so it takes an.</p>
+  </section>
+
+  <section id="kinds">
+    <h2>Articles for your class</h2>
+    <p class="lead" id="kindsLead"></p>
+    <div class="tlist" id="tlist"></div>
+  </section>
+
+  <section id="practice">
+    <h2>Practice time</h2>
+    <p class="lead">Play with your class. Take turns, or let teams answer together.</p>
+    <div class="row" style="margin-top:.8rem">
+      <div class="seg" id="modeSeg" role="group" aria-label="Practice mode">
+        <button type="button" data-m="fill" aria-pressed="true">Fill it</button>
+        <button type="button" data-m="fix" aria-pressed="false">Fix it</button>
+      </div>
+    </div>
+    <div class="card pbox" id="pbody"></div>
+  </section>
+
+  <section id="teacher">
+    <h2>For the teacher</h2>
+    <details>
+      <summary>Objectives and lesson flow</summary>
+      <p><b>Learners will be able to</b></p>
+      <ul>
+        <li>choose a or an by the first sound of the next word, use the for a particular thing or something mentioned before and for the sun, the moon and the earth, and leave out the article before names (Class 6);</li>
+        <li>use an before a silent h (an hour, an honest man), a before “you” and “wun” sounds (a uniform, a one-rupee coin), articles with short forms (an MLA), and the with rivers, seas, mountain ranges, superlatives, first and famous buildings (Class 7);</li>
+        <li>leave out the article with games, meals, languages and school subjects, use the with musical instruments and the + adjective for a group (the poor), use a or an to mean “per”, and never put a or an before uncountable nouns like advice and furniture (Class 8).</li>
+      </ul>
+      <p><b>Time:</b> two periods of about 40 minutes. <b>Materials:</b> a projector or phone, and a bag with a few real objects (an apple, an eraser, a pen, a key).</p>
+      <ol>
+        <li><b>Hook (5 min).</b> Take objects out of the bag one by one. The class says “a pen”, “an eraser”. Then ask: “Where is the pen?”</li>
+        <li><b>Teach (10 min).</b> Project the hero. Students tap each picture word and say the sentence before you press Listen. Ask why the second sentence uses “the”.</li>
+        <li><b>Sound check (5 min).</b> Read the a / an boxes. Say words aloud (hour, uniform, honest, umbrella, one, MLA) and let students show a or an on their fingers.</li>
+        <li><b>Your class (10 min).</b> Pick your class on the bar and read the cards. Students give one more example for each card.</li>
+        <li><b>Practice (8 min).</b> Teams play Fill it and Fix it on the count of three.</li>
+        <li><b>Exit ticket.</b> Each student writes two sentences about their home: one with a or an, and one with the.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Common mistakes to watch for</summary>
+      <ul>
+        <li>Choosing by the letter, not the sound: “a hour”, “an uniform”, “an one-rupee coin”, “a MLA”.</li>
+        <li>Forgetting that an adjective changes the sound: “an big apple” should be “a big apple”.</li>
+        <li>Leaving out “the” with things that are one of a kind: “Sun rises in the east.”</li>
+        <li>Adding “the” before names: “the Ravi”, “the Hyderabad”.</li>
+        <li>Missing “the” with superlatives and rivers: “He is best student”, “Godavari is a long river.”</li>
+        <li>Adding “the” before games, meals and languages: “play the cricket”, “have the lunch”, “speak the Telugu”.</li>
+        <li>Putting a or an before uncountable nouns: “an advice”, “a furniture”, “an information”.</li>
+      </ul>
+    </details>
+  </section>
+
+  <LessonNav slug="15-Articles" />
+
+  <footer>
+    Teaching learning material (TLM) on Articles for Classes 6 to 8.<br>
+    Prepared by <strong>Madimi Arundhathi</strong>.
+  </footer>
+</main>
+
+
+<script is:inline>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var cls=6;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+  /* {{a}} marks a or an, [[the]] marks the */
+  function hlSent(s){return esc(s).replace(/\{\{(.+?)\}\}/g,'<span class="hl">$1</span>').replace(/\[\[(.+?)\]\]/g,'<span class="hl t">$1</span>')}
+
+  /* ---------- hero: a, an and the ---------- */
+  var THINGS=[
+    {w:"apple",e:"🍎",a:"an",adj:"red",n:"“Apple” begins with a vowel sound, so we say an."},
+    {w:"dog",e:"🐕",a:"a",adj:"friendly",n:"“Dog” begins with a consonant sound, so we say a."},
+    {w:"elephant",e:"🐘",a:"an",adj:"huge",n:"“Elephant” begins with a vowel sound, so we say an."},
+    {w:"mango",e:"🥭",a:"a",adj:"sweet",n:"“Mango” begins with a consonant sound, so we say a."},
+    {w:"owl",e:"🦉",a:"an",adj:"wise",n:"“Owl” begins with a vowel sound, so we say an."},
+    {w:"umbrella",e:"☂️",a:"an",adj:"open",n:"“Umbrella” begins with a vowel sound, so we say an."},
+    {w:"hourglass",e:"⏳",a:"an",adj:"old",n:"“Hourglass” is spelt with h, but the h is silent. It begins with a vowel sound, so we say an."},
+    {w:"unicorn",e:"🦄",a:"a",adj:"white",n:"“Unicorn” is spelt with u, but it begins with the sound “you”, a consonant sound. So we say a."}
+  ];
+  var ht=0;
+  function heroSay(){var T=THINGS[ht];return "I can see "+T.a+" "+T.w+". The "+T.w+" is "+T.adj+"."}
+  function drawHero(){
+    var T=THINGS[ht];
+    $("#pic").textContent=T.e;
+    $("#pic").setAttribute("aria-label",T.a+" "+T.w);
+    $("#hSent").innerHTML=hlSent("I can see {{"+T.a+"}} "+T.w+". [[The]] "+T.w+" is "+T.adj+".");
+    $("#hNote").textContent=T.n+" The second time, we know which "+T.w+", so we say the.";
+    document.querySelectorAll("#things button").forEach(function(b,i){b.setAttribute("aria-pressed",i===ht)});
+  }
+  $("#things").innerHTML=THINGS.map(function(t,i){return '<button type="button" data-i="'+i+'" aria-pressed="false">'+esc(t.w)+'</button>'}).join("");
+  $("#things").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;ht=+b.dataset.i;drawHero()});
+  $("#listen").addEventListener("click",function(){
+    try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(heroSay());u.lang="en-IN";u.rate=.85;speechSynthesis.speak(u)}catch(err){}
+  });
+  drawHero();
+
+  /* ---------- articles by class ---------- */
+  var KINDS=[
+    {c:6,n:"A and an",m:"a / an + one thing",d:"Use a or an for one thing when it is not a particular one. Any one will do.",ex:"I have {{a}} pen and {{an}} eraser."},
+    {c:6,n:"A or an: listen to the sound",m:"a + consonant sound · an + vowel sound",d:"Say the next word aloud and listen to how it begins.",ex:"{{a}} boy, {{a}} cat, {{an}} egg, {{an}} ink pot, {{an}} orange"},
+    {c:6,n:"The next word decides",m:"an apple · a big apple",d:"Look at the word straight after the article. If a describing word comes first, its sound decides.",ex:"{{an}} apple, but {{a}} big apple. {{a}} dog, but {{an}} old dog."},
+    {c:6,n:"The: we know which one",m:"the + a particular thing",d:"Use the when the listener knows which one you mean, often because you said it before.",ex:"I saw {{a}} kite. [[The]] kite was yellow."},
+    {c:6,n:"The: only one in the world",m:"the sun · the moon · the earth · the sky",d:"There is only one of each, so everyone knows which one.",ex:"[[The]] sun rises in the east."},
+    {c:6,n:"No article before names",m:"no article + names of people, cities and countries",d:"Names of people and most places need no article.",ex:"Ravi lives in Chennai. India is a big country."},
+    {c:7,n:"Silent h",m:"an hour · an honest boy · an honour",d:"In some words the h is silent, so the word begins with a vowel sound.",ex:"We waited for {{an}} hour. Salma is {{an}} honest girl."},
+    {c:7,n:"U and o that sound like consonants",m:"a uniform · a university · a one-rupee coin",d:"Some words begin with the sound “you” or “wun”. These are consonant sounds, so use a.",ex:"Every student wears {{a}} uniform. I found {{a}} one-rupee coin."},
+    {c:7,n:"Short forms",m:"an MLA · an NCC cadet · a PT teacher",d:"Say the letters aloud. M is said “em”, which begins with a vowel sound. P is said “pee”, which does not.",ex:"Her uncle is {{an}} MLA. Mr Rao is {{a}} PT teacher."},
+    {c:7,n:"The with rivers, seas and mountain ranges",m:"the + river · sea · ocean · mountain range",d:"Use the with these names, but not with a single mountain.",ex:"[[The]] Godavari flows into [[the]] Bay of Bengal. [[The]] Himalayas are high, but Mount Everest takes no article."},
+    {c:7,n:"The with best and first",m:"the + -est word · the + first, second, last",d:"There is only one best or one first, so use the.",ex:"Ravi is [[the]] tallest boy in our class. Rakesh Sharma was [[the]] first Indian in space."},
+    {c:7,n:"The with famous buildings and holy books",m:"the Taj Mahal · the Charminar · the Ramayana",d:"These are one of a kind, so use the.",ex:"We visited [[the]] Charminar and read [[the]] Ramayana."},
+    {c:8,n:"No article with games, meals, languages and subjects",m:"play cricket · have lunch · speak Telugu · study maths",d:"These need no article when we talk about them in general.",ex:"We play kabaddi after lunch. Meena speaks Telugu and loves science."},
+    {c:8,n:"The with musical instruments",m:"play + game · play the + instrument",d:"Games take no article, but musical instruments take the.",ex:"Ravi plays cricket and [[the]] flute."},
+    {c:8,n:"School and bed",m:"go to school (to study) · go to the school (for another reason)",d:"No article when a place is used for its main purpose. Use the when you go there for some other reason.",ex:"Rani goes to school by bus. Her mother went to [[the]] school to meet the teacher. It is late, so go to bed."},
+    {c:8,n:"The + describing word for a group",m:"the poor · the rich · the old · the young",d:"The + a describing word means all the people of that kind.",ex:"We should help [[the]] poor and respect [[the]] old."},
+    {c:8,n:"A and an meaning each",m:"twice a week · 60 km an hour · ₹50 a kilo",d:"A or an can mean each or per.",ex:"We have PT twice {{a}} week. The bus goes at 50 kilometres {{an}} hour."},
+    {c:8,n:"No a or an with uncountable nouns",m:"advice · information · furniture · luggage · gold",d:"These nouns cannot be counted, so they never take a or an. Use some, or a piece of.",ex:"She gave me some good advice. We bought new furniture."}
+  ];
+  function drawKinds(){
+    $("#kindsLead").textContent=cls===6
+      ?"Class 6 learns a, an and the for everyday things."
+      :"Class "+cls+" revises the earlier ones and adds new ones. The new ones are marked.";
+    $("#tlist").innerHTML=KINDS.filter(function(k){return k.c<=cls}).map(function(k){
+      return '<article class="tcard"><h3>'+esc(k.n)+(k.c===cls&&cls>6?'<span class="new">new this year</span>':'')+'</h3>'+
+        '<span class="formula">'+esc(k.m)+'</span><p>'+esc(k.d)+'</p><p class="ex">'+hlSent(k.ex)+'</p></article>';
+    }).join("");
+  }
+
+  /* ---------- practice data ---------- */
+  var NONE="no article";
+  var FILL=[
+    {pre:"I eat",post:"apple every day.",ans:"an",o:["an","a",NONE],w:"“Apple” begins with a vowel sound, so use an.",c:6},
+    {pre:"Ravi has",post:"umbrella.",ans:"an",o:["an","a",NONE],w:"“Umbrella” begins with a vowel sound, so use an.",c:6},
+    {pre:"My uncle drives",post:"bus.",ans:"a",o:["a","an",NONE],w:"“Bus” begins with a consonant sound, so use a.",c:6},
+    {pre:"There is",post:"owl in that tree.",ans:"an",o:["an","a",NONE],w:"“Owl” begins with a vowel sound, so use an.",c:6},
+    {pre:"Asha bought",post:"new bicycle.",ans:"a",o:["a","an",NONE],w:"The next word is “new”, which begins with a consonant sound, so use a.",c:6},
+    {pre:"We saw",post:"elephant at the zoo.",ans:"an",o:["an","a",NONE],w:"“Elephant” begins with a vowel sound, so use an.",c:6},
+    {pre:"Please give me",post:"orange.",ans:"an",o:["an","a",NONE],w:"“Orange” begins with a vowel sound, so use an.",c:6},
+    {pre:"My sister is",post:"teacher.",ans:"a",o:["a","an",NONE],w:"“Teacher” begins with a consonant sound, so use a.",c:6},
+    {pre:"Kamala wants to be",post:"engineer.",ans:"an",o:["an","a",NONE],w:"“Engineer” begins with a vowel sound, so use an.",c:6},
+    {pre:"",post:"sun rises in the east.",ans:"The",o:["The","A","An"],w:"There is only one sun, so use the.",c:6},
+    {pre:"",post:"moon shines at night.",ans:"The",o:["The","A","An"],w:"There is only one moon, so use the.",c:6},
+    {pre:"I bought a pen yesterday. Today I lost",post:"pen.",ans:"the",o:["the","an",NONE],w:"We already know which pen, so use the.",c:6},
+    {pre:"Ravi has a dog and a cat.",post:"dog is called Moti.",ans:"The",o:["The","An",NONE],w:"The dog was mentioned before, so use the.",c:6},
+    {pre:"Look at",post:"sky. It is so blue!",ans:"the",o:["the","an",NONE],w:"There is only one sky, so use the.",c:6},
+    {pre:"Raju lives in",post:"Chennai.",ans:NONE,o:[NONE,"the","a"],w:"Names of cities need no article.",c:6},
+    {pre:"An ant is",post:"insect.",ans:"an",o:["an","a",NONE],w:"“Insect” begins with a vowel sound, so use an.",c:6},
+    {pre:"The earth goes round",post:"sun.",ans:"the",o:["the","a","an"],w:"There is only one sun, so use the.",c:6},
+    {pre:"Grandpa sat under",post:"old banyan tree.",ans:"an",o:["an","a",NONE],w:"The next word is “old”, which begins with a vowel sound, so use an.",c:6},
+    {pre:"Amma made",post:"big pot of sambar.",ans:"a",o:["a","an",NONE],w:"The next word is “big”, which begins with a consonant sound, so use a.",c:6},
+    {pre:"We waited for",post:"hour at the bus stop.",ans:"an",o:["an","a",NONE],w:"The h in “hour” is silent, so it begins with a vowel sound. Use an.",c:7},
+    {pre:"Salma is",post:"honest girl.",ans:"an",o:["an","a",NONE],w:"The h in “honest” is silent, so use an.",c:7},
+    {pre:"My brother studies at",post:"university in Delhi.",ans:"a",o:["a","an",NONE],w:"“University” begins with the sound “you”, a consonant sound. Use a.",c:7},
+    {pre:"Every student must wear",post:"uniform.",ans:"a",o:["a","an",NONE],w:"“Uniform” begins with the sound “you”, so use a.",c:7},
+    {pre:"Mr Reddy is",post:"MLA from our district.",ans:"an",o:["an","a",NONE],w:"M is said “em”, which begins with a vowel sound. Use an.",c:7},
+    {pre:"I found",post:"one-rupee coin on the road.",ans:"a",o:["a","an",NONE],w:"“One” begins with the sound “wun”, a consonant sound. Use a.",c:7},
+    {pre:"This is",post:"useful book.",ans:"a",o:["a","an",NONE],w:"“Useful” begins with the sound “you”, so use a.",c:7},
+    {pre:"",post:"Ganga is a holy river.",ans:"The",o:["The","A","An"],w:"Use the with names of rivers.",c:7},
+    {pre:"Our ship sailed across",post:"Indian Ocean.",ans:"the",o:["the","an",NONE],w:"Use the with names of oceans.",c:7},
+    {pre:"",post:"Himalayas are in the north of India.",ans:"The",o:["The","A","An"],w:"Use the with mountain ranges.",c:7},
+    {pre:"Mount Everest is",post:"highest mountain in the world.",ans:"the",o:["the","a","an"],w:"There is only one highest, so use the.",c:7},
+    {pre:"Neil Armstrong was",post:"first man to walk on the moon.",ans:"the",o:["the","a","an"],w:"There is only one first, so use the.",c:7},
+    {pre:"Have you seen",post:"Taj Mahal?",ans:"the",o:["the","a",NONE],w:"Use the with famous buildings.",c:7},
+    {pre:"Sachin is",post:"best batsman in our team.",ans:"the",o:["the","a","an"],w:"Use the with best.",c:7},
+    {pre:"My uncle is",post:"honourable man.",ans:"an",o:["an","a",NONE],w:"The h in “honourable” is silent, so use an.",c:7},
+    {pre:"The Godavari flows into",post:"Bay of Bengal.",ans:"the",o:["the","a",NONE],w:"Use the with names of seas and bays.",c:7},
+    {pre:"We play",post:"cricket after school.",ans:NONE,o:[NONE,"the","a"],w:"Games need no article.",c:8},
+    {pre:"Grandma plays",post:"veena beautifully.",ans:"the",o:["the","an",NONE],w:"Musical instruments take the.",c:8},
+    {pre:"We have",post:"lunch at one o’clock.",ans:NONE,o:[NONE,"a","the"],w:"Meals need no article.",c:8},
+    {pre:"Priya speaks",post:"Tamil and Hindi.",ans:NONE,o:[NONE,"the","a"],w:"Languages need no article.",c:8},
+    {pre:"We study",post:"science on Mondays.",ans:NONE,o:[NONE,"the","a"],w:"School subjects need no article.",c:8},
+    {pre:"We must help",post:"poor.",ans:"the",o:["the","a",NONE],w:"The poor means all poor people.",c:8},
+    {pre:"The car was going at 60 kilometres",post:"hour.",ans:"an",o:["an","a","the"],w:"An here means per, and “hour” begins with a vowel sound.",c:8},
+    {pre:"I visit my grandparents twice",post:"year.",ans:"a",o:["a","an","the"],w:"A here means each, and “year” begins with a consonant sound.",c:8},
+    {pre:"It is late. Go to",post:"bed now.",ans:NONE,o:[NONE,"the","a"],w:"Bed used for sleeping needs no article.",c:8},
+    {pre:"Children go to",post:"school to learn.",ans:NONE,o:[NONE,"the","a"],w:"School used for studying needs no article.",c:8},
+    {pre:"Mother went to",post:"school to meet my teacher.",ans:"the",o:["the",NONE,"a"],w:"She went for another reason, not to study, so use the.",c:8},
+    {pre:"My uncle gave me",post:"good advice.",ans:NONE,o:[NONE,"a","an"],w:"Advice is uncountable, so it never takes a or an.",c:8},
+    {pre:"We bought",post:"new furniture for our house.",ans:NONE,o:[NONE,"a","an"],w:"Furniture is uncountable, so it never takes a or an.",c:8},
+    {pre:"Rings are often made of",post:"gold.",ans:NONE,o:[NONE,"the","a"],w:"Gold in general needs no article.",c:8},
+    {pre:"Sita earns 500 rupees",post:"day.",ans:"a",o:["a","an","the"],w:"A here means each.",c:8}
+  ];
+  var FIX=[
+    {o:["I have an apple.","I have a apple.","I have apple."],w:"“Apple” begins with a vowel sound, so use an.",c:6},
+    {o:["She is an actor.","She is a actor.","She is actor."],w:"“Actor” begins with a vowel sound, so use an.",c:6},
+    {o:["He has a red ball.","He has an red ball.","He has red ball."],w:"“Red” begins with a consonant sound, so use a.",c:6},
+    {o:["The sun is very hot.","A sun is very hot.","Sun is very hot."],w:"There is only one sun, so use the.",c:6},
+    {o:["Ravi saw an owl.","Ravi saw a owl.","Ravi saw owl."],w:"“Owl” begins with a vowel sound, so use an.",c:6},
+    {o:["My mother is a nurse.","My mother is an nurse.","My mother is nurse."],w:"“Nurse” begins with a consonant sound, so use a.",c:6},
+    {o:["I live in Hyderabad.","I live in the Hyderabad.","I live in a Hyderabad."],w:"Names of cities need no article.",c:6},
+    {o:["Amit ate an orange.","Amit ate a orange.","Amit ate the an orange."],w:"“Orange” begins with a vowel sound, so use an.",c:6},
+    {o:["The moon is bright tonight.","A moon is bright tonight.","An moon is bright tonight."],w:"There is only one moon, so use the.",c:6},
+    {o:["I saw a cat. The cat was black.","I saw a cat. A cat was black.","I saw an cat. The cat was black."],w:"First a cat, then the cat, because we know which one.",c:6},
+    {o:["Is there an egg in the basket?","Is there a egg in the basket?","Is there the egg in basket?"],w:"“Egg” begins with a vowel sound, so use an.",c:6},
+    {o:["An ant is a small insect.","A ant is a small insect.","An ant is an small insect."],w:"An before “ant”, but a before “small”.",c:6},
+    {o:["We sat under a big tree.","We sat under an big tree.","We sat under big tree."],w:"“Big” begins with a consonant sound, so use a.",c:6},
+    {o:["The earth is round.","An earth is round.","A earth is round."],w:"There is only one earth, so use the.",c:6},
+    {o:["Leela has an umbrella.","Leela has a umbrella.","Leela has umbrella."],w:"“Umbrella” begins with a vowel sound, so use an.",c:6},
+    {o:["Please switch on the fan.","Please switch on an fan.","Please switch on fan."],w:"We know which fan, the one in this room, so use the.",c:6},
+    {o:["Raju is an Indian boy.","Raju is a Indian boy.","Raju is Indian a boy."],w:"“Indian” begins with a vowel sound, so use an.",c:6},
+    {o:["I will come back in an hour.","I will come back in a hour.","I will come back in hour."],w:"The h in “hour” is silent, so use an.",c:7},
+    {o:["He is an honest man.","He is a honest man.","He is honest a man."],w:"The h in “honest” is silent, so use an.",c:7},
+    {o:["She studies at a university.","She studies at an university.","She studies at university a."],w:"“University” begins with the sound “you”, so use a.",c:7},
+    {o:["Every child needs a uniform.","Every child needs an uniform.","Every child need an uniform."],w:"“Uniform” begins with the sound “you”, so use a.",c:7},
+    {o:["We met an MLA at the function.","We met a MLA at the function.","We met MLA at the function."],w:"M is said “em”, a vowel sound, so use an.",c:7},
+    {o:["I found a one-rupee coin.","I found an one-rupee coin.","I found one-rupee coin."],w:"“One” begins with the sound “wun”, so use a.",c:7},
+    {o:["The Ganga is a holy river.","A Ganga is a holy river.","The Ganga is an holy river."],w:"Use the with rivers. “Holy” begins with a sounded h, so use a.",c:7},
+    {o:["The Himalayas are very high.","Himalayas are very high.","A Himalayas are very high."],w:"Use the with mountain ranges.",c:7},
+    {o:["Mount Everest is the highest peak.","The Mount Everest is the highest peak.","Mount Everest is a highest peak."],w:"A single mountain takes no article, but highest takes the.",c:7},
+    {o:["She was the first girl to finish.","She was a first girl to finish.","She was first a girl to finish."],w:"Use the with first.",c:7},
+    {o:["This is the best day of my life.","This is a best day of my life.","This is best day of the my life."],w:"Use the with best.",c:7},
+    {o:["We visited the Taj Mahal.","We visited a Taj Mahal.","We visited an Taj Mahal."],w:"Use the with famous buildings.",c:7},
+    {o:["Ships sail across the Arabian Sea.","Ships sail across Arabian Sea.","Ships sail across an Arabian Sea."],w:"Use the with seas.",c:7},
+    {o:["He is a useful member of the team.","He is an useful member of the team.","He is useful a member of the team."],w:"“Useful” begins with the sound “you”, so use a.",c:7},
+    {o:["The Bay of Bengal is to the east of India.","Bay of Bengal is to the east of India.","A Bay of Bengal is to the east of India."],w:"Use the with seas and bays.",c:7},
+    {o:["He is the tallest boy in our class.","He is a tallest boy in our class.","He is tallest the boy in our class."],w:"Use the with tallest.",c:7},
+    {o:["We play cricket every evening.","We play the cricket every evening.","We play a cricket every evening."],w:"Games need no article.",c:8},
+    {o:["Ravi plays the tabla and cricket.","Ravi plays tabla and the cricket.","Ravi plays a tabla and a cricket."],w:"Instruments take the. Games take no article.",c:8},
+    {o:["We have dinner at eight.","We have the dinner at eight.","We have an dinner at eight."],w:"Meals need no article.",c:8},
+    {o:["My aunt speaks Kannada.","My aunt speaks the Kannada.","My aunt speaks a Kannada."],w:"Languages need no article.",c:8},
+    {o:["Science is my favourite subject.","The science is my favourite subject.","A science is my favourite subject."],w:"School subjects need no article.",c:8},
+    {o:["We should help the poor.","We should help poor.","We should help a poor."],w:"The poor means all poor people.",c:8},
+    {o:["The bus goes at 40 kilometres an hour.","The bus goes at 40 kilometres a hour.","The bus goes at 40 kilometres the hour."],w:"An means per here, and “hour” begins with a vowel sound.",c:8},
+    {o:["I go to the dentist twice a year.","I go to the dentist twice an year.","I go to the dentist twice the year."],w:"A means each here, and “year” begins with a consonant sound.",c:8},
+    {o:["Rani goes to school by bus.","Rani goes to the school by bus.","Rani goes to a school by bus."],w:"She goes there to study, so no article.",c:8},
+    {o:["It is ten o’clock. Go to bed.","It is ten o’clock. Go to the bed.","It is ten o’clock. Go to a bed."],w:"Bed used for sleeping needs no article.",c:8},
+    {o:["She gave me good advice.","She gave me a good advice.","She gave me an good advice."],w:"Advice is uncountable, so no a or an.",c:8},
+    {o:["We bought new furniture.","We bought a new furniture.","We bought an new furniture."],w:"Furniture is uncountable, so no a or an.",c:8},
+    {o:["Rings are made of gold.","Rings are made of the gold.","Rings are made of a gold."],w:"Gold in general needs no article.",c:8},
+    {o:["Mother went to the school to meet my teacher.","Mother went to school to meet my teacher.","Mother went to a school to meet my teacher."],w:"She went for another reason, not to study, so use the.",c:8},
+    {o:["The old need our care.","Old need our care.","An old need our care."],w:"The old means all old people.",c:8},
+    {o:["My uncle earns a thousand rupees a day.","My uncle earns an thousand rupees a day.","My uncle earns thousand rupees an day."],w:"“Thousand” and “day” begin with consonant sounds, so use a.",c:8}
+  ];
+
+  var mode="fill",S={};
+  function resetPractice(){
+    var F=FILL.filter(function(x){return x.c<=cls}),X=FIX.filter(function(x){return x.c<=cls});
+    S.fill={i:0,score:0,ans:null,miss:[],q:TLM.deal("art-fill-"+cls,F,8).map(function(x){return {pre:x.pre,post:x.post,ans:x.ans,w:x.w,o:shuffle(x.o)}})};
+    S.fix={i:0,score:0,ans:null,miss:[],q:TLM.deal("art-fix-"+cls,X,8).map(function(x){return {ans:x.o[0],w:x.w,o:shuffle(x.o)}})};
+    drawPractice();
+  }
+  function drawPractice(){
+    document.querySelectorAll("#modeSeg button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===mode)});
+    var s=S[mode],box=$("#pbody"),n=s.q.length;
+    if(s.i>=n){
+      box.innerHTML=TLM.result(s.score,n,s.score===n?"Perfect round. You are an article star.":s.score>=n*0.7?"Great work. Check the ones you missed and try again.":"Good start. Read the cards for your class again, then play once more.",s.miss.length);
+      return;
+    }
+    var q=s.q[s.i],html='<p class="count">Question '+(s.i+1)+' of '+n+'</p>';
+    if(mode==="fill"){
+      html+='<p class="qs">'+esc(q.pre)+' <span class="gap" id="gap">&nbsp;</span> '+esc(q.post)+'</p><div class="opts row3">';
+    }else{
+      html+='<p class="qs">Which sentence is correct?</p><div class="opts">';
+    }
+    html+=q.o.map(function(x,i){return '<button type="button" class="opt" data-o="'+i+'"'+(i===q.o.indexOf(q.ans)?' data-right':'')+'>'+esc(x)+'</button>'}).join("")+'</div>';
+    html+='<p class="fb" aria-live="polite"></p><button type="button" class="btn" data-act="next" hidden>'+(s.i===n-1?"See my score":"Next question")+'</button>';
+    box.innerHTML=html;
+  }
+  $("#pbody").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.act==="again"){resetPractice();return}
+    if(b.dataset.act==="retry"){S[mode]=TLM.retry(S[mode].miss);drawPractice();return}
+    var s=S[mode];
+    if(b.dataset.act==="next"){s.i++;s.ans=null;drawPractice();return}
+    if(b.dataset.o===undefined||s.ans!==null)return;
+    var q=s.q[s.i],ok=q.o[+b.dataset.o]===q.ans;
+    s.ans=1;if(ok)s.score++;else s.miss.push(q);
+    var fb=$("#pbody .fb");
+    fb.className="fb "+(ok?"good":"bad");
+    fb.textContent=(ok?"Correct. ":"Not quite. ")+q.w;
+    if(mode==="fill")$("#gap").textContent=q.ans===NONE?"—":q.ans;
+    document.querySelectorAll("#pbody .opt").forEach(function(x){
+      x.disabled=true;
+      if(q.o[+x.dataset.o]===q.ans)x.classList.add("good");
+      else if(x===b)x.classList.add("bad");
+    });
+    $("#pbody [data-act=next]").hidden=false;
+  });
+  $("#modeSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b||b.dataset.m===mode)return;
+    mode=b.dataset.m;drawPractice();
+  });
+
+  /* ---------- class bar ---------- */
+  $("#classSeg").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var c=+b.dataset.c;if(c===cls)return;
+    cls=c;
+    document.querySelectorAll("#classSeg button").forEach(function(x){x.setAttribute("aria-pressed",+x.dataset.c===cls)});
+    drawKinds();resetPractice();
+  });
+
+  drawKinds();resetPractice();
+})();
+</script>
+</Base>

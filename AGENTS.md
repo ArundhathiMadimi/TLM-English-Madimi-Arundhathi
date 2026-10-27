@@ -11,7 +11,7 @@ src/lessons.js            lessons grouped into sections (Words, Verbs, Sentences
 src/layouts/Base.astro    shared <head> (fonts, theme.css) and the "All topics" button on lesson pages
 src/components/LessonNav.astro   Previous / Next buttons at the bottom of each lesson
 src/pages/index.astro     start page
-src/pages/N-Topic.astro   one lesson per topic (1-Voices.astro ... 7-Modal-Verbs.astro)
+src/pages/N-Topic.astro   one lesson per topic (1-Voices.astro ... 16-Types-of-Nouns.astro)
 public/theme.css          shared colours, fonts and common components, copied to the site as-is
 public/feedback.js        right/wrong sounds (Web Audio, no files), confetti and the Sound on/off button; emits tlm:answer / tlm:round events
 public/play.js            Team game scoreboard, streak pop-ups and the Hint button above every practice game
@@ -77,8 +77,8 @@ Every lesson uses `<Base title="..." lesson>` and keeps the same layout and IDs:
 
 ## Adding a new topic
 
-1. Copy the closest lesson to `src/pages/15-New-Topic.astro` (next free number; the number is only part of the URL and is never shown), then change the `slug` passed to `LessonNav`, the title, the content and the chip tokens.
-2. Add `{ slug: '15-New-Topic', title, icon, blurb }` to the right group in `src/lessons.js`, at its place in the learning order. The start page card and the Previous/Next buttons update automatically. Write the blurb for kids and use an emoji icon.
+1. Copy the closest lesson to `src/pages/17-New-Topic.astro` (next free number; the number is only part of the URL and is never shown), then change the `slug` passed to `LessonNav`, the title, the content and the chip tokens.
+2. Add `{ slug: '17-New-Topic', title, icon, blurb }` to the right group in `src/lessons.js`, at its place in the learning order. The start page card and the Previous/Next buttons update automatically. Write the blurb for kids and use an emoji icon.
 3. Run `npm run build` and click through the new page.
 
 ## Content and accessibility

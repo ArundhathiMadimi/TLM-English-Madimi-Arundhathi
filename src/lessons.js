@@ -4,6 +4,8 @@
 export const groups = [
   { title: 'Words', icon: '🧱', blurb: 'What each word does', lessons: [
     { slug: '9-Parts-of-Speech', title: 'Parts of Speech', icon: '🏷️', blurb: 'Every word has a job. Find it!' },
+    { slug: '16-Types-of-Nouns', title: 'Types of Nouns', icon: '📛', blurb: 'Naming words: proper, common, collective and more' },
+    { slug: '15-Articles', title: 'Articles', icon: '🅰️', blurb: 'A, an or the? Listen to the first sound' },
     { slug: '12-Adjectives', title: 'Adjectives', icon: '🎨', blurb: 'Describing words: big, bigger, biggest' },
     { slug: '11-Prepositions', title: 'Prepositions', icon: '📦', blurb: 'In, on, under: where is the cat?' },
     { slug: '6-Synonyms', title: 'Synonyms', icon: '🔤', blurb: 'Same meaning, different strength' },
